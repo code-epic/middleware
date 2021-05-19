@@ -1,0 +1,14 @@
+[
+  {
+    "id": "MGDBA",
+    "driver" : "mongodb",
+    "usuario" : "",
+    "basedatos": "code-epic",
+    "clave" : "",
+    "host" : "localhost",
+    "puerto" : "27017",
+    "url": "",
+    "descripcion": "MongoDB v.4.4.0",
+    "estatus": true
+  }
+]

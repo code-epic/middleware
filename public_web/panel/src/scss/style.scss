@@ -1,0 +1,30 @@
+// If you want to override variables do it here
+@import "variables";
+
+// Import styles
+@import "~@coreui/coreui/scss/coreui";
+
+// If you want to add something do it here
+@import "custom";
+
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-grid.css";
+
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-alpine.css";
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-balham.css";
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-blue.css";
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-bootstrap.css";
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-fresh.css";
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-material.css";
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-dark.css";
+
+@import "../../node_modules/ag-grid-community/dist/styles/ag-theme-balham-dark.css";
+
+

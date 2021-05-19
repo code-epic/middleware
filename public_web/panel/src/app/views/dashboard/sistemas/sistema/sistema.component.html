@@ -1,0 +1,266 @@
+<div class="animated fadeIn" >
+
+    <div class="row">
+        <div class="col-sm-12 col-lg-12">
+
+            <div class="card" >
+                
+                <div class="card-body" >
+                    <div class="text-value"><h6 >Sistemas</h6>
+                    <hr></div>
+                    
+                    <ng-wizard [config]="config" (stepChanged)="stepChanged($event)" >
+
+                        <ng-wizard-step [title]="'Registrar'" [description]="'Definir sistema'"
+                            [canEnter]="isValidTypeBoolean" [canExit]="isValidFunctionReturnsBoolean.bind(this)">
+                            
+                            <div class="row">   
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Servidor</label>
+                                        <select id="cmbHost" class="form-control selected"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="host"  value ="{{host}}"
+                                        style="display: flex; justify-content: center;" >
+                                            <option value="0">SELECCIONE</option>
+                                            <option *ngFor="let mdl of hosts" value="{{mdl.host}}" >{{ mdl.id }} | {{ mdl.descripcion }}</option> 
+                                        </select>
+                                    </div>
+                                </div>        
+                                <div class="col-md-5">
+                                    <div class="form-group">
+                                        <label>Nombre del sistema</label>
+                                        <input type="text" id="txtNombre" class="form-control" 
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="nombre"  value ="{{nombre}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Versión</label>
+                                        <input type="text" id="txtVersion" class="form-control" 
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="version"  value ="{{version}}" >
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Descripción</label>
+                                        <textarea class="form-control" rows="5" id="txtDescripcion" placeholder="Enter ..." 
+                                         [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion"  value ="{{descripcion}}"></textarea>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Sistema Operativo</label>
+                                        <select id="cmbSistemaOperativo" class="form-control selected"  
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="sistemaoperativo"  value ="{{sistemaoperativo}}">
+                                            <option value='0'>SELECCIONE</option>
+                                            <option value='WIN'>WINDOWS</option>
+                                            <option value='LIN'>LINUX</option>
+                                            <option value='MAC'>MAC</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Base de Datos</label>
+                                        <select id="cmbBaseDatos" class="form-control selected"  
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="basedatos"  value ="{{basedatos}}">
+                                            <option value='0'>SELECCIONE</option>
+                                            <option value='POSTGRES'>POSTGRES</option>
+                                            <option value='MYSQL'>MYSQL</option>
+                                            <option value='MARIADB'>MARIADB</option>
+                                            <option value='SQLSERVER'>SQLSERVER</option>
+                                            <option value='ORACLE'>ORACLE</option>
+                                            <option value='SYBASE'>SYBASE</option>
+                                            <option value='INFORMIX'>INFORMIX</option>
+                                            <option value='MONGODB'>MONGODB</option>
+                                            <option value='RETHINKDB'>RETHINKDB</option>
+                                            <option value='FIREBASE'>FIREBASE</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Lenguaje</label>
+                                        <select id="cmbLenguaje" class="form-control selected"  
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="lenguaje"  value ="{{lenguaje}}">
+                                            <option value='0'>SELECCIONE</option>
+                                            <option value='PHP'>PHP</option>
+                                            <option value='JAVA'>JAVA</option>
+                                            <option value='JS'>JAVASCRIPT</option>
+                                            <option value='TSC'>TYPESCRIPT</option>
+                                            <option value='VBA'>VISUAL BASIC</option>
+                                            <option value='VBN'>VISUAL STUDIO .NET</option>
+                                            <option value='GO'>GOLANG</option>
+                                            <option value='PYC'>PYTHON</option>
+                                            <option value='C++'>C++</option>
+                                            <option value='C'>C</option>
+                                        </select>
+                                    </div>
+                                </div>
+                            </div>
+
+
+                        </ng-wizard-step>
+                        
+                        <ng-wizard-step [title]="'API'" [description]="'Definir API'">
+                            
+                            <h6>Registrar Nueva API</h6>
+                            <hr>
+
+                            <div class="row">
+                              
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Definir Nombre</label>
+                                        <div class="input-group">
+                                            <input type="text" id="txtURL" class="form-control"  
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="xnombre"  value ="{{xnombre}}">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary" 
+                                                (click)="activarFormulario(frmSQL)">
+                                                <i style='color:#FFFFFF; font-size: 18px;' class="icon-cloud-upload"></i>
+                                                Agregar API's
+                                                </button>
+                                                
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-12" >
+                                    <h6>Listado</h6>
+                                    <hr>
+                                    <table class="table table-striped">
+                                        <thead>
+                                            <th *ngFor="let col of columnDefs">{{ col.field }}</th>
+                                        </thead>
+                                        <tbody>
+                                            <tr *ngFor="let row of rowData">
+                                                <td>{{ row.nombre }}</td>
+                                                <td>{{ row.funcion }}</td>
+                                                <td>{{ row.descripcion }}</td>
+                                                <td>{{ row.parametros }}</td>
+                                                <td>{{ row.id }}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+
+                                    <button type="button" class="btn btn-success float-right"
+                                                (click)="ListarAPI()">
+                                                <i style='color:#FFFFFF; font-size: 18px;' class="icon-note"></i> Registrar</button>
+                                </div>
+                            </div>
+                            
+
+
+                        </ng-wizard-step>
+                        
+                        <ng-wizard-step [title]="'Conexiones'" [description]="'Definir conexiones'"
+                            [canEnter]="isValidFunctionReturnsObservable.bind(this)" [canExit]="isValidFunctionReturnsBoolean.bind(this)">
+
+                            <h6>Registrar Conexiones</h6>
+                            <hr>
+
+                            <div class="row">
+                              
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <label>Definir Nombre de Conexión</label>
+                                        <div class="input-group">
+                                            <input type="text" id="txtURL" class="form-control"  
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="xnombre"  value ="{{xnombre}}">
+                                            <div class="input-group-append">
+                                                <button type="button" class="btn btn-primary" 
+                                                (click)="activarFormularioConexion(frmSQL)">
+                                                <i style='color:#FFFFFF; font-size: 18px;' class="icon-cloud-upload"></i>
+                                                Agregar Conexión
+                                                </button>
+                                                
+                                            </div>
+                                        </div>
+                                       
+                                    </div>
+                                </div>
+                            </div>
+
+
+
+                        </ng-wizard-step>
+
+                    </ng-wizard>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
+
+
+
+<ng-template #frmSQL let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Listado de API</h4>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+    <div class="modal-body">
+
+     
+
+                <form #form="ngForm">
+                    <div class="row">
+                        
+                       
+                        <div class="col-md-12">
+                            <ag-grid-angular
+                                style="width: 100%; height: 250px;"
+                                class="ag-theme-blue"
+                                [rowData]="rowDataAPI"
+                                [columnDefs]="columnDefsAPI"
+                                [pagination]="true"
+                                [rowSelection]="rowSelection"
+                                [paginationPageSize]="paginationPageSize"
+                                (selectionChanged)="onSelectionChanged($event)"
+                                (gridReady)="onGridReady($event)">
+                            </ag-grid-angular>
+                        </div>
+                        <br>
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label>Parametros (*) </label>
+                                <div class="input-group">
+                                    <input  type="text" class="form-control"  
+                                        [ngModelOptions]="{standalone: true}" 
+                                        [(ngModel)]="xparametro" value ="{{xparametro}}">
+                                    <div class="input-group-append">
+                                        <button type="button" class="btn btn-primary" 
+                                        (click)="ProbarAPI()">
+                                        <i style='color:#FFFFFF; font-size: 18px;' class="icon-rocket"></i>
+                                        Probar API's
+                                        </button>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                            
+                    </div>
+                </form>
+
+       
+
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-success float-right" (click)="AsignarAPI();modal.dismiss('Cross click')">Asginar API</button>
+        <button type="button" class="btn btn-secondary float-right" (click)="modal.dismiss('Cross click')">Cancelar</button>
+    </div>
+</ng-template>

@@ -1,0 +1,24 @@
+[
+   {
+        "modulo": "ipostel",
+        "driver": "MGODB",
+        "coleccion": "drivers",
+        "query": "{ \"Estatus\": true }",
+        "parametros": "",
+        "concurrencia": false,
+        "retorna": true,
+        "funcion": "ListarDrivers",
+        "metodo": "GET",
+        "puerto": 2286,
+        "protocolo": "HTTPS",
+        "migrar": false,
+        "estatus": true,
+        "entorno": "produccion",
+        "consumidores": 10,
+        "logs": false,
+        "descripcion": ""
+    }
+]
+
+
+

@@ -13,3 +13,52 @@
 
 # Dependency directories (remove the comment below to include it)
 # vendor/
+
+
+
+/public_web/www/tmp
+/public_web/www/build
+
+# compiled output
+/public_web/panel/dist
+/public_web/panel/dist-server
+/public_web/panel/tmp
+/public_web/panel/out-tsc
+
+# dependencies
+/public_web/panel/node_modules
+/public_web/panel/package-lock.json
+
+# IDEs and editors
+/public_web/panel/.idea
+/public_web/panel/.project
+/public_web/panel/.classpath
+/public_web/panel/.c9/
+/public_web/panel/*.launch
+/public_web/panel/.settings/
+/public_web/panel/*.sublime-workspace
+
+# IDE - VSCode
+/public_web/panel/.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+/public_web/panel/.sass-cache
+/public_web/panel/connect.lock
+/public_web/panel/coverage
+/public_web/panel/libpeerconnection.log
+/public_web/panelnpm-debug.log
+/public_web/panelyarn-error.log
+/public_web/paneltestem.log
+/public_web/panel/typings
+
+# e2e
+/public_web/panel/e2e/*.js
+/public_web/panel/e2e/*.map
+
+# System Files
+/public_web/panel.DS_Store
+/public_web/panelThumbs.db

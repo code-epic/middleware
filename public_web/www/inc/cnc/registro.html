@@ -1,0 +1,620 @@
+<section>
+    <form role="form" id="Registro">
+        <div class="row">
+            
+            <div class="col-md-8">
+                <div class="card" style="height: 650px;">
+                    <div class="card-header bg-danger">
+                        <h3 class="card-title">Datos Básicos OPT</h3>
+                    </div>
+                    <div class="card-body">
+                            <div class="col-md-12">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <label>Código</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fas fa-hashtag"></i></span>
+                                            </div>
+                                            <input type="text" id="txtCodigo" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label>Nombre de la Oficina Postal</label>
+                                            <input type="text" id="txtNombreOficina" class="form-control">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-md-6">
+                                        <label>Telefono</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                            </div>
+                                            <input type="text" id="txtTelefono" class="form-control" >
+                                        </div> 
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label>E-mail</label>
+                                        <div class="input-group mb-3">
+                                            <div class="input-group-prepend">
+                                              <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                            </div>
+                                            <input type="text" id="txtEmail" class="form-control" >
+                                        </div> 
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Estado</label>
+                                            <select id="cmbEstado" class="form-control selected">
+                                                <option value="0">DTTO. CAPITAL</option>
+                                                <option value="1">LA GUAIRA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Ciudad</label>
+                                            <select id="cmbCiudad" class="form-control selected">
+                                                <option value="0">CARACAS</option>
+                                                <option value="1">LA GUAIRA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Municipio</label>
+                                            <select id="cmbMunicipio" class="form-control selected">
+                                                <option value="0">LIBERTADOR</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Parroquia</label>
+                                            <select id="cmbParroquia" class="form-control selected">
+                                                <option value="0">SAN JUAN</option>
+                                                <option value="1">EL VALLE</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    
+                                    <div class="col-md-8">
+                                        <div class="form-group">
+                                            <label>Avenida/Edificio/Calle</label>
+                                            <input type="text" id="txtAvenida" class="form-control" >
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Zona Postal</label>
+                                            <input type="text" id="txtZonaPostal" class="form-control" >
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Punto de Referencia</label>
+                                            <textarea id="txtPuntoReferencia" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+                    </div>
+                </div> 
+            </div>
+            <div class="col-md-4">
+                <div class="card " style="height: 650px;">
+                    <div class="card-header bg-danger ">
+                        <h3 class="card-title">Ficha Técnica</h3>
+                    </div>
+                    <div class="card-body">
+                        <div class="box box-primary">
+                            <div class="box-body box-profile">
+                                <center><a href="img/ndisponible.jpg" data-fancybox="group1" data-caption="foto" id="minifoto">
+                                    <img style="width: 180px; height: 220px;"  
+                                    class="profile-user-img img-responsive file-path-wrapper-pre-view" 
+                                    id="_img" src="img/ndisponible.jpg" /><span></span>
+                                </a></center>
+                                <br>
+                        
+                        
+                                
+                                <ul class="list-group list-group-unbordered">
+                                    <li class="list-group-item">
+                                        <b>Nombres y Apellidos</b> <a class="pull-right" id=""></a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Cédula</b> <a class="pull-right" id=""></a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>Fecha de Nacimiento</b> <a class="pull-right" id=""></a>
+                                    </li>
+                        
+                                    <li class="list-group-item">
+                                        <b>Cargo</b> <a class="pull-right" id=""></a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>N° de Celular</b> <a class="pull-right" id=""> </a>
+                                    </li>
+                                    <li class="list-group-item">
+                                        <b>E-mail </b> <a class="pull-right" id="">  </a>
+                                    </li>
+                                </ul>
+                            </div>
+                            <!-- /.box-body -->
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card card-danger card-tabs" style="height: auto;">   
+                    <div class="card-header p-0 pt-1">
+                        <ul class="nav nav-tabs" id="" role="tablist">
+                            <li class="nav-item">
+                                <a class="nav-link active" id="planta-tab" data-toggle="tab" href="#planta" 
+                                role="tab" aria-controls="planta" aria-selected="true">Planta Física</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="jefe-tab" data-toggle="tab" href="#jefe" 
+                                role="tab" aria-controls="jefe" aria-selected="false">Jefe de Oficina</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="vehiculo-tab" data-toggle="tab" href="#vehiculo" 
+                                role="tab" aria-controls="vehiculo" aria-selected="false">Vehículos</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" id="mobiliario-tab" data-toggle="tab" href="#mobiliario" 
+                                    role="tab" aria-controls="mobiliario" aria-selected="false">Mobiliarios</a>
+                            </li>
+                        </ul>
+                    </div>
+                    <div class="card-body">
+                        <div class="tab-content" id="">
+
+                            <!-- Planta Fisica -->
+                            <div class="tab-pane fade show active" id="planta" role="tabpanel" aria-labelledby="planta-tab">
+                                <div class="row">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Área Parcela/Edificación (M2)</label>
+                                            <input type="text" id="txtArea" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Área de Ubicación</label>
+                                            <input type="text" id="txtUbicacion" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Área de Construcción (M3)</label>
+                                            <input type="text" id="txtAreaConstruccion" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <h5 for=""><b>Linderos</b></h5>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Norte</label>
+                                                    <input type="text" id="txtNorte" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Sur</label>
+                                                    <input type="text" id="txtSur" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Este</label>
+                                                    <input type="text" id="txtEste" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="form-group">
+                                                    <label>Oeste</label>
+                                                    <input type="text" id="txtOeste" class="form-control">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Zonificación Municipal</label>
+                                            <input type="text" id="txtZonificacion" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Plantas o Niveles</label>
+                                            <select id="cmbPlantas" class="form-control selected">
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                                <option value="2">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Falla Sísmica</label>
+                                            <select id="cmbFallaSismica" class="form-control selected">
+                                                <option value="0">GRAVE</option>
+                                                <option value="1">REGULAR</option>
+                                                <option value="2">BAJA</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Puestos de Estacionamiento</label>
+                                            <select id="cmbEstacionamiento" class="form-control selected">
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                                <option value="2">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Oficinas</label>
+                                            <select id="cmbOficinas" class="form-control selected">
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                                <option value="2">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Baños</label>
+                                            <select id="cmbBanos" class="form-control selected">
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                                <option value="2">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Comedor</label>
+                                            <select id="cmbComedor" class="form-control selected">
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                                <option value="2">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Cocina</label>
+                                            <select id="cmbCocina" class="form-control selected">
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                                <option value="2">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Inmueble</label>
+                                            <select id="cmbInmueble" class="form-control selected">
+                                                <option value="0">PROPIO</option>
+                                                <option value="1">ARRENDADO</option>
+                                                <option value="2">OTRO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Escuela Postal</label>
+                                            <select id="cmbEscuelaPostal" class="form-control selected">
+                                                <option value="0">SI</option>
+                                                <option value="1">NO</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Cantidad de Empleados</label>
+                                            <select id="cmbEmpleados" class="form-control selected">
+                                                <option value="0">1</option>
+                                                <option value="1">2</option>
+                                                <option value="2">3</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Capacidad</label>
+                                            <input type="text" id="txtCapacidad" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="form-group">
+                                            <label>Descripción de Estatus de la Planta Física</label>
+                                            <textarea id="txtPuntoReferencia" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                        </div>
+                                    </div> 
+                                </div>
+                            </div>
+
+                            <!-- Jefe -->
+                            <div class="tab-pane fade" id="jefe" role="tabpanel" aria-labelledby="jefe-tab">
+                                <div class="row">
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Nombres</label>
+                                            <input type="text" id="txtNumero" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <div class="form-group">
+                                            <label>Apellidos</label>
+                                            <input type="text" id="txtApellidos" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Cédula</label>
+                                                    <input type="text" id="txtCedula" class="form-control">
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Fecha de Nacimiento</label>
+                                                <div class="input-group">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-calendar-alt"></i></span>
+                                                    </div>
+                                                    <input type="text" id="txtFechaNacimiento" class="form-control" data-inputmask-alias="datetime" data-inputmask-inputformat="mm/dd/yyyy" data-mask="">
+                                                </div> 
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Nivel Profesional</label>
+                                                    <select id="cmbNivelProfesional" class="form-control selected">
+                                                        <option value="0">PRIMARIA</option>
+                                                        <option value="1">SECUNDARIA</option>
+                                                        <option value="2">UNIVERSITARIA</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Cargo</label>
+                                                    <select id="cmbCargo" class="form-control selected">
+                                                        <option value="0">JEFE DE OPT</option>
+                                                        <option value="1">OPERADOR</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>Telefono</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-phone"></i></span>
+                                                    </div>
+                                                    <input type="text" id="txtTelefono" class="form-control" >
+                                                </div> 
+                                            </div>
+                                            <div class="col-md-4">
+                                                <label>E-mail</label>
+                                                <div class="input-group mb-3">
+                                                    <div class="input-group-prepend">
+                                                    <span class="input-group-text"><i class="fas fa-envelope"></i></span>
+                                                    </div>
+                                                    <input type="text" id="txtEmail" class="form-control" >
+                                                </div> 
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Vehiculos -->
+                            <div class="tab-pane fade" id="vehiculo" role="tabpanel" aria-labelledby="vehiculo-tab">
+                                <div class="row">
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>N° Vehiculo</label>
+                                            <input type="text" id="txtVehiculos" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Marca</label>
+                                            <select id="cmbMarca" class="form-control selected">
+                                                <option value="0">TOYOTA</option>
+                                                <option value="1">CHEVROLET</option>
+                                                <option value="2">FORD</option>
+                                                <option value="3">NISSAN</option>
+                                                <option value="4">FIAT</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Modelo</label>
+                                            <input type="text" id="txtModelo" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-3">
+                                        <div class="form-group">
+                                            <label>Placa</label>
+                                            <input type="text" id="txtPlaca" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Tipo</label>
+                                                    <select id="cmbTipo" class="form-control selected">
+                                                        <option value="0">MOTO</option>
+                                                        <option value="1">CARRO</option>
+                                                        <option value="2">CAMION</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Estatus</label>
+                                                    <select id="cmbEstatus" class="form-control selected">
+                                                        <option value="0">OPERATIVA</option>
+                                                        <option value="1">INOPERATIVA</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-4">
+                                                <div class="form-group">
+                                                    <label>Tenencia</label>
+                                                    <select id="cmbTendencia" class="form-control selected">
+                                                        <option value="0">PROPIA</option>
+                                                        <option value="1">ALQUILADA</option>
+                                                    </select>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-12">
+                                                <div class="form-group">
+                                                    <label>Insumos Requeridos</label>
+                                                    <textarea id="txtInsumos" class="form-control" rows="3" placeholder="Enter ..."></textarea>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-right mt-3">
+                                        <button type="button" class="btn btn-outline-danger" id="btnGuardar">Registrar</button>
+                                    </div>
+                                </div>
+                                <table class="table table-bordered">
+                                <thead>
+                                    <tr>
+                                    <th style="width: 10px">N°</th>
+                                    <th>Marca</th>
+                                    <th>Placa</th>
+                                    <th>Estatus</th>
+                                    <th>Insumos</th>
+                                    <th>Tenencia</th>
+                                    
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>001</td>
+                                        <td>CHEVROLET LUV</td>
+                                        <td>AKY-546</td>
+                                        <td>ACTIVA</td>
+                                        <td>FALTA LUCES</td>
+                                        <td>ALQUILADO</td>
+                                    </tr>
+                                    <tr>
+                                        <td>010</td>
+                                        <td>TOYOTA DINA</td>
+                                        <td>AKY-U41</td>
+                                        <td>INOPERATIVA</td>
+                                        <td>FALTA CAUCHOS</td>
+                                        <td>PROPIO</td>
+                                    </tr>
+                                    <tr>
+                                        <td>006</td>
+                                        <td>FORD FOCUS</td>
+                                        <td>MJS-484</td>
+                                        <td>INOPERATIVA</td>
+                                        <td>MOTOR DAÑADO</td>
+                                        <td>PROPIO</td>
+                                    </tr>
+                                    <tr>
+                                        <td>005</td>
+                                        <td>TOYOTA HILUX</td>
+                                        <td>AKY-U41</td>
+                                        <td>INOPERATIVA</td>
+                                        <td>FALTA CAUCHOS</td>
+                                        <td>PROPIO</td>
+                                    </tr>
+                                </tbody>
+                                </table>
+                            </div>
+
+                            <!-- Mobiliarios -->
+                            <div class="tab-pane fade" id="mobiliario" role="tabpanel" aria-labelledby="mobiliario-tab">
+                                <div class="row">
+                                    <div class="col-md-1">
+                                        <div class="form-group">
+                                            <label>N°</label>
+                                            <input type="text" id="txtNumero" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-5">
+                                        <div class="form-group">
+                                            <label>Tipo (Nombre)</label>
+                                            <input type="text" id="txtTipoNombre" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-2">
+                                        <div class="form-group">
+                                            <label>Cantidad</label>
+                                            <input type="text" id="txtCantidadMobiliario" class="form-control">
+                                        </div>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label>Estatus</label>
+                                            <select id="cmbEstatusMobiliario" class="form-control selected">
+                                                <option value="0">DETERIORADO</option>
+                                                <option value="1">BUEN ESTADO</option>
+                                                <option value="2">INSERVIBLE</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="col-12 text-right mt-3">
+                                        <button type="button" class="btn btn-outline-danger" id="btnGuardar">Registrar</button>
+                                    </div>
+                                    <table class="table table-bordered">
+                                        <thead>
+                                            <tr>
+                                                <th style="width: 10px">N°</th>
+                                                <th>Tipo (Nombre)</th>
+                                                <th>Cantidad</th>
+                                                <th>Estatus</th>
+                                                <th>Requerimiento</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>001</td>
+                                                <td>ESCIRTORIO LUV</td>
+                                                <td>41</td>
+                                                <td>BUEN ESTADO</td>
+                                                <td>HACER MANTENIMIENTO</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+    </form>
+</section>
+
