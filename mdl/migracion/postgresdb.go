@@ -7,7 +7,7 @@ import (
 	"os"
 	"strings"
 
-	"github.com/code-epic/esb/util"
+	"github.com/code-epic/middleware/util"
 )
 
 type Migrar struct {

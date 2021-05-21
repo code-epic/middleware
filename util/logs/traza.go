@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/code-epic/esb/sys/seguridad"
+	"github.com/code-epic/middleware/sys/seguridad"
 )
 
 type Traza struct {

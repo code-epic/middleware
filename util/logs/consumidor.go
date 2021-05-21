@@ -5,7 +5,7 @@ package logs
 import (
 	"time"
 
-	"github.com/code-epic/esb/sys/seguridad"
+	"github.com/code-epic/middleware/sys/seguridad"
 )
 
 type Recurso struct {

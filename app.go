@@ -21,8 +21,8 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/code-epic/esb/sys"
-	"github.com/code-epic/esb/sys/web"
+	"github.com/code-epic/middleware/sys"
+	"github.com/code-epic/middleware/sys/web"
 	"github.com/fatih/color"
 	"github.com/gorilla/context"
 )

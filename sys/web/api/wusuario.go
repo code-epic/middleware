@@ -7,12 +7,12 @@ import (
 	"strings"
 	"time"
 
-	"github.com/code-epic/esb/util"
+	"github.com/code-epic/middleware/util"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
 	"github.com/gorilla/mux"
 
-	"github.com/code-epic/esb/sys/seguridad"
+	"github.com/code-epic/middleware/sys/seguridad"
 )
 
 type WUsuario struct{}

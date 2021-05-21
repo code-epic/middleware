@@ -5,10 +5,10 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/code-epic/esb/mdl/core"
-	"github.com/code-epic/esb/sys"
-	"github.com/code-epic/esb/util"
-	"github.com/code-epic/esb/util/webscraper"
+	"github.com/code-epic/middleware/mdl/core"
+	"github.com/code-epic/middleware/sys"
+	"github.com/code-epic/middleware/util"
+	"github.com/code-epic/middleware/util/webscraper"
 	"github.com/gorilla/mux"
 )
 

@@ -3,7 +3,7 @@ package seguridad
 import (
 	"time"
 
-	"github.com/code-epic/esb/sys"
+	"github.com/code-epic/middleware/sys"
 	"go.mongodb.org/mongo-driver/bson"
 )
 

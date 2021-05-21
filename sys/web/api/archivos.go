@@ -9,9 +9,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/code-epic/esb/mdl/migracion"
-	"github.com/code-epic/esb/sys"
-	"github.com/code-epic/esb/util"
+	"github.com/code-epic/middleware/mdl/migracion"
+	"github.com/code-epic/middleware/sys"
+	"github.com/code-epic/middleware/util"
 )
 
 //SubirArchivos Permite procesar archivos al sistema

@@ -14,8 +14,8 @@ import (
 
 	"go.mongodb.org/mongo-driver/bson"
 
-	"github.com/code-epic/esb/sys"
-	"github.com/code-epic/esb/util"
+	"github.com/code-epic/middleware/sys"
+	"github.com/code-epic/middleware/util"
 )
 
 const (

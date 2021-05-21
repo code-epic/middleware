@@ -12,10 +12,10 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 
-	"github.com/code-epic/esb/sys"
-	"github.com/code-epic/esb/util"
-	"github.com/code-epic/esb/util/cache"
-	"github.com/code-epic/esb/util/xzip"
+	"github.com/code-epic/middleware/sys"
+	"github.com/code-epic/middleware/util"
+	"github.com/code-epic/middleware/util/cache"
+	"github.com/code-epic/middleware/util/xzip"
 	"go.mongodb.org/mongo-driver/bson"
 )
 

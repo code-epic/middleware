@@ -9,7 +9,7 @@ import (
 	"log"
 	"os"
 
-	util "github.com/code-epic/esb/util"
+	util "github.com/code-epic/middleware/util"
 	"github.com/fatih/color"
 	"go.mongodb.org/mongo-driver/mongo"
 )

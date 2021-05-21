@@ -5,8 +5,8 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/code-epic/esb/mdl/core"
-	"github.com/code-epic/esb/sys/seguridad"
+	"github.com/code-epic/middleware/mdl/core"
+	"github.com/code-epic/middleware/sys/seguridad"
 )
 
 //UsuarioConectado Seguridad Informatica

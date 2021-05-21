@@ -6,7 +6,7 @@ import (
 	"io/ioutil"
 	"time"
 
-	"github.com/code-epic/esb/util"
+	"github.com/code-epic/middleware/util"
 	jwt "github.com/dgrijalva/jwt-go"
 )
 

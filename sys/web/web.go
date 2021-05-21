@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/code-epic/esb/sys/web/api"
+	"github.com/code-epic/middleware/sys/web/api"
 	"github.com/fatih/color"
 	"github.com/gorilla/mux"
 )

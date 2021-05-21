@@ -6,10 +6,10 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/code-epic/esb/mdl/chat"
-	"github.com/code-epic/esb/mdl/core"
-	"github.com/code-epic/esb/sys"
-	"github.com/code-epic/esb/util"
+	"github.com/code-epic/middleware/mdl/chat"
+	"github.com/code-epic/middleware/mdl/core"
+	"github.com/code-epic/middleware/sys"
+	"github.com/code-epic/middleware/util"
 	"github.com/gorilla/mux"
 	"github.com/gorilla/websocket"
 )
