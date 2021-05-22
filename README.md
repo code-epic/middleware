@@ -6,7 +6,17 @@ Middleware o lógica de intercambio de información entre aplicaciones (interlog
 
 Funciona como una capa de abstracción de software distribuida, que se sitúa entre las capas de aplicaciones y las capas inferiores (sistema operativo y red). El middleware abstrae de la complejidad y heterogeneidad de las redes de comunicaciones subyacentes, así como de los sistemas operativos y lenguajes de programación, proporcionando una API para la fácil programación y manejo de aplicaciones distribuidas. Dependiendo del problema a resolver y de las funciones necesarias, serán útiles diferentes tipos de servicios de middleware. Por lo general el middleware del lado cliente está implementado por el Sistema Operativo, el cual posee las bibliotecas que ejecutan todas las funcionalidades para la comunicación a través de la red.
 
-go get -u github.com/code-epic/middleware
+
+
+## DEBIAN
+sudo apt install unixodbc-dev
+
+
+# General
+go env -w GOPRIVATE=github.com/code-epic/*
+
+env GIT_TERMINAL_PROMPT=1 go get github.com/code-epic/middleware
+
 
 acceder a la carpeta public_web/panel/
 ejecutar el comando 

@@ -30,6 +30,8 @@
 
 # dependencies
 /public_web/panel/node_modules
+/public_web/panel/*.zip
+/public_web/panel/*.tar*
 /public_web/panel/package-lock.json
 
 # IDEs and editors
