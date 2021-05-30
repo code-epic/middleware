@@ -49,7 +49,7 @@ const routes: Routes = [
     path: 'sistema',
     component: SistemaComponent,
     data: {
-      title: 'Sistemas'
+      title: 'Aplicaciones'
     }
   },
   {

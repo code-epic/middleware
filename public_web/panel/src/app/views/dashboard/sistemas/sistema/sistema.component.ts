@@ -38,6 +38,7 @@ export class SistemaComponent implements OnInit {
 
   hosts = []
   host : string = '0'
+  tipo : string = '0'
   xnombre: string  = ''
   sistemaoperativo : string = '0'
   basedatos : string = '0'
@@ -59,6 +60,9 @@ export class SistemaComponent implements OnInit {
     { field: "Parametros"},
     { field: "Isd"},
   ];
+
+  
+  
 
   private gridApi
   private gridColumnApi
@@ -188,4 +192,8 @@ export class SistemaComponent implements OnInit {
   isValidFunctionReturnsObservable(args: StepValidationArgs) {
     return of(true);
   }
+
+
+ 
+
 }

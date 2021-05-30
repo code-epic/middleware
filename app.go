@@ -1,18 +1,16 @@
 /*
 Copyright 2021 Carlos Peña.Todos los derechos reservados.
-En informática un Bus de Servicio Empresarial (ESB por sus siglas en inglés)
-es un modelo de arquitectura de software que gestiona la comunicación entre
-servicios web. Es un componente fundamental de la Arquitectura Orientada a
-Servicios.
-Un ESB generalmente proporciona una capa de abstracción construida sobre
-una implementación de un sistema de mensajes de empresa que permita a los
-expertos en integración explotar el valor del envío de mensajes sin tener que
-escribir código. Al contrario que sucede con la clásica integración de
-aplicaciones de empresa (IAE) que se basa en una pila monolítica sobre una
-implantación distribuida cuando se hace necesario, de modo que trabajen
-arquitectura hub and spoke, un bus de servicio de empresa se construye sobre
-unas funciones base que se dividen en sus partes constituyentes, con una
-armoniosamente según la demanda.
+Middleware o lógica de intercambio de información entre aplicaciones (interlogical), o Agente Intermedio, es un software que
+asiste a una aplicación para interactuar o comunicarse con otras aplicaciones, o paquetes de programas, redes, hardware o
+sistemas operativos. Este simplifica el trabajo de los programadores en la compleja tarea de generar las conexiones y sincronizaciones
+que son necesarias en los sistemas distribuidos. De esta forma, se provee una solución que mejora la calidad de servicio, así
+como la seguridad, el envío de mensajes, la actualización del directorio de servicio.
+
+Funciona como una capa de abstracción de software distribuida, que se sitúa entre las capas de aplicaciones y las capas inferiores (sistema operativo y red).
+El middleware abstrae de la complejidad y heterogeneidad de las redes de comunicaciones subyacentes, así como de los sistemas operativos y lenguajes de
+programación, proporcionando una API para la fácil programación y manejo de aplicaciones distribuidas. Dependiendo del problema a resolver y de las
+funciones necesarias, serán útiles diferentes tipos de servicios de middleware. Por lo general el middleware del lado cliente está implementado por el
+Sistema Operativo, el cual posee las bibliotecas que ejecutan todas las funcionalidades para la comunicación a través de la red.
 */
 package main
 

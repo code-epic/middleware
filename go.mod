@@ -14,5 +14,6 @@ require (
 	github.com/gorilla/sessions v1.2.1
 	github.com/gorilla/websocket v1.4.2
 	github.com/lib/pq v1.10.2
+	github.com/novalagung/golpal v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.5.2
 )
