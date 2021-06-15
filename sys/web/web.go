@@ -57,6 +57,7 @@ func CargarModulosPanel() {
 	Enrutador.HandleFunc(vAPI+"evaluarconexion", wUsuario.ValidarToken(wp.EvaluarConexion)).Methods("POST")       //Ejecutar Evaluacion de conexion
 	Enrutador.HandleFunc(vAPI+"establecerconexion", wUsuario.ValidarToken(wp.EstablecerConexion)).Methods("POST") //Establecer conexiones
 	Enrutador.HandleFunc(vAPI+"evaluarpuente", wUsuario.ValidarToken(wp.EvaluarPuenteURL)).Methods("POST")        //Ejecutar Evaluacion puente url
+	Enrutador.HandleFunc(vAPI+"subirarchivos", wUsuario.ValidarToken(wp.SubirArchivos)).Methods("POST")           //Subir Archivos al sistema
 
 }
 

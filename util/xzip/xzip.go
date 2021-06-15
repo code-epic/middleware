@@ -9,8 +9,11 @@ import (
 	"compress/gzip"
 	"encoding/base64"
 	"io/ioutil"
+	"log"
+	"os"
 )
 
+//Comprimir Archivos de codigo fuentes
 func Comprimir(databytes []byte) (str string) {
 	var b bytes.Buffer
 	gz := gzip.NewWriter(&b)
@@ -27,10 +30,42 @@ func Comprimir(databytes []byte) (str string) {
 	return
 }
 
+//Descomprimir una cadena
 func Descomprimir(str string) string {
 	data, _ := base64.StdEncoding.DecodeString(str)
 	rdata := bytes.NewReader(data)
 	r, _ := gzip.NewReader(rdata)
 	s, _ := ioutil.ReadAll(r)
 	return string(s)
+}
+
+//DescomprimirArchivos Origen del archivo en formato zip
+func DescomprimirArchivos(origen string, destino string) {
+	fr, err := os.Open(origen)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer fr.Close()
+
+	// Crea gzip.Reader
+	gr, err := gzip.NewReader(fr)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	defer gr.Close()
+
+	// leer el contenido del archivo
+	buf := make([]byte, 1024*1024*10) //
+	n, err := gr.Read(buf)
+
+	// Escribe los datos del archivo en el paquete
+	fw, err := os.Create(gr.Header.Name)
+	if err != nil {
+		log.Fatalln(err)
+	}
+	_, err = fw.Write(buf[:n])
+	if err != nil {
+		log.Fatalln(err)
+	}
+
 }

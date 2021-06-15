@@ -30,7 +30,7 @@ export class ConexionService {
     'Authorization': 'Bearer ' + sessionStorage.getItem('token') })
   };
 
-  constructor(private router: Router, private http : HttpClient) { 
+  constructor(private http : HttpClient) { 
 
   }
 
@@ -41,6 +41,7 @@ export class ConexionService {
   }
 
   Listar() : Observable<any>{
+    console.log("Entrando en la funcion" + this.httpOptions)
     var url = this.URL + 'lcoleccion/sys-conection';
     return this.http.get<any>(url, this.httpOptions);
   }

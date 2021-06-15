@@ -16,4 +16,5 @@ require (
 	github.com/lib/pq v1.10.2
 	github.com/novalagung/golpal v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.5.2
+	golang.org/x/tools/gopls v0.6.11 // indirect
 )

@@ -199,6 +199,17 @@ func (wp *WPanel) EvaluarPuenteURL(w http.ResponseWriter, r *http.Request) {
 	w.Write(j)
 }
 
+func (wp *WPanel) SubirArchivos(w http.ResponseWriter, r *http.Request) {
+	Cabecera(w, r)
+	var M util.Mensajes
+	M.Tipo = 1
+	M.Msj = "Subir Archivos al sistema"
+
+	j, _ := json.Marshal(M)
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
+}
+
 //ObtenerImagenWeb Permite descargar imagenes mediante protocolo de seguridad JWT
 func (wp *WPanel) ObtenerImagenWeb(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")

@@ -1,9 +1,5 @@
 package util
 
-import (
-	"syscall"
-)
-
 const (
 	Bd  = 1
 	KBd = 1024 * Bd
@@ -19,14 +15,14 @@ type EstatusDisco struct {
 
 //DetalleDisco usage of path/disk
 func DetalleDisco(path string) (disk EstatusDisco) {
-	fs := syscall.Statfs_t{}
-	err := syscall.Statfs(path, &fs)
-	if err != nil {
-		return
-	}
-	disk.Todo = fs.Blocks * uint64(fs.Bsize)
-	disk.Libre = fs.Bfree * uint64(fs.Bsize)
-	disk.Usado = disk.Todo - disk.Libre
+	//	fs := syscall.Statfs_t{}
+	//	err := syscall.Statfs(path, &fs)
+	//	if err != nil {
+	//		retur
+	//	}
+	//	disk.Todo = fs.Blocks * uint64(fs.Bsize)
+	//	disk.Libre = fs.Bfree * uint64(fs.Bsize)
+	//	disk.Usado = disk.Todo - disk.Libre
 	return
 }
 

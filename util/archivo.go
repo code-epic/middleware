@@ -82,6 +82,7 @@ func (a *Archivo) Escribir(ruta string, contenido string) (err error) {
 	return err
 }
 
+//LeerTodo Funcion que recorre todos el documento
 func (a *Archivo) LeerTodo() (f []byte, err error) {
 	f, err = ioutil.ReadFile(a.NombreDelArchivo)
 	return

@@ -8,6 +8,8 @@
     "moduleResolution": "node",
     "emitDecoratorMetadata": true,
     "experimentalDecorators": true,
+    //"strictTemplates": true,
+   // "strictInjectionParameters": true,
     "module": "esnext",
     "target": "es5",
     "typeRoots": [

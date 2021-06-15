@@ -62,8 +62,38 @@ export class SistemaComponent implements OnInit {
   ];
 
   
-  
-
+  afuConfig = {
+    multiple: false,
+    formatsAllowed: ".zip, .tar, .war",
+    maxSize: "100",
+    uploadAPI:  {
+      url:"https://example-file-upload-api",
+      method:"POST",
+      headers: {
+     "Content-Type" : "text/plain;charset=UTF-8",
+     "Authorization" : `Bearer ${this.lenguaje}`
+      },
+      params: {
+        'page': '1'
+      },
+      responseType: 'blob',
+    },
+    theme: " attachPin", //dragNDrop
+    hideProgressBar: false,
+    hideResetBtn: true,
+    hideSelectBtn: false,
+    fileNameIndex: true,
+    replaceTexts: {
+      selectFileBtn: 'Seleccionar la aplicación que desea instalar, en formato (zip, tar, o war)',
+      resetBtn: 'Limpiar Formulario',
+      uploadBtn: 'Subir archivo',
+      dragNDropBox: 'Arrastrar y soltar',
+      attachPinBtn: 'Seleccionar Archivos...',
+      afterUploadMsg_success: 'El archivo subio con exito!',
+      afterUploadMsg_error: 'Fallo la carga del archivo!',
+      sizeLimit: 'Limite del Archivo '
+    }
+};
   private gridApi
   private gridColumnApi
   private defaultColDef

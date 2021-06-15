@@ -18,6 +18,7 @@ import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
 import { MonitorComponent } from './monitor/monitor/monitor.component';
 import { EventoComponent } from './monitor/eventos/evento/evento.component';
 import { SistemaComponent } from './sistemas/sistema/sistema.component';
+import { AngularFileUploaderModule } from 'angular-file-uploader';
  
 const ngWizardConfig: NgWizardConfig = {
   theme: THEME.default
@@ -36,6 +37,7 @@ const ngWizardConfig: NgWizardConfig = {
     BsDropdownModule,
     AgGridModule.withComponents([]),
     ArchwizardModule,
+    AngularFileUploaderModule,
     NgxLoadingModule.forRoot({})
   ],
   declarations: [ DashboardComponent, ApiComponent, DriverComponent, ConexionComponent, MonitorComponent, EventoComponent, SistemaComponent ]
