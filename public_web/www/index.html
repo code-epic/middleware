@@ -1,110 +1,80 @@
+
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <title>CorePostal - Iniciar</title>
-  <!-- Tell the browser to be responsive to screen width -->
-  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SSSIFANB - Login</title>
+  <meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 
-  <!-- Font Awesome -->
-  <link rel="stylesheet" href="plugins/fontawesome-free/css/all.min.css">
-  <!-- Ionicons -->
-  <link rel="stylesheet" href="https://code.ionicframework.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- icheck bootstrap -->
-  <link rel="stylesheet" href="plugins/icheck-bootstrap/icheck-bootstrap.min.css">
-  <!-- Theme style -->
-  <link rel="stylesheet" href="dist/css/adminlte.min.css">
-  <!-- Google Font: Source Sans Pro -->
-  <link href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,400i,700" rel="stylesheet">
-  <link rel="stylesheet" href="plugins/animate/animate.min.css">
-  <!-- SweetAlert2 -->
-  <link rel="stylesheet" href="plugins/sweetalert2-theme-bootstrap-4/bootstrap-4.min.css">
-  <!-- Toastr -->
-  <link rel="stylesheet" href="plugins/toastr/toastr.min.css">
+  <link rel="stylesheet" href="bower_components/bootstrap/css/bootstrap.min.css">
+  <link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css">
+  <link rel="stylesheet" href="bower_components/Ionicons/css/ionicons.min.css">
+  <link rel="stylesheet" href="dist/css/AdminLTE.min.css">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Source+Sans+Pro:300,400,600,700,300italic,400italic,600italic">
+  <link rel="stylesheet" href="bower_components/animate/animate.css">
+  <link rel="stylesheet" href="bower_components/pace/themes/blue/pace-theme-loading-bar.css">
+  <style>
+    #xpage-pace{
+      display: none;
+    };
+  </style>
 
+  <script src="bower_components/pace/pace.min.js"></script>
+  <script src="bower_components/jquery/dist/jquery.min.js"></script>
+  <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
 
+  <script type="text/javascript" src="js/es6/config.js"></script>
+  <script src="js/es6/login.js"></script>
+  <script src="bower_components/notify/bootstrap-notify.min.js"></script>
 </head>
-<body class="hold-transition login-page"  style="background:linear-gradient(197deg, #4CAA9D 10%, rgb(200, 238, 208) 90.5%) !important;">
-<div class="login-box">
 
-  <!-- /.login-logo -->
-  <div class="card card-outline card-primary" id="login1" >
-    <div class="card-body login-card-body">
-      <center>
-        <img src="img/ipostel.jpg" style="width: 90%;">
-      </center>
-      
-        <div class="input-group mb-3">
-          <input type="email" class="form-control" placeholder="Usuario" id="usuario">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-address-card"></span>
-            </div>
-          </div>
+<body class="hold-transition login-page">
+
+<div class="login-box"  id="xpage-pace">
+
+  <div class="login-box-body" style="background-color:transparent">
+
+    <div class="box box-primary box-solid">
+        <div class="box-header with-border">
+            <center><h3 class="box-title">S. de Seguridad Social Integral</h3></center>
         </div>
-        <div class="input-group mb-3">
-          <input type="password" class="form-control" placeholder="Contraseña" id="clave">
-          <div class="input-group-append">
-            <div class="input-group-text">
-              <span class="fas fa-lock"></span>
+        <div class="box-body">
+          <div class="login-logo">
+            <img src="images/lg1.png" width="50%" height="50%"><h3>SSSIFANB</h3>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="text" class="form-control" placeholder="Usuario" id="usuario">
+            <span class="glyphicon glyphicon-user form-control-feedback"></span>
+          </div>
+          <div class="form-group has-feedback">
+            <input type="password" class="form-control" placeholder="Clave" id="clave" onClick="ActivarIniciar()" onfocus="ActivarIniciar()">
+            <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          </div>
+          <div class="row">
+            <div class="col-xs-5 pull-right">
+              <button type="submit" id="_login" class="btn btn-success btn-block" onClick="Ingresar()" disabled="disabled">
+                 <i class="fa fa-unlock-alt"></i>&nbsp;&nbsp;Iniciar</button>
             </div>
           </div>
+
+        </div><!-- /.box-body -->
+        <div class="box-footer">
+          <center>Fuerza  Armada Nacional Bolivariana</center>
         </div>
-        <div class="row">
-          <div class="col-8">
-            <div class="icheck-primary">
-              <input type="checkbox" id="remember">
-              <label for="remember">
-                Recordar
-              </label>
-            </div>
-          </div>
-          <!-- /.col -->
-          <div class="col-4">
-
-            <button type="button" class="btn btn-primary btn-block" onclick="Ingresar()">Iniciar</button>
-
-          </div>
-          <!-- /.col -->
+        <!-- Loading (remove the following to stop the loading)-->
+        <div class="overlay" id="_cargando" style="display:none">
+            <i class="fa fa-refresh fa-spin"></i>
         </div>
+        <!-- end loading -->
+    </div><!-- /.box -->
 
 
-    <!-- /.login-card-body -->
-    </div>
-    </div>
+  </div>
 
-     <div class="card card-outline"  id="reload" style="display:none">
-            <div class="text-center mt-2">
-                <div style="width: 5rem; height: 5rem;" class="spinner-border text-success" role="status">
-
-                </div>
-                <h5>Iniciando Sesión...</h5>
-            </div>
-    </div>
 </div>
-<!-- jQuery -->
-<script src="plugins/jquery/jquery.min.js"></script>
-<!-- /.login-box -->
-<script type="text/javascript">
-        $(document).ready(function(){
-            $("#reload").hide();
 
-            $("#iniciar").click(function(){
-                $("#login1").hide();
-                $("#reload").show();
-            });
-        });
-</script>
-<!-- Bootstrap 4 -->
-<script src="plugins/bootstrap/js/bootstrap.bundle.min.js"></script>
 
-<!-- SweetAlert2 -->
-<script src="plugins/sweetalert2/sweetalert2.min.js"></script>
-<!-- Toastr -->
-<script src="plugins/toastr/toastr.min.js"></script>
-<!-- AdminLTE App -->
-<script src="dist/js/adminlte.min.js"></script>
-<script src="js/login.js"></script>
+
 </body>
 </html>
