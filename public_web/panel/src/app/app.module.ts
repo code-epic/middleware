@@ -6,13 +6,19 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
 import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
 import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
+
+import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
+
 const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
   suppressScrollX: true
 };
+
 import { AppComponent } from './app.component';
+
 // Import containers
 import { DefaultLayoutComponent } from './containers';
-import { LoginComponent } from './views/login/login.component';
+
+
 
 const APP_CONTAINERS = [
   DefaultLayoutComponent
@@ -33,71 +39,58 @@ import { AppRoutingModule } from './app.routing';
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
-import { ToastrModule } from 'ngx-toastr';
-import { FormsModule } from '@angular/forms';
+import { LoginComponent } from './view/login/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { AuthGuardGuard } from '../app/servicios/seguridad/auth-guard.guard';
-import { RegistrarComponent } from './views/registrar/registrar/registrar.component'
-import { CarouselModule } from 'ngx-bootstrap/carousel';
-import { BasicoComponent } from './views/registrar/base/basico/basico.component';
-import { AgGridModule } from 'ag-grid-angular';
-import { BotonComponent } from './views/dashboard/apicore/api/componente/boton/boton.component';
+import { FormsModule } from '@angular/forms';
+import { PrincipalModule } from './view/principal/principal.module';
+import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
+import { AuthGuardGuard } from './service/seguridad/auth-guard.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import {PrettyJsonModule} from 'angular2-prettyjson';
-import { EstatusComponent } from './views/dashboard/conexiones/conexion/componente/estatus/estatus.component';
-import { ScanComponent } from './views/dashboard/conexiones/conexion/componente/scan/scan.component';
-import { NgxLoadingModule } from 'ngx-loading';
-import { ArchwizardModule } from 'angular-archwizard';
+import { AgGridModule } from 'ag-grid-angular';
 
-import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
-import { MonitorestatusComponent } from './views/dashboard/monitor/monitor/monitorestatus/monitorestatus.component';
- 
-const ngWizardConfig: NgWizardConfig = {
-  theme: THEME.default
-};
- 
+//const oToastr = ;
 
 @NgModule({
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
     AppRoutingModule,
-    NgWizardModule.forRoot(ngWizardConfig),
     AppAsideModule,
-    CarouselModule.forRoot(),
     AppBreadcrumbModule.forRoot(),
     AppFooterModule,
     AppHeaderModule,
-    HttpClientModule,
     AppSidebarModule,
     PerfectScrollbarModule,
     BsDropdownModule.forRoot(),
     TabsModule.forRoot(),
-    ToastrModule.forRoot(),
-    AgGridModule.withComponents([]),
-    FormsModule,
     ChartsModule,
-    PrettyJsonModule,
-    ArchwizardModule,
+    IconModule,
+    IconSetModule.forRoot(),
+    HttpClientModule,
+    FormsModule,
     NgbModule,
-    NgxLoadingModule.forRoot({})
+    PrincipalModule,
+    ToastContainerModule,
+    ToastrModule.forRoot({
+      closeButton: false,
+      newestOnTop: false,
+      progressBar: true,
+      positionClass: "toast-top-right",
+      preventDuplicates: false    }),
+      AgGridModule.withComponents([]),
   ],
   declarations: [
     AppComponent,
     ...APP_CONTAINERS,
     LoginComponent,
-    RegistrarComponent,
-    BasicoComponent,
-    BotonComponent,
-    EstatusComponent,
-    MonitorestatusComponent,
-    ScanComponent,
   ],
-  providers: [{
-    provide: [LocationStrategy, AuthGuardGuard, JsonPipe],
-    useClass: HashLocationStrategy,
-  }],
-  entryComponents:[BotonComponent, EstatusComponent,ScanComponent, MonitorestatusComponent,],
+  providers: [
+    {
+      provide: [ LocationStrategy, AuthGuardGuard, JsonPipe],
+      useClass: HashLocationStrategy
+    },
+    IconSetService,
+  ],
   bootstrap: [ AppComponent ]
 })
 export class AppModule { }

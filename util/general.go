@@ -276,6 +276,7 @@ func Sh(script string, flags string, sIP string) (out []byte, err error) {
 	var M Mensajes
 	M.Tipo = 1
 	M.Fecha = time.Now()
+	fmt.Println("Ejecutando comandos ", runtime.GOOS, "./cmd/"+script+" "+sIP)
 
 	if runtime.GOOS == "darwin" {
 		out, err = exec.Command("osascript", "-e", `do shell script "./cmd/`+script+` `+sIP+`"`).Output()
@@ -284,6 +285,7 @@ func Sh(script string, flags string, sIP string) (out []byte, err error) {
 	}
 
 	M.Msj = string(out)
+	fmt.Println(string(out))
 
 	switch script {
 	case "getmac.sh":

@@ -42,6 +42,7 @@ func (D *Directorio) Listar(ruta string, esDirectorio bool) error {
 			D.Listado = append(D.Listado, f.Name())
 		}
 	}
+	fmt.Println("Controlando datos ", D.Listado)
 	return nil
 }
 

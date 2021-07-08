@@ -48,8 +48,14 @@ func (C *Core) CrearNOSQL(coleccion string, query string, db *mongo.Database) (j
 	var lst []bson.M
 	var bsonMap bson.M
 	err = json.Unmarshal([]byte(query), &bsonMap)
-
-	rs, err := c.Find(sys.Contexto, bsonMap)
+	if err != nil {
+		M.Tipo = 0
+		M.Msj = "fallo la conversion Unmarshal: core.CrearNOSQL "
+		sys.SystemLog.Println("Unmarchal Core.CrearNOSQL ", query, err.Error())
+		jSon, err = json.Marshal(M)
+		return
+	}
+	rs, _ := c.Find(sys.Contexto, bsonMap)
 	if err = rs.All(sys.Contexto, &lst); err != nil {
 		M.Msj = "Driver de conexión falló"
 		M.Tipo = 1

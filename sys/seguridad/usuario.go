@@ -50,56 +50,6 @@ type MetodoSeguro struct {
 	Funcion    bool `json:"funcion"`
 }
 
-// Privilegio
-type Privilegio struct {
-	Metodo      string `json:"nombre"`
-	Descripcion string `json:"descripcion"`
-	Accion      string `json:"accion"`
-}
-
-// Perfil
-type Perfil struct {
-	Descripcion string       `json:"descripcion,omitempty"`
-	Privilegios []Privilegio `json:"Privilegios,omitempty"`
-	Menu        []Menu       `json:"Menu,omitempty"`
-}
-
-type Menu struct {
-	Url     string    `json:"url,omitempty"`
-	Js      string    `json:"js,omitempty"`
-	Icono   string    `json:"icono,omitempty"`
-	Nombre  string    `json:"nombre,omitempty"`
-	Accion  string    `json:"accion,omitempty"`
-	Clase   string    `json:"clase,omitempty"`
-	Color   string    `json:"color,omitempty"`
-	SubMenu []SubMenu `json:"SubMenu,omitempty"`
-}
-
-type SubMenu struct {
-	Url     string       `json:"url,omitempty"`
-	Js      string       `json:"js,omitempty"`
-	Icono   string       `json:"icono,omitempty"`
-	Nombre  string       `json:"nombre,omitempty"`
-	Accion  string       `json:"accion,omitempty"`
-	Clase   string       `json:"clase,omitempty"`
-	Color   string       `json:"color,omitempty"`
-	SubMenu []SubSubMenu `json:"SubMenu,omitempty"`
-}
-
-type SubSubMenu struct {
-	Url    string `json:"url,omitempty"`
-	Js     string `json:"js,omitempty"`
-	Icono  string `json:"icono,omitempty"`
-	Nombre string `json:"nombre,omitempty"`
-	Accion string `json:"accion,omitempty"`
-	Clase  string `json:"clase,omitempty"`
-	Color  string `json:"color,omitempty"`
-}
-
-type Rol struct {
-	Descripcion string `json:"descripcion" bson:"descipcion"`
-}
-
 //Usuario del Sistema
 type Usuario struct {
 	ID            string       `json:"id" bson:"_id"`
@@ -107,21 +57,74 @@ type Usuario struct {
 	Nombre        string       `json:"nombre" bson:"nombre"`
 	Login         string       `json:"usuario" bson:"login"`
 	Correo        string       `json:"correo" bson:"correo"`
+	Clave         string       `json:"clave,omitempty" bson:"clave"`
 	FechaCreacion time.Time    `json:"fechacreacion,omitempty" bson:"fechacreacion"`
 	Estatus       int          `json:"estatus" bson:"estatus"`
-	Clave         string       `json:"clave,omitempty" bson:"clave"`
-	Situacion     string       `json:"situacion,omitempty" bson:"situacion"` //PM - PC
-	Sucursal      string       `json:"sucursal,omitempty" bson:"sucursal" bson:"sucursal"`
-	Departamento  string       `json:"departamento,omitempty" bson:"departamento"`
-	Sistema       string       `json:"sistema,omitempty" bson:"sistema"`
-	Rol           Rol          `json:"Roles,omitempty" bson:"roles"`
 	Token         string       `json:"token,omitempty" bson:"token"`
 	Perfil        Perfil       `json:"Perfil,omitempty" bson:"perfil"`
 	FirmaDigital  FirmaDigital `json:"FirmaDigital,omitempty" bson:"firmadigital"`
-	Direccion     string       `json:"direccion,omitempty" bson:"direccion"`
-	Telefono      string       `json:"telefono,omitempty" bson:"telefono"`
-	Cargo         string       `json:"cargo,omitempty" bson:"cargo"`
-	Modulo        []Modulo     `json:"modulo,omitempty" bson:"modulo"`
+	Aplicacion    []Aplicacion `json:"modulo,omitempty" bson:"modulo"`
+}
+
+//Aplicacion las diferentes aplicaciones del sistema
+type Aplicacion struct {
+	Id         string `json:"id"`
+	Nombre     string `json:"nombre"`
+	URL        string `json:"url"`
+	Origen     string `json:"origen"`
+	Comentario string `json:"comentario"`
+	Version    string `json:"version"`
+	Autor      string `json:"autor"`
+	Rol        []Rol  `json:"Rol,omitempty" bson:"rol"`
+}
+
+// Perfil
+type Perfil struct {
+	Descripcion  string `json:"descripcion,omitempty"`
+	Situacion    string `json:"situacion,omitempty" bson:"situacion"` //PM - PC
+	Sucursal     string `json:"sucursal,omitempty" bson:"sucursal"`
+	Departamento string `json:"departamento,omitempty" bson:"departamento"`
+	Direccion    string `json:"direccion,omitempty" bson:"direccion"`
+	Telefono     string `json:"telefono,omitempty" bson:"telefono"`
+	Cargo        string `json:"cargo,omitempty" bson:"cargo"`
+}
+
+type Rol struct {
+	Descripcion string `json:"descripcion" bson:"descipcion"`
+	Menu        []Menu `json:"Menu,omitempty"`
+}
+
+// Privilegio
+type Privilegio struct {
+	Metodo      string `json:"nombre"`
+	Descripcion string `json:"descripcion"`
+	Accion      string `json:"accion"`
+	Directiva   string `json:"directiva"`
+}
+
+//Menu
+type Menu struct {
+	Url         string       `json:"url,omitempty"`
+	Js          string       `json:"js,omitempty"`
+	Icono       string       `json:"icono,omitempty"`
+	Nombre      string       `json:"nombre,omitempty"`
+	Accion      string       `json:"accion,omitempty"`
+	Clase       string       `json:"clase,omitempty"`
+	Color       string       `json:"color,omitempty"`
+	Privilegios []Privilegio `json:"Privilegios,omitempty"`
+	SubMenu     []SubMenu    `json:"SubMenu,omitempty"`
+}
+
+//SubMenu
+type SubMenu struct {
+	Url         string       `json:"url,omitempty"`
+	Js          string       `json:"js,omitempty"`
+	Icono       string       `json:"icono,omitempty"`
+	Nombre      string       `json:"nombre,omitempty"`
+	Accion      string       `json:"accion,omitempty"`
+	Clase       string       `json:"clase,omitempty"`
+	Color       string       `json:"color,omitempty"`
+	Privilegios []Privilegio `json:"Privilegios,omitempty"`
 }
 
 //FirmaDigital La firma permite identificar una maquina y persona autorizada por el sistema
@@ -133,15 +136,6 @@ type FirmaDigital struct {
 
 type RespuestaToken struct {
 	Token string `json:"token"`
-}
-
-type Modulo struct {
-	Id         string `json:"id"`
-	Nombre     string `json:"nombre"`
-	URL        string `json:"url"`
-	Comentario string `json:"comentario"`
-	Version    string `json:"version"`
-	Autor      string `json:"autor"`
 }
 
 func (f *FirmaDigital) Registrar() bool {
@@ -207,35 +201,4 @@ func (usr *Usuario) Listar() (j []byte, err error) {
 	err = c.FindOne(sys.Contexto, bson.M{}).Decode(&lstUsuario)
 	j, _ = json.Marshal(lstUsuario)
 	return
-}
-
-//Generico Consulta General
-func (usr *Usuario) Generico() {
-	var privilegio Privilegio
-	var lst []Privilegio
-	var usuario Usuario
-	//usuario.ID = bson.NewObjectId()
-	usuario.Nombre = "Informatica - Consulta"
-	usuario.Login = "usuario"
-	usuario.Sucursal = "Principal"
-	usuario.Clave = util.GenerarHash256([]byte("123"))
-
-	// usuario.Rol.ID = ROOT
-	usuario.Rol.Descripcion = "Super Usuario"
-	// usuario.Perfil.ID = ROOT
-	usuario.Perfil.Descripcion = "Super Usuario"
-
-	privilegio.Metodo = "afiliacion.salvar"
-	privilegio.Descripcion = "Crear Usuario"
-	privilegio.Accion = "Insert()" // ES6 Metodos
-	lst = append(lst, privilegio)
-
-	privilegio.Metodo = "afiliacion.modificar"
-	privilegio.Descripcion = "Modificar Usuario"
-	privilegio.Accion = "Update()"
-	lst = append(lst, privilegio)
-	usuario.Perfil.Privilegios = lst
-
-	//var MongoDB sys.Mongo
-
 }

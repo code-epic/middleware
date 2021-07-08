@@ -109,6 +109,7 @@ func (wp *WPanel) CrearColeccion(w http.ResponseWriter, r *http.Request) {
 func (wp *WPanel) Sh(w http.ResponseWriter, r *http.Request) {
 	Cabecera(w, r)
 	e := json.NewDecoder(r.Body).Decode(&wp)
+	fmt.Println("Entrando en la funcion")
 	if e != nil {
 
 		fmt.Println("Err. ", e.Error())

@@ -9,8 +9,6 @@ import (
 	"strings"
 	"time"
 
-	"github.com/code-epic/middleware/mdl/migracion"
-	"github.com/code-epic/middleware/sys"
 	"github.com/code-epic/middleware/util"
 )
 
@@ -33,7 +31,7 @@ func (a *API) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 	m := r.MultipartForm
 	files := m.File["input-folder-2"]
 	codigo := r.FormValue("txtFileID")
-	directorio := "./public_web/www/temp/migracion/"
+	directorio := "./tmp/file/source/"
 	errr := os.Mkdir(directorio, 0777)
 	if errr != nil {
 		fmt.Println("El directorio ya existe!")
@@ -68,14 +66,5 @@ func (a *API) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 	j, _ := json.Marshal(M)
 	w.WriteHeader(http.StatusOK)
 	w.Write(j)
-
-}
-
-//ProcesarTxt Proceso de archivo
-func ProcesarTxt(doc string, codigo string) {
-	var procesar migracion.Migrar
-	procesar.Ruta = "./public_web/www/temp/migracion/" + doc
-	db := sys.SQLTODO["PGODB"].DB
-	procesar.Leer(db, codigo, doc)
 
 }

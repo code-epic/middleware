@@ -72,15 +72,15 @@ func CMySQL(c CadenaDeConexion) (DB *sql.DB, err error) {
 	cadena := c.Usuario + ":" + c.Clave + "@tcp(" + c.Host + ":" + c.Puerto + ")/" + c.Basedatos
 	DB, err = sql.Open("mysql", cadena)
 	if err != nil {
-		color.Red("... Host: "+c.Host+" Base De Datos: ( "+c.Basedatos+" ) Error... ", err.Error())
+		color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
 	} else {
 		err = DB.Ping()
 		if err != nil {
-			color.Red("... Host: "+c.Host+" Base De Datos: ( "+c.Basedatos+" ) Error...", err.Error())
+			color.Red("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  Error...")
 			color.Red(err.Error())
 			return
 		}
-		color.Green("... Host: " + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK... ")
+		color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
 	}
 	return
 }

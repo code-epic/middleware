@@ -29,9 +29,11 @@ func init() {
 	bytePrivados, err := ioutil.ReadFile("./sys/seguridad/private.rsa")
 	util.Fatal(err)
 	LlavePrivada, err = jwt.ParseRSAPrivateKeyFromPEM(bytePrivados)
+	util.Fatal(err)
 	bytePublicos, err := ioutil.ReadFile("./sys/seguridad/public.rsa.pub")
 	util.Fatal(err)
 	LlavePublica, err = jwt.ParseRSAPublicKeyFromPEM(bytePublicos)
+	util.Fatal(err)
 }
 
 //GenerarJWT Json Web Token

@@ -125,7 +125,6 @@ func CargarModulosSeguridad() {
 	Enrutador.HandleFunc(vAPI+"wusuario", wUsuario.ValidarToken(wUsuario.Crear)).Methods("POST")
 	Enrutador.HandleFunc(vAPI+"wusuario", wUsuario.ValidarToken(wUsuario.CambiarClave)).Methods("PUT")
 	Enrutador.HandleFunc(vAPI+"wusuario", wUsuario.ValidarToken(wUsuario.Opciones)).Methods("OPTIONS")
-	Enrutador.HandleFunc(vAPI+"wusuario/listar", wUsuario.ValidarToken(wUsuario.Listar)).Methods("GET")
 
 }
 

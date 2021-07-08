@@ -1,75 +1,115 @@
 import { INavData } from '@coreui/angular';
 
-export const navItems: INavData[] = [
+export const navItems: INavData[] = [ 
   {
     title: true,
-    name: 'General'
+    name: 'Components'
   },
   {
-    name: 'Telecomunicaciones',
-    url: '/principal/conexiones',
-    icon: 'icon-cloud-upload'
-  },
-  {
-    name: 'Conexiones',
-    url: '/principal/driver',
-    icon: 'icon-globe'
-  },
-  {
-    name: 'API REST-FULL',
-    url: '/principal/apicore',
-    icon: 'icon-note'
-  },
-  {
-    name: 'Aplicaciones',
-    url: '/icons',
-    icon: 'icon-grid',
+    name: 'Redes',
+    url: '/principal/redes',
+    icon: 'icon-folder-alt',
     children: [
       {
-        name: 'Instalar',
-        url: '/principal/sistema',
-        icon: 'icon-drawer'
+        name: 'Comunicaciones',
+        url: '/principal/redes/comunicaciones',
+        icon: 'icon-globe'
       },
       {
-        name: 'Definir Menu',
-        url: '/principal/menu',
-        icon: 'icon-list',
+        name: 'Conexiones',
+        url: '/principal/redes/conexiones',
+        icon: 'icon-link'
       },
-      
+      {
+        name: 'Monitoreo',
+        url: '/principal/redes/monitoreo',
+        icon: 'icon-list'
+      }
     ]
   },
   {
-    name: 'Operatividad',
-    icon: 'icon-eye',
-    url: '/icons',
+    name: 'Herramienta',
+    url: '/principal/herramientas',
+    icon: 'icon-wrench',
+    badge: {
+      variant: 'info',
+      text: 'CESB'
+    },
     children: [
       {
+        name: 'API',
+        url: '/principal/herramientas/api',
+        icon: 'icon-note'
+      },
+      {
+        name: 'GraphQL',
+        url: '/principal/herramientas/graphql',
+        icon: 'icon-shuffle',
+        attributes: { disabled: true }
+      }
+    ]
+  },
+  {
+    name: 'Aplicaciones',
+    url: '/principal/aplicaciones',
+    icon: 'icon-grid',
+    children: [
+      {
+        name: 'Instalar App',
+        url: '/principal/aplicaciones/instalar',
+        icon: 'icon-magic-wand'
+      },
+      {
+        name: 'Definir Menu',
+        url: '/principal/aplicaciones/menu',
+        icon: 'icon-list'
+      },
+      {
         name: 'Monitoreo',
-        url: '/principal/monitor',
-        icon: 'icon-speedometer'
+        url: '/principal/aplicaciones/monitoreo',
+        icon: 'icon-list'
       },
       {
         name: 'Eventos',
-        url: '/principal/evento',
-        icon: 'icon-star',
-      },
-      
+        url: '/principal/aplicaciones/eventos',
+        icon: 'icon-list'
+      }
     ]
   },
   {
     name: 'Seguridad',
-    url: '/icons',
-    icon: 'icon-lock',
+    url: '/principal/seguridad',
+    icon: 'icon-lock-open',
     children: [
       {
+        name: 'Roles',
+        url: '/herramientas/api',
+        icon: 'icon-docs'
+      },
+      {
         name: 'Usuarios',
-        url: '/icons/coreui-icons',
-        icon: 'icon-people',
-        badge: {
-          variant: 'success',
-          text: 'NEW'
-        }
+        url: '/principal/seguridad/usaurio',
+        icon: 'icon-user-following'
       }
     ]
+  },
+  {
+    name: 'Disabled',
+    url: '/dashboard',
+    icon: 'icon-ban',
+    badge: {
+      variant: 'secondary',
+      text: 'NEW'
+    },
+    attributes: { disabled: true },
   }
+  //,
+  // {
+  //   name: 'Download CoreUI',
+  //   url: 'http://coreui.io/angular/',
+  //   icon: 'icon-cloud-download',
+  //   class: 'mt-auto',
+  //   variant: 'success',
+  //   attributes: { target: '_blank', rel: 'noopener' }
+  // }
 ];

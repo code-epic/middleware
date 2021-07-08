@@ -1,0 +1,335 @@
+
+<!--
+Realizado por: Yasmin Vicuña Rondon
+Fecha: 23-11-2020
+Titulo: Panel de Control: APICORE
+ -->
+
+
+ <div class="animated fadeIn">
+    <section class="esb">        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+
+                            <nav ngbNav #nav="ngbNav" class="nav-tabs">
+                                <ng-container ngbNavItem>
+                                <a ngbNavLink>Listado General</a>
+                                <ng-template ngbNavContent>
+                                    
+                                    <ag-grid-angular
+                                        style="width: 100%; height: 500px;"
+                                        class="ag-theme-blue" [rowData]="rowData" [columnDefs]="columnDefs"
+                                        [pagination]="true"  [paginationPageSize]="paginationPageSize"  >
+                                    </ag-grid-angular>
+                                </ng-template>
+                                </ng-container>
+
+                                <ng-container ngbNavItem>
+                                    <a ngbNavLink>Listado General</a>
+                                    <ng-template ngbNavContent>
+                                        <form role="form" id="Api">
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="card">
+                                                        <div class="card-body">
+                                                            <div class="row">
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group">    
+                                                                            <label>HTTP / Puerto</label>                                              
+                                                                            <div class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text">
+                                                                                    <input type="checkbox" id="chkhttp" 
+                                                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="http"  value ="{{http}}"  disabled>
+                                                                                </span>
+                                                                            </div>
+                                                                                <select class="form-control selected" id="cmbpuertohttp" (change)="SeleccionarChk(this.puertohttp)" 
+                                                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="puertohttp"  value ="{{puertohttp}}">
+                                                                                    <option value=0>SELECCIONE</option>
+                                                                                    <option value=8012>8012</option>
+                                                                                    <option value=8013>8013</option>
+                                                                                </select>
+                                                                            </div>
+                                                                            <!-- /input-group -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-sm-4">
+                                                                    <div class="form-group">    
+                                                                            <label>HTTPS / Puerto</label>                                              
+                                                                        <div class="input-group">
+                                                                            <div class="input-group-prepend">
+                                                                                <span class="input-group-text">
+                                                                                    <input type="checkbox" id="chkhttps" 
+                                                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="https"  value ="{{https}}" disabled>
+                                                                                </span>
+                                                                            </div>
+                                                                            <select class="form-control selected" id="cmbpuertohttps" (change)="SeleccionarChks(this.puertohttps)" 
+                                                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="puertohttps"  value ="{{puertohttps}}">
+                                                                                <option value=0>SELECCIONE</option>
+                                                                                <option value=2286>2286</option>
+                                                                                <option value=2385>2385</option>
+                                                                            </select>
+                                                                            <div class="input-group-append">
+                                                                                <span class="input-group-text"><i class="fa fa-eye"></i></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /input-group -->
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Tipo</label>
+                                                                        <select id="cmbTipo" class="form-control selected"  
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}"
+                                                                        (change)="onTipo($event)">>
+                                                                            <option value="0">SELECCIONE</option>
+                                                                            <option value="CODIGO">CODIGO</option>
+                                                                            <option value="CONSULTA">CONSULTA</option>
+                                                                            <option value="INTERFAZ">INTERFAZ</option>
+                                                                            <option value="ARCHIVO">ARCHIVO</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                    
+                                                            </div>
+                                                            
+                                                            <div class="row" [ngStyle]="{'display':divArchivosng}">
+                                                                
+                                                                <div class="col-md-4" >
+                                                                    <div class="form-group">
+                                                                        <label>Relacional</label>
+                                                                        <select id="cmbRelacional" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="relacional" value ="{{relacional}}" >
+                                                                        
+                                                                            <option value=false>NO</option>
+                                                                            <option value=true>SI</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4" >
+                                                                    <div class="form-group">
+                                                                        <label>Módulo</label>
+                                                                        <select id="cmbModulo" class="form-control selected" (change)="CargarArchivos()" 
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="modulo"  >
+                                                                            <option value="0">SELECCIONE</option>
+                                                                            <option *ngFor="let mdl of modulos" value="{{mdl}}" >{{ mdl }}</option> 
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-4" >
+                                                                    <div class="form-group">    
+                                                                            <label>Seleccionar archivos (opcional)</label>                                              
+                                                                        <div class="input-group">
+                                                                            <select class="form-control selected" id="cmbArchivos"  [ngModelOptions]="{standalone: true}" [(ngModel)]="archivo"  >
+                                                                                <option value="0">SELECCIONE</option>
+                                                                                <option *ngFor="let mdl of archivos" value="{{ mdl }}" >{{ mdl }}</option> 
+                                                                            </select>
+                                                                            <div class="input-group-append">
+                                                                                <span class="input-group-text" (click)="ProcesarArchivos()"><i class="fa fa-play"></i></span>
+                                                                            </div>
+                                                                        </div>
+                                                                        <!-- /input-group -->
+                                                                    </div>
+                                                                </div>
+                                                                
+                                                            </div>
+                                                            <div class="row" [ngStyle]="{'display':divCodigofuente}">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>Codigo Fuente </label>
+                                                                        <textarea class="form-control" rows="8" id="txtCodigo" placeholder="Enter ..."  
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="codigo"  value ="{{codigo}}"></textarea>
+                                                                        
+                                                                    </div>
+                                                                </div>
+                                                            
+                                                                <div class="col-md-7"></div>
+                                                                <div class="col-md-5" id="duracion" style="text-align: right;">
+                                                                    <b>Duración:</b> 00.00.00 seg &nbsp; <b>Peso:</b> 0.00 KB<hr>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Función</label>
+                                                                        <input type="text" id="txtFuncion" class="form-control" placeholder="Enter ..."  
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="funcion"  value ="{{funcion}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label>Driver</label>
+                                                                        <select id="cmbDriver" class="form-control selected"
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="driver"  value ="{{driver}}">
+                                                                            <option value="0">SELECCIONE</option>
+                                                                            <option *ngFor="let mdl of drivers" value="{{mdl.id}}" >{{mdl.id}} | {{ mdl.basedatos }}</option> 
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label>Metodo</label>
+                                                                        <select id="cmbMetodo" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="metodo"  value ="{{metodo}}">
+                                                                            <option value="0" selected>SELECCIONE</option>
+                                                                            <option value="GET">GET</option>
+                                                                            <option value="POST">POST</option>
+                                                                            <option value="PUT">PUT</option>
+                                                                            <option value="DELETE">DELETE</option>
+                                                                            <option value="OPTIONS">OPTIONS</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                                            <div class="row" [ngStyle]="{'display':divConsultang}" >
+                                                                <div class="col-md-2" >
+                                                                    <div class="form-group">
+                                                                        <label>Relacional</label>
+                                                                        <select id="cmbRelacional" class="form-control selected"  
+                                                                            [ngModelOptions]="{standalone: true}" 
+                                                                            [(ngModel)]="xrelacional"  value ="{{xrelacional}}">
+                                                                            <option value=false>NO</option>
+                                                                            <option value=true>SI</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                            
+                                                                <div class="col-md-4">
+                                                                    <div class="form-group">
+                                                                        <label>Colección en caso de ser NOSQL</label>
+                                                                        <input type="text" id="txtColeccion" class="form-control" [disabled]="!xrelacional"
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="coleccion"  value ="{{coleccion}}">
+                                                                    </div>
+                                                                </div>
+                                
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>Consulta / SQL / NOSQL </label>
+                                                                        <textarea class="form-control" rows="5" id="txtConsulta" placeholder="Enter ..." 
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="consulta"  value ="{{consulta}}"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            <div class="row">
+                                                                <div class="col-md-12">
+                                                                    <div class="form-group">
+                                                                        <label>Incluir una breve descripción:</label>
+                                                                        <textarea class="form-control" rows="3" id="txtDescripcion" placeholder="Enter ..."
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion"  value ="{{descripcion}}"></textarea>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                            
+                                
+                                                            <div class="row">
+                                                                
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label>Consumidores</label>
+                                                                        <input type="number" id="txtConsumidores" class="form-control" 
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="consumidores"  value ="{{consumidores}}">
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label>Cache</label>
+                                                                        <select id="cmbCache" class="form-control selected"  
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="cache"  value ="{{cache}}">
+                                                                            <option value=0>NINGUNO</option>
+                                                                            <option value=1>INCLUSIVO</option>
+                                                                            <option value=2>EXCLUSIVO</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label>Logs</label>
+                                                                        <select id="cmbLog" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="log"  value ="{{log}}">
+                                                                            <option value=true>SI</option>
+                                                                            <option value=false>NO</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label>Concurrente</label>
+                                                                        <select id="cmbConcurrencia" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="concurrencia"  value ="{{concurrencia}}">
+                                                                            <option value=true>SI</option>
+                                                                            <option value=false>NO</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label>Retorno</label>
+                                                                        <select id="cmbRetorno" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="retorna"  value ="{{retorna}}">
+                                                                            <option value=true>SI</option>
+                                                                            <option value=false>NO</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label>Prioridad</label>
+                                                                        <select id="cmbPrioridad" class="form-control selected"
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="prioridad"  value ="{{prioridad}}">
+                                                                            <option value="0">BAJA</option>
+                                                                            <option value="1">MEDIA</option>
+                                                                            <option value="2">ALTA</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-3">
+                                                                    <div class="form-group">
+                                                                        <label>Entorno</label>
+                                                                        <select id="cmbEntorno" class="form-control selected"
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="entorno"  value ="{{entorno}}">
+                                                                            <option value="desarrollo" selected>DESARROLLO</option>
+                                                                            <option value="calidad">CALIDAD</option>
+                                                                            <option value="produccion">PRODUCCION</option>
+                                                                        </select>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="col-md-6">
+                                                                    <div class="form-group">
+                                                                        <label>URL</label>
+                                                                        <input type="text" id="txtUrl" class="form-control" placeholder="http://...:xxxx/..."  
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="xruta"  value ="{{xruta}}"
+                                                                        readonly>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                        <div class="card-footer">
+                                                            <button type="button" class="btn btn-success" (click)="Guardar()">Registrar</button>
+                                                            <button type="button" class="btn btn-danger float-right">Cancelar</button>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </form>
+
+                                    </ng-template>
+                                </ng-container>
+
+                            </nav>
+
+                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ </div>
+
+
+
+
+
+
+
+
+

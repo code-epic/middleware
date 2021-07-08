@@ -1,17 +1,20 @@
 package core
 
 import (
-	"fmt"
+	"strconv"
+	"strings"
 
+	"github.com/code-epic/middleware/sys"
+	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 //Core Ejecucion
 type Core struct {
-	Sistema  string
-	Consulta string
-	Ruta     string
-	Autor    string
+	Sistema  string `json:"sistema"`
+	Consulta string `json:"consulta"`
+	Ruta     string `json:"ruta"`
+	Autor    string `json:"autor"`
 	ApiCore
 }
 
@@ -49,10 +52,44 @@ type ApiCore struct {
 	Logs         bool               `json:"logs"`
 	Cache        int                `json:"cache"`
 	Descripcion  string             `json:"descripcion"`
+	Resultado    interface{}        `json:"resultado"`
 }
 
 //Object Objeto para reflexiones
 type Object map[string]interface{}
+
+//Asignar valores y operaciones
+func (C *Core) Asignar(v map[string]interface{}) (jSon []byte, err error) {
+	var api ApiCore
+	var Valores = false
+
+	for k, vs := range v {
+
+		if vs != nil {
+			switch k {
+			case "relacional":
+				api.Relacional = vs.(bool)
+			case "valores":
+				api.Valores = vs.(interface{})
+				Valores = true
+			case "coleccion":
+				api.Coleccion = vs.(string)
+			case "query":
+				api.Query = vs.(string)
+			case "tipo":
+				api.Tipo = vs.(string)
+			}
+
+		}
+	}
+
+	if Valores {
+		jSon, err = C.InsertNOSQL(api.Coleccion, api.Valores)
+	} else {
+		jSon, err = C.OperarConsulta(v)
+	}
+	return
+}
 
 //OperarConsulta Control de resultados
 func (C *Core) OperarConsulta(v map[string]interface{}) (jSon []byte, err error) {
@@ -61,48 +98,27 @@ func (C *Core) OperarConsulta(v map[string]interface{}) (jSon []byte, err error)
 	return
 }
 
-//Asignar valores y operaciones
-func (C *Core) Asignar(v map[string]interface{}) (jSon []byte, err error) {
-	var api ApiCore
-	var Valores = false
+//actualizarEstatusAPI
+func actualizarEstatusAPI(fn string, estatus bool) (err error) {
 
-	for k, vs := range v {
-		switch k {
-		case "relacional":
-			if vs != nil {
-				api.Relacional = vs.(bool)
-			}
-			break
-		case "valores":
-			if vs != nil {
-				api.Valores = vs.(interface{})
-				Valores = true
-			}
-			break
-		case "coleccion":
-			if vs != nil {
-				api.Coleccion = vs.(string)
-			}
-			break
-		case "query":
-			if vs != nil {
-				api.Query = vs.(string)
-			}
-			break
-		case "tipo":
-			if vs != nil {
-				api.Tipo = vs.(string)
-			}
-			break
-		}
+	c := sys.MongoDB.Collection(sys.APICORE)
+	filtrar := bson.M{"funcion": bson.M{"$eq": fn}}
+	actualizar := bson.M{"$set": bson.M{"estatus": estatus}}
+	_, err = c.UpdateOne(
+		sys.Contexto,
+		filtrar,
+		actualizar,
+	)
+	return
+}
 
-	}
-
-	if Valores == true {
-		fmt.Println("Valor ", api.Valores)
-		jSon, err = C.InsertNOSQL(api.Coleccion, api.Valores)
-	} else {
-		jSon, err = C.OperarConsulta(v)
+func parsearParametros(parametros string, consulta string) (cadena string) {
+	valores := strings.Split(parametros, ",")
+	cantidad := len(valores)
+	for i := 0; i < cantidad; i++ {
+		svalor := valores[i]
+		pos := "$" + strconv.Itoa(i)
+		cadena = strings.Replace(consulta, pos, svalor, -1)
 	}
 	return
 }

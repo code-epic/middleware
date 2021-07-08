@@ -7,6 +7,7 @@ require (
 	github.com/alexbrainman/odbc v0.0.0-20200426075526-f0492dfa1575
 	github.com/denisenkom/go-mssqldb v0.10.0
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible
+	github.com/ethereum/go-ethereum v1.10.4
 	github.com/fatih/color v1.11.0
 	github.com/go-sql-driver/mysql v1.6.0
 	github.com/gorilla/context v1.1.1
