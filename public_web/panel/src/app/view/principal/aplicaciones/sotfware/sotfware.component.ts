@@ -4,7 +4,8 @@ import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { NgWizardConfig, NgWizardService, StepChangedArgs, StepValidationArgs, STEP_STATE, THEME } from 'ng-wizard';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
-import { ApiService } from '../../../../service/apicore/api.service';
+import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
+import { SoftwareService } from '../../../../service/aplicaciones/software.service';
 import { ComunicacionesService } from '../../../../service/comunicaciones/comunicaciones.service';
 
 @Component({
@@ -35,14 +36,22 @@ export class SotfwareComponent implements OnInit {
       ],
     }
   };
-
+  stlFile = "none"
   hosts = []
-  host : string = '0'
+  
+  nombre: string  = ''  
+  app: string = ''
   tipo : string = '0'
-  xnombre: string  = ''
+  host : string = '0'
+  version: string  = ''  
   sistemaoperativo : string = '0'
   basedatos : string = '0'
-  lenguaje : string = '0'
+  lenguaje: string  = '0'  
+  descripcion: string  = ''  
+  
+  
+  xnombre: string  = ''
+  
   closeResult : string  = ''
   rowDataAPI = []
   columnDefsAPI = [
@@ -53,6 +62,8 @@ export class SotfwareComponent implements OnInit {
 
   rowData = []
   xrowData = []
+  dataApp = []
+  keyword = 'name'
   columnDefs = [
     { field: "Nombre"},
     { field: "Funcion"},
@@ -62,38 +73,7 @@ export class SotfwareComponent implements OnInit {
   ];
 
   
-  afuConfig = {
-    multiple: false,
-    formatsAllowed: ".zip, .tar, .war",
-    maxSize: "100",
-    uploadAPI:  {
-      url:"https://example-file-upload-api",
-      method:"POST",
-      headers: {
-     "Content-Type" : "text/plain;charset=UTF-8",
-     "Authorization" : `Bearer ${this.lenguaje}`
-      },
-      params: {
-        'page': '1'
-      },
-      responseType: 'blob',
-    },
-    theme: " attachPin", //dragNDrop
-    hideProgressBar: false,
-    hideResetBtn: true,
-    hideSelectBtn: false,
-    fileNameIndex: true,
-    replaceTexts: {
-      selectFileBtn: 'Seleccionar la aplicación que desea instalar, en formato (zip, tar, o war)',
-      resetBtn: 'Limpiar Formulario',
-      uploadBtn: 'Subir archivo',
-      dragNDropBox: 'Arrastrar y soltar',
-      attachPinBtn: 'Seleccionar Archivos...',
-      afterUploadMsg_success: 'El archivo subio con exito!',
-      afterUploadMsg_error: 'Fallo la carga del archivo!',
-      sizeLimit: 'Limite del Archivo '
-    }
-};
+  
   private gridApi
   private gridColumnApi
   private defaultColDef
@@ -101,13 +81,29 @@ export class SotfwareComponent implements OnInit {
   public API
   public xparametro
 
+  public xAPI : IAPICore = {
+    funcion: '',
+    relacional: false,
+    concurrencia : false,
+    retorna : false,
+    migrar : false,
+    parametros: '',
+    modulo : '',
+    valores : {},
+    logs : false,
+    cache: 0,
+    estatus: false
+  };
+
+
 
   constructor(private apiService : ApiService,
               private modalService: NgbModal, 
               private comunicacionesService : ComunicacionesService, 
               private ruta: Router,  
-              private ngWizardService: NgWizardService, 
-              private toastrService: ToastrService) {
+              private ngWizardService: NgWizardService,               
+              private toastrService: ToastrService,
+              private softwareService : SoftwareService) {
 
                 this.defaultColDef = {
                   flex: 1,
@@ -119,8 +115,30 @@ export class SotfwareComponent implements OnInit {
   ngOnInit(): void {
     this.ListarIP()
     this.ListarApis()
+    this.lstAplicaciones()
   }
 
+
+  async lstAplicaciones(){
+    this.xAPI.funcion = "LstAplicaciones";
+    this.xAPI.valores = null;
+
+    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        console.log(data)
+        data.forEach(e => {          
+          this.dataApp.push({id: e.id, name: e.nomb + " | " + e.vers });  
+        });             
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  selectEventModulo(e){
+
+  }
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -154,7 +172,7 @@ export class SotfwareComponent implements OnInit {
   }
 
   activarFormulario(content){
-    if(this.xnombre == ""){
+    if(this.xnombre == ''){
       this.toastrService.info(
         'Debe definir un nombre para la prueba',
         `Code-Epic ESB`
@@ -193,12 +211,20 @@ export class SotfwareComponent implements OnInit {
      );
   }
 
+  selTipo(){
+    this.stlFile = "none"
+    if (this.tipo == "2") this.stlFile = ""
+    
+  }
+
+  isValidTypeBoolean: boolean = true;
+
   showPreviousStep(event?: Event) {
     this.ngWizardService.previous();
   }
  
   showNextStep(event?: Event) {
-    this.ngWizardService.next();
+    
   }
  
   resetWizard(event?: Event) {
@@ -213,10 +239,20 @@ export class SotfwareComponent implements OnInit {
     console.log(args.step);
   }
  
-  isValidTypeBoolean: boolean = true;
+  
  
   isValidFunctionReturnsBoolean(args: StepValidationArgs) {
-    return true;
+    var valor = true;
+    if(this.app == ''){
+    //   this.ngWizardService.next();
+    // }else{
+      this.toastrService.warning(
+        'Debe registrar o seleccionar una aplicacion ',
+        `CodeEpic Middleware`
+      );
+      valor = false
+    }
+    return valor;
   }
  
   isValidFunctionReturnsObservable(args: StepValidationArgs) {

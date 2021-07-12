@@ -11,11 +11,12 @@ import { SoftwareService } from '../../../../service/aplicaciones/software.servi
 export class MenuComponent implements OnInit {
 
   columnDefsAcc = [
-    { field: "#", width: 50},
-    { field: "Nombre"},
-    { field: "Funcion"},
-    { field: "EndPoint"},
+    { field: "accid", headerName: '#', width: 50},
+    { field: "accnomb", headerName: 'Nombre'},
+    { field: "func", headerName: 'Funcion'},
+    { field: "endpoint", headerName: 'EndPoint'},
   ];
+
 
   columnDefsSub = [
     { field: "#", width: 50},
@@ -41,11 +42,14 @@ export class MenuComponent implements OnInit {
   aplicacion :string = ""
   rowDataAcc: any
   rowDataSub: any
-  closeResult : string  = '';
+  closeResult : string  = ''
   lstApps = []
 
-  keyword = 'name';
-  dataModulo = [];
+  keyword = 'name'
+  dataModulo = []
+  datamenu = []
+
+  colormenu = "btn-success"
   modulo : string = ""
   menu : string = "" //id
   menuid : string = ""
@@ -58,7 +62,7 @@ export class MenuComponent implements OnInit {
   xcolor: string = ""
   xestatus : string = "1"
 
-  metodo: string = ""
+  metodo: string = "0"
   nombre: string = ""
   funcion: string = ""
   endpoint : string = ""
@@ -114,9 +118,18 @@ export class MenuComponent implements OnInit {
     this.modulo = item.id;
     this.consultarMenu()
   }
+
+  onFocusedMenu(item) {
+    this.menu =  ""
+    this.menuid = ""
+    //this.consultarMenu()
+  }
+
+
   selectEventMenu(item) {
-    this.menu = item.id;
-    this.xmenu = item.name;
+    this.menu =  item.name
+    this.menuid = item.id
+    //this.consultarMenu()
   }
 
   selectEventUrl(item) {
@@ -125,34 +138,84 @@ export class MenuComponent implements OnInit {
   }
 
 
-  consultarMenu(){
+  consultarMenu(acc : string = ""){
     
-    this.xAPI.funcion = "LstMenus";
-    this.xAPI.parametros = this.modulo;
-    
-    
+    this.xAPI.funcion = "LstMenus"
+    this.xAPI.parametros = this.modulo
+    this.xnombre = this.menu
+    this.datamenu = []
 
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        console.log(data);
+        
+        data.forEach(e => {          
+          this.datamenu.push({id: e.id, name: e.nomb });  
+        });       
       },
       (error) => {
         console.log(error)
       }
     )
   }
+
+  OMenuAccion(){
+    this.colormenu = "btn-warning"
+    if ( this.menuid == "" ) {
+      this.xnombre = this.menu
+      this.colormenu = "btn-success"
+      return
+    }
+    this.xAPI.funcion = "OMenuAccion"
+    this.xAPI.parametros = this.menuid
+    console.log("ID: " +  this.menuid)
+
+
+    this.softwareService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+       
+        var i = 0
+        var lista = []
+        data.forEach(e => {    
+          if(i == 0 ) {
+            this.xnombre = e.nomb     
+            this.xurl = e.url 
+            this.xjs = e.js
+            this.xcss = e.clase
+            //this.xicon = e.icon
+            //this.xcolor  = e.color
+            this.xestatus = e.type
+          }
+          if ( e.endpoint != undefined ){
+            lista.push(e)
+          }
+          console.log(e)
+        });       
+        
+        this.rowDataAcc = lista;  
+      },
+      (error) => {
+        console.log("")
+      }
+    )
+  }
+
 
   GuardarMenu(){
-    this.xAPI.funcion = "AgregarMenu";
 
+    
     this.xAPI.parametros = this.xurl + "," + this.xjs + ",icon-test,"+ this.xnombre + ","
     this.xAPI.parametros +=  this.xcss + "," + this.xcolor + "," + this.xestatus + "," + this.modulo
-    this.dataModulo = [];
-    console.log(this.xAPI)
+    if(this.menuid == ""){
+      this.xAPI.funcion = "AgregarMenu";
+    }else{
+      this.xAPI.funcion = "ActualizarMenu";
+      console.log(this.menuid)
+      this.xAPI.parametros += "," + this.menuid
+    }
     
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-       console.info(data)     
+       this.menuid = this.xAPI.funcion == "AgregarMenu"? data.msj: this.menuid
       },
       (error) => {
         console.log(error)
@@ -164,7 +227,7 @@ export class MenuComponent implements OnInit {
 
 
 
-  AccionesGuardar(){
+  GuardarAccion(){
     this.xAPI.funcion = "AgregarAccion";
 
     this.xAPI.parametros = this.endpoint + "," + this.nombre + ","+ this.funcion + "," + this.directiva 
@@ -173,8 +236,9 @@ export class MenuComponent implements OnInit {
     
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-       console.info(data) 
-        
+        console.info(data) 
+        this.accionid = data.msj
+        this.MenuAccionGuardar()
       },
       (error) => {
         console.log(error)
@@ -183,13 +247,15 @@ export class MenuComponent implements OnInit {
   }
 
   MenuAccionGuardar(){
+    console.log("Consultado menu ID: " + this.menuid + " @  " + this.accionid)
     this.xAPI.funcion = "AgregarAccionMenu";
 
     this.xAPI.parametros = this.menuid + "," + this.accionid
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-       console.info(data) 
-
+        console.info(data) 
+        this.OMenuAccion()
+        
       },
       (error) => {
         console.log(error)
@@ -197,7 +263,26 @@ export class MenuComponent implements OnInit {
     )
   }
 
+  limpiarMenu(){
+    this.xnombre = ""     
+    this.xurl = "" 
+    this.xjs = ""
+    this.xcss = ""
+    //this.xicon = e.icon
+    //this.xcolor  = e.color
+    this.xestatus = "1"
+  }
+
+  limpiarMenuAcciones(){
+    this.metodo= "0"
+    this.nombre = ""
+    this.funcion = ""
+    this.directiva = ""
+    this.endpoint = ""
+  }
+
   modalAccion(content){
+    console.log("Consultado menu ID: " + this.menuid)
     this.modalService.open(content, {centered: true, size: 'lg', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 

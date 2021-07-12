@@ -74,6 +74,7 @@
                                                                     [(ngModel)]="menu"
                                                                     [data]="datamenu"
                                                                     [searchKeyword]="keyword"
+                                                                    (inputFocused)='onFocusedMenu($event)'
                                                                     (selected)='selectEventMenu($event)'
                                                                     [itemTemplate]="itemTemplate">     
                                                                 </ng-autocomplete>
@@ -98,7 +99,7 @@
                                         </div>
                                         <div class="card-footer ">
                                             <small class="text-muted">
-                                            <button type="button" class="btn btn-warning float-right" (click)='consultarMenu()'> Procesar <i class="icon-shuffle"></i></button>
+                                                <button type="button" class="btn btn-warning float-right" (click)='OMenuAccion()'> Procesar <i class="icon-shuffle"></i></button>
                                             </small>
                                         </div>
                                         </div>
@@ -149,7 +150,7 @@
                                                     <label>Clase Css</label>
                                                     <div class="input-group">
                                                         <input type="text" id="txtClass"class="form-control"
-                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="xclass"  value ="{{xclass}}" >
+                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="xcss"  value ="{{xcss}}" >
                                                     </div>
                                                 </div>
                                             </div>
@@ -163,8 +164,9 @@
                                                             <option value=0>INACTIVO</option>
                                                         </select>
                                                         <div class="input-group-append">
-                                                                <button type="button" class="btn btn-success" (click)="GuardarMenu()">
+                                                                <button type="button" class="btn {{colormenu}}" (click)="GuardarMenu()">
                                                                     <i class="icon-plus"></i></button>
+                                                                
                                                         </div>
                                                     </div>
                                                 </div>
@@ -318,7 +320,7 @@
         <button type="button" class="btn btn-secondary float-right" 
             (click)="modal.dismiss('Cross click')">Cancelar
         </button>
-        <button type="button" class="btn btn-success" (click)="AccionesGuardar()"> 
+        <button type="button" class="btn btn-success" (click)="modal.dismiss('Cross click');GuardarAccion()"> 
             Agregar <i class="icon-shuffle"></i>
         </button>
     </div>

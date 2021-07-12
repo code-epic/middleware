@@ -20,18 +20,17 @@ import (
 //CrearQuery Creación dinamica de Consultas
 func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 	var M util.Mensajes
-	conexion, a, xmongo := leerValores(v)
+	conexion, a, xmongo, msj := leerValores(v)
 
 	M.Tipo = 1
 	C.ApiCore = a
 
 	M.Fecha = time.Now()
 	if !a.Estatus {
-		M.Msj = "La conexion con el driver fallo " + a.Driver
+		M.Msj = msj
 		M.Tipo = 0
 		jSon, _ = json.Marshal(M)
 		err = actualizarEstatusAPI(a.Funcion, false)
-		sys.SystemLog.Println(M.Msj)
 
 		return jSon, err
 	}
@@ -70,7 +69,7 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 	return
 }
 
-func leerValores(v map[string]interface{}) (db *sql.DB, a ApiCore, mgo *mongo.Database) {
+func leerValores(v map[string]interface{}) (db *sql.DB, a ApiCore, mgo *mongo.Database, mensaje string) {
 
 	ApiCoreAux := retornaValores(v)
 	c := sys.MongoDB.Collection(sys.APICORE)
@@ -78,8 +77,10 @@ func leerValores(v map[string]interface{}) (db *sql.DB, a ApiCore, mgo *mongo.Da
 
 	err := c.FindOne(sys.Contexto, bson.M{"funcion": ApiCoreAux.Funcion}).Decode(&a)
 	if err != nil {
-		fmt.Println("Error creando Query en Mongodb "+"funcion: "+ApiCoreAux.Funcion, err.Error())
-		sys.SystemLog.Printf("Error creando Query en Mongodb funcion: %s %s", ApiCoreAux.Funcion, err.Error())
+		fmt.Println("Error la funcion no existe: "+ApiCoreAux.Funcion, err.Error())
+		mensaje = "Verifique la funcion no exite: " + ApiCoreAux.Funcion
+		sys.SystemLog.Println("No existe la funcion: ", ApiCoreAux.Funcion, err.Error())
+		return
 	}
 
 	if sys.SQLTODO[a.Driver].Estatus {

@@ -71,6 +71,7 @@ import { BotonComponent } from './herramientas/api/componente/boton/boton.compon
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 import { SubmenuComponent } from './aplicaciones/menu/submenu/submenu.component';
+import { PaqueteComponent } from './aplicaciones/sotfware/paquete/paquete.component';
 
 
 
@@ -90,6 +91,7 @@ import { SubmenuComponent } from './aplicaciones/menu/submenu/submenu.component'
     MonitoreoComponent,
     BotonComponent,
     SubmenuComponent,
+    PaqueteComponent,
   
   ],
   imports: [

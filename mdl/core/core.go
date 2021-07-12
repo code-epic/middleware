@@ -118,7 +118,8 @@ func parsearParametros(parametros string, consulta string) (cadena string) {
 	for i := 0; i < cantidad; i++ {
 		svalor := valores[i]
 		pos := "$" + strconv.Itoa(i)
-		cadena = strings.Replace(consulta, pos, svalor, -1)
+		consulta = strings.Replace(consulta, pos, svalor, -1)
 	}
+	cadena = consulta
 	return
 }

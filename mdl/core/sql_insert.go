@@ -21,6 +21,7 @@ func (C *Core) IUDQuery(consulta string, conexion *sql.DB, tipo int64) (jSon []b
 	if err != nil {
 		M.Msj = "Error ejecutando consulta: " + err.Error()
 		M.Tipo = 0
+		sys.QueryLog.Println("Core.IUDQuery : ", consulta, err.Error())
 	} else if tipo == 0 {
 		id, _ := rs.LastInsertId()
 		M.Msj = strconv.FormatInt(id, 10)

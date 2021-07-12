@@ -76,7 +76,7 @@ func WMAdminLTE() {
 	BoldCyan.Println("")
 
 	prefix := http.StripPrefix("/app", http.FileServer(http.Dir("public_web/www")))
-	Enrutador.PathPrefix("/app/").Handler(prefix)
+	Enrutador.PathPrefix("/app").Handler(prefix)
 
 }
 
@@ -92,6 +92,8 @@ func CargarModulosWeb() {
 	Enrutador.HandleFunc(vAPI+"crud", wUsuario.ValidarToken(ap.Crud)).Methods("PUT")
 	Enrutador.HandleFunc(vAPI+"crud", wUsuario.ValidarToken(ap.Crud)).Methods("DELETE")
 	Enrutador.HandleFunc(vAPI+"crud", wUsuario.ValidarToken(ap.Crud)).Methods("OPTIONS")
+	Enrutador.HandleFunc(vAPI+"listar", wUsuario.ValidarToken(ap.Listar)).Methods("GET")
+	Enrutador.HandleFunc(vAPI+"file", wUsuario.ValidarToken(ap.Listar)).Methods("GET")
 
 	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("GET")
 	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("POST")
@@ -99,7 +101,6 @@ func CargarModulosWeb() {
 	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("DELETE")
 	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("OPTIONS")
 
-	Enrutador.HandleFunc(vAPI+"listar", wUsuario.ValidarToken(ap.Listar)).Methods("GET")
 	Enrutador.HandleFunc("/devel/api/listar", ap.Listar).Methods("GET")
 
 }

@@ -15,18 +15,46 @@
 
                         <ng-wizard-step [title]="'Registrar'" [description]="'Definir aplicación'"
                             [canEnter]="isValidTypeBoolean" [canExit]="isValidFunctionReturnsBoolean.bind(this)">
-                            
+                            <br>
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6">
+                                    <div class="form-group">
+                                        <div class="ng-autocomplete" > 
+                                            <ng-autocomplete 
+                                                [data]="dataApp"
+                                                placeholder="Nombre del sistema"
+                                                [ngModelOptions]="{standalone: true}" 
+                                                [(ngModel)]="nombre"  
+                                                [searchKeyword]="keyword"
+                                                (selected)='selectEventModulo($event)'
+                                                [itemTemplate]="itemTemplate">    
+                                            </ng-autocomplete>
+                                            
+                                            <ng-template #itemTemplate let-item >
+                                                <a [innerHTML]="item.name"></a>
+                                            </ng-template>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+                            <hr>
                             <div class="row">   
-                                <div class="col-md-2">
+                                <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Tipo de instalación</label>
-                                        <select id="cmbTipo" class="form-control selected"
-                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}"
-                                        style="display: flex; justify-content: center;" >
-                                            <option value="0">SELECCIONE</option>
-                                            <option value="1">PRE-INSTALADA</option>
-                                            <option value="2">INSTALAR</option>
-                                        </select>
+                                        
+                                            <select id="cmbTipo" class="form-control selected"
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}"
+                                            style="display: flex; justify-content: center;" (change)="selTipo()" >
+                                                <option value="0">SELECCIONE</option>
+                                                <option value="1">PRE-INSTALADA</option>
+                                                <option value="2">INSTALAR</option>
+                                            </select>
+
+                                            
+
                                     </div>
                                 </div>  
 
@@ -40,31 +68,7 @@
                                             <option *ngFor="let mdl of hosts" value="{{mdl.host}}" >{{ mdl.id }} | {{ mdl.descripcion }}</option> 
                                         </select>
                                     </div>
-                                </div>        
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label>Nombre del sistema</label>
-                                        <input type="text" id="txtNombre" class="form-control" 
-                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="nombre"  value ="{{nombre}}">
-                                    </div>
-                                </div>
-                                <div class="col-md-2">
-                                    <div class="form-group">
-                                        <label>Versión</label>
-                                        <input type="text" id="txtVersion" class="form-control" 
-                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="version"  value ="{{version}}" >
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <div class="col-md-6">
-                                    <angular-file-uploader [config]="afuConfig"></angular-file-uploader>
-                                </div>
-                            </div>
-                            <div class="row">
-                                <hr>
-                            </div>
-                            <div class="row">
+                                </div> 
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Sistema Operativo</label>
@@ -76,7 +80,13 @@
                                             <option value='MAC'>MAC</option>
                                         </select>
                                     </div>
-                                </div>
+                                </div>   
+                               
+                                
+                            </div>
+                        
+                            <div class="row">
+                               
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Base de Datos</label>
@@ -98,24 +108,38 @@
                                 </div>
                                 <div class="col-md-4">
                                     <div class="form-group">
+                                        <label>Versión</label>
+                                        <input type="text" id="txtVersion" class="form-control" 
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="version"  value ="{{version}}" >
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
                                         <label>Lenguaje</label>
-                                        <select id="cmbLenguaje" class="form-control selected"  
-                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="lenguaje"  value ="{{lenguaje}}">
-                                            <option value='0'>SELECCIONE</option>
-                                            <option value='PHP'>PHP</option>
-                                            <option value='J2EE'>JAVA J2EE</option>
-                                            <option value='HCJS'>HTML / CSS3 / JAVASCRIPT</option>
-                                            <option value='TSC'>ANGULAR</option>
-                                            <option value='VBA'>VISUAL BASIC</option>
-                                            <option value='VBN'>VISUAL STUDIO .NET</option>
-                                            <option value='GO'>GOLANG</option>
-                                            <option value='PYC'>PYTHON</option>
-                                            <option value='C++'>C++</option>
-                                            <option value='C'>C</option>
-                                        </select>
+                                        <div class="input-group">
+                                            <select id="cmbLenguaje" class="form-control selected"  
+                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="lenguaje"  value ="{{lenguaje}}">
+                                                <option value='0'>SELECCIONE</option>
+                                                <option value='PHP'>PHP</option>
+                                                <option value='J2EE'>JAVA J2EE</option>
+                                                <option value='HCJS'>HTML / CSS3 / JAVASCRIPT</option>
+                                                <option value='TSC'>ANGULAR</option>
+                                                <option value='VBA'>VISUAL BASIC</option>
+                                                <option value='VBN'>VISUAL STUDIO .NET</option>
+                                                <option value='GO'>GOLANG</option>
+                                                <option value='PYC'>PYTHON</option>
+                                                <option value='C++'>C++</option>
+                                                <option value='C'>C</option>
+                                            </select>
+                                            
+                                            <div [ngStyle]="{'display':stlFile}"  class="input-group-append">
+                                                <app-paquete></app-paquete>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
+
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
