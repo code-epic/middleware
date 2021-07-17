@@ -63,7 +63,7 @@ type Usuario struct {
 	Token         string       `json:"token,omitempty" bson:"token"`
 	Perfil        Perfil       `json:"Perfil,omitempty" bson:"perfil"`
 	FirmaDigital  FirmaDigital `json:"FirmaDigital,omitempty" bson:"firmadigital"`
-	Aplicacion    []Aplicacion `json:"modulo,omitempty" bson:"modulo"`
+	Aplicacion    []Aplicacion `json:"Aplicaion,omitempty" bson:"aplicaion"`
 }
 
 //Aplicacion las diferentes aplicaciones del sistema
