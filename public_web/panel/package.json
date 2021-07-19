@@ -3,15 +3,15 @@
   "version": "1.0.0",
   "description": "Middleware Consola",
   "author": {
-    "name": "Łukasz Holeczek",
-    "url": "http://holeczek.pl",
-    "github": "https://github.com/mrholek",
-    "twitter": "https://twitter.com/lukaszholeczek"
+    "name": "CodeEpic Technologies",
+    "url": "https://code-epic.github.io",
+    "github": "https://github.com/code-epic",
+    "twitter": "https://twitter.com/code-epic"
   },
   "contributors": [
     {
-      "name": "Andrzej Kopański",
-      "url": "https://github.com/xidedix"
+      "name": "Carlos Pena",
+      "url": "https://github.com/gesaodin"
     }
   ],
   "homepage": "https://coreui.io/angular",
