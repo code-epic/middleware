@@ -1,0 +1,3 @@
+[submodule "public_web/www/ipostel"]
+	path = public_web/www/ipostel
+	url = https://github.com/code-epic/ipostel
