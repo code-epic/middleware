@@ -90,6 +90,8 @@ func (u *WUsuario) Login(w http.ResponseWriter, r *http.Request) {
 	e := json.NewDecoder(r.Body).Decode(&usuario)
 	util.Error(e)
 
+	fmt.Println("Conexion de datos ")
+
 	usuario.Validar(usuario.Nombre, util.GenerarHash256([]byte(usuario.Clave)))
 
 	if usuario.Login != "" {
@@ -110,6 +112,8 @@ func (u *WUsuario) Login(w http.ResponseWriter, r *http.Request) {
 		traza.Log = "Inicio de sesión"
 		traza.IP = ip[0]
 		traza.Documento = "Usuario"
+
+		fmt.Println("Acceso Permitido")
 
 		w.WriteHeader(http.StatusOK)
 		w.Write(j)
@@ -225,7 +229,7 @@ func (u *WUsuario) Listar(w http.ResponseWriter, r *http.Request) {
 func (u *WUsuario) Opciones(w http.ResponseWriter, r *http.Request) {
 	CabeceraW(w, r)
 	fmt.Println("Conectandose usuario vía Extranet...")
-	//fmt.Fprintf(w, "Saludos")
+	fmt.Fprintf(w, "Saludos")
 
 }
 

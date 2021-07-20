@@ -16,10 +16,81 @@
   "Aplicacion": [{
     "id" : "IP-001",
     "nombre": "Core Postal Venezolano",
-    "url" : "ipostel",
+    "url" : "http://localhost:2286/app/ipostel?tk=$0",
     "comentario": "Usuario Ipostel",
     "version": "V1.0.0.0",
     "autor": "Maikol Echenique",
+    "Rol" : {
+      "descripcion": "Development FrontEnd",
+      "Menu": [{
+        "url": "",
+        "js": "",
+        "icono": "fas fa-truck",
+        "descripcion": "Oficina Postal Privada",
+        "nombre": "OPP",
+        "accion": "",
+        "clase": "trn",
+        "color": "bg-warning",
+        "Privilegio": [],
+        "SubMenu": [{
+          "url": "",
+          "js": "",
+          "icono": "fas fa-shipping-fast",
+          "nombre": "Buzon",
+          "accion": "",
+          "clase": "buzon",
+          "color": "bg-warning",
+          "Privilegios": [
+            {
+              "metodo": "pendientes",
+              "descripcion": "Pendientes",
+              "accion": "Pendientes()",
+              "directivas": ""
+            },
+            {
+              "metodo": "procesados",
+              "descripcion": "Procesados",
+              "accion": "Procesados()",
+              "directivas": ""
+            },
+            {
+              "metodo": "conciliados",
+              "descripcion": "Conciliados",
+              "accion": "Conciliados()",
+              "directivas": ""
+          }]
+        }]
+      }]
+    }
+  }],
+  "firmadigital": {
+    "direccionmac": "*",
+    "direccionip": "*",
+    "tiempo": "2021-07-16T19:07:05.851Z"
+  }
+},
+{
+  "cedula": "22045794",
+  "nombre": "Amgel Herrera",
+  "login": "DEV002",
+  "correo": "",
+  "clave": "393a9f8b0b9d1b751bffbe860fe18d19f0639cbae7bc42123f187cf7f5187322",
+  "sucursal": "Todas",
+  "direccion": "Principal",
+  "cargo": "Desarrollador",
+  "telefono": "",
+  "sistema": "Development",
+  "token": "Autorizado",
+  "Perfil": {
+    "descripcion": "Development"
+  },
+  "Aplicacion": [{
+    "id" : "IP-001",
+    "nombre": "Core Postal Venezolano",
+    "url" : "https://localhost:2608/app/ipostel?tk=$0",
+    "comentario": "Usuario Ipostel",
+    "version": "V1.0.0.0",
+    "autor": "Angel Herrera",
     "Rol" : {
       "descripcion": "Development FrontEnd",
       "Menu": [{

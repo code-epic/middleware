@@ -19,7 +19,7 @@
 /util/logs/query.log
 /util/logs/cache.log
 
-/public_web/www/*
+#/public_web/www/*
 /public_web/www/tmp
 /public_web/www/build
 
