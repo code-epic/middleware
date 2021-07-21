@@ -61,9 +61,9 @@ type Usuario struct {
 	FechaCreacion time.Time    `json:"fechacreacion,omitempty" bson:"fechacreacion"`
 	Estatus       int          `json:"estatus" bson:"estatus"`
 	Token         string       `json:"token,omitempty" bson:"token"`
-	Perfil        Perfil       `json:"Perfil,omitempty" bson:"perfil"`
+	Perfil        Perfil       `json:"Perfil,omitempty" bson:"Perfil"`
 	FirmaDigital  FirmaDigital `json:"FirmaDigital,omitempty" bson:"firmadigital"`
-	Aplicacion    []Aplicacion `json:"Aplicaion,omitempty" bson:"aplicaion"`
+	Aplicacion    []Aplicacion `json:"Aplicacion,omitempty" bson:"Aplicacion"`
 }
 
 //Aplicacion las diferentes aplicaciones del sistema
@@ -75,7 +75,7 @@ type Aplicacion struct {
 	Comentario string `json:"comentario"`
 	Version    string `json:"version"`
 	Autor      string `json:"autor"`
-	Rol        []Rol  `json:"Rol,omitempty" bson:"rol"`
+	Rol        Rol    `json:"Rol,omitempty" bson:"Rol"`
 }
 
 // Perfil
@@ -90,8 +90,10 @@ type Perfil struct {
 }
 
 type Rol struct {
+	Id          string `json:"id"`
+	Nombre      string `json:"nombre"`
 	Descripcion string `json:"descripcion" bson:"descipcion"`
-	Menu        []Menu `json:"Menu,omitempty"`
+	Menu        []Menu `json:"Menu,omitempty", bson:"Menu"`
 }
 
 // Privilegio
@@ -112,7 +114,7 @@ type Menu struct {
 	Clase       string       `json:"clase,omitempty"`
 	Color       string       `json:"color,omitempty"`
 	Privilegios []Privilegio `json:"Privilegios,omitempty"`
-	SubMenu     []SubMenu    `json:"SubMenu,omitempty"`
+	SubMenu     []SubMenu    `json:"SubMenu,omitempty", bson:"SubMenu"`
 }
 
 //SubMenu
