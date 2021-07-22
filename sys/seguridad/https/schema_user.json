@@ -60,6 +60,38 @@
               "directivas": ""
           }]
         }]
+      },{
+        "url": "",
+        "js": "",
+        "icono": "fas fa-truck",
+        "descripcion": "Centro Nacional Control",
+        "nombre": "Centro Nacional",
+        "accion": "",
+        "clase": "trn",
+        "color": "bg-primary",
+        "Privilegio": [],
+        "SubMenu": [{
+          "url": "",
+          "js": "",
+          "icono": "fas fa-shipping-fast",
+          "nombre": "Oficina Postal",
+          "accion": "CargarUrl('cuerpo', 'inc/cnc/registro')",
+          "clase": "opt",
+          "color": "bg-success",
+          "Privilegios": [
+            {
+              "metodo": "actualizar",
+              "descripcion": "Actualizar",
+              "accion": "ActualizarOPT()",
+              "directivas": ""
+            },
+            {
+              "metodo": "reporte",
+              "descripcion": "Reportes",
+              "accion": "Reportes()",
+              "directivas": ""
+          }]
+        }]
       }]
     }
   }],
