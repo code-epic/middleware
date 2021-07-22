@@ -37,7 +37,7 @@
           "js": "",
           "icono": "fas fa-shipping-fast",
           "nombre": "Buzon",
-          "accion": "",
+          "accion": "CargarUrl('cuerpo', 'inc/buzon/bandeja')",
           "clase": "buzon",
           "color": "bg-warning",
           "Privilegios": [

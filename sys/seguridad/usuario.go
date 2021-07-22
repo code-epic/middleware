@@ -93,7 +93,7 @@ type Rol struct {
 	Id          string `json:"id"`
 	Nombre      string `json:"nombre"`
 	Descripcion string `json:"descripcion" bson:"descipcion"`
-	Menu        []Menu `json:"Menu,omitempty", bson:"Menu"`
+	Menu        []Menu `json:"Menu,omitempty" bson:"Menu"`
 }
 
 // Privilegio
@@ -110,11 +110,12 @@ type Menu struct {
 	Js          string       `json:"js,omitempty"`
 	Icono       string       `json:"icono,omitempty"`
 	Nombre      string       `json:"nombre,omitempty"`
+	Descripcion string       `json:"descripcion"`
 	Accion      string       `json:"accion,omitempty"`
 	Clase       string       `json:"clase,omitempty"`
 	Color       string       `json:"color,omitempty"`
 	Privilegios []Privilegio `json:"Privilegios,omitempty"`
-	SubMenu     []SubMenu    `json:"SubMenu,omitempty", bson:"SubMenu"`
+	SubMenu     []SubMenu    `json:"SubMenu,omitempty" bson:"SubMenu"`
 }
 
 //SubMenu
