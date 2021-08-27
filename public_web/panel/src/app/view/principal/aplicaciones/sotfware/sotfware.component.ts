@@ -1,17 +1,18 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ModalDismissReasons, NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { timeStamp } from 'console';
 import { NgWizardConfig, NgWizardService, StepChangedArgs, StepValidationArgs, STEP_STATE, THEME } from 'ng-wizard';
 import { ToastrService } from 'ngx-toastr';
 import { of } from 'rxjs';
 import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
-import { SoftwareService } from '../../../../service/aplicaciones/software.service';
+import { IAplicacion, SoftwareService } from '../../../../service/aplicaciones/software.service';
 import { ComunicacionesService } from '../../../../service/comunicaciones/comunicaciones.service';
 
 @Component({
-  selector: 'app-sotfware',
-  templateUrl: './sotfware.component.html',
-  styleUrls: ['./sotfware.component.scss']
+  selector    : 'app-sotfware',
+  templateUrl : './sotfware.component.html',
+  styleUrls   : ['./sotfware.component.scss']
 })
 
 export class SotfwareComponent implements OnInit {
@@ -21,7 +22,7 @@ export class SotfwareComponent implements OnInit {
     disabled: STEP_STATE.disabled,
     error: STEP_STATE.error,
     hidden: STEP_STATE.hidden
-  };
+  }
  
   config: NgWizardConfig = {
     selected: 0,
@@ -35,67 +36,73 @@ export class SotfwareComponent implements OnInit {
         { text: 'Finalizar', class: 'btn btn-info', event: () => { alert("Finished!!!"); } }
       ],
     }
-  };
-  stlFile = "none"
-  hosts = []
-  
-  nombre: string  = ''  
-  app: string = ''
-  tipo : string = '0'
-  host : string = '0'
-  version: string  = ''  
-  sistemaoperativo : string = '0'
-  basedatos : string = '0'
-  lenguaje: string  = '0'  
-  descripcion: string  = ''  
-  
-  
-  xnombre: string  = ''
-  
-  closeResult : string  = ''
-  rowDataAPI = []
-  columnDefsAPI = [
-    { field: "funcion"},
-    { field: "descripcion"},
-    { field: "entorno"},
-  ];
+  }
 
-  rowData = []
-  xrowData = []
-  dataApp = []
-  keyword = 'name'
-  columnDefs = [
-    { field: "Nombre"},
-    { field: "Funcion"},
-    { field: "Descripcion"},
-    { field: "Parametros"},
-    { field: "Isd"},
-  ];
-
-  
-  
-  private gridApi
-  private gridColumnApi
-  private defaultColDef
-  private rowSelection
+  public gridApi
+  public gridColumnApi
+  public defaultColDef
+  public rowSelection
   public API
   public xparametro
 
   public xAPI : IAPICore = {
-    funcion: '',
-    relacional: false,
-    concurrencia : false,
-    retorna : false,
-    migrar : false,
-    parametros: '',
-    modulo : '',
-    valores : {},
-    logs : false,
-    cache: 0,
-    estatus: false
+    id            : '',
+    funcion       : '',
+    relacional    : false,
+    concurrencia  : false,
+    retorna       : false,
+    migrar        : false,
+    parametros    : '',
+    modulo        : '',
+    valores       : null,
+    logs          : false,
+    cache         : 0,
+    estatus       : false
   };
 
+  public iApp : IAplicacion = {
+    id    : '',
+    type  : '0',
+    serv  : '0',
+    nomb  : '',
+    vers  : '',
+    sope  : '0',  //Sistema Operativo
+    db    : '0',  //Base de datos
+    idio  : '0',  //Lenguaje de Programacion
+    obse  : '',   //Comentarios del sistemaoperativo
+    user  : '',   //Rol creador del sistema
+  }
 
+  public bProbar : boolean = false
+
+  stlFile   = "none"
+  hosts     = []
+
+  nombreapp     : string  = ''
+  xnombreapi    : string  = ''
+  xnombrecon    : string  = ''
+  funcion       : string  = ''
+  xparametroapi : string  = ''
+  
+  closeResult   : string  = ''
+  rowDataAPI    = []
+  columnDefsAPI = [
+    { field: "funcion", filter: 'agTextColumnFilter'},
+    { field: "descripcion"},
+    { field: "entorno"},
+    { field: "id"},
+  ];
+
+  rowData     = []
+  dataApp     = []
+  keyword     = 'name'
+  columnDefs  = [
+    { field: "nombre"},
+    { field: "funcion"},
+    { field: "descripcion"},
+    { field: "parametros"},
+    { field: "id"},
+  ];
 
   constructor(private apiService : ApiService,
               private modalService: NgbModal, 
@@ -105,11 +112,12 @@ export class SotfwareComponent implements OnInit {
               private toastrService: ToastrService,
               private softwareService : SoftwareService) {
 
-                this.defaultColDef = {
-                  flex: 1,
-                  minWidth: 100,
-                };
-                this.rowSelection = 'single';
+    this.defaultColDef = {
+      flex: 1,
+      minWidth: 100,
+    };
+    this.rowSelection = 'single';
+    this.iApp.user = 'administrador';
   }
 
   ngOnInit(): void {
@@ -117,7 +125,6 @@ export class SotfwareComponent implements OnInit {
     this.ListarApis()
     this.lstAplicaciones()
   }
-
 
   async lstAplicaciones(){
     this.xAPI.funcion = "LstAplicaciones";
@@ -137,8 +144,159 @@ export class SotfwareComponent implements OnInit {
   }
 
   selectEventModulo(e){
+    this.iApp.id = e.id;
+    this.nombreapp = e.name;
+    this.consultarAplicacion()    
+  }
+
+  onFocusedModulo(item) {
+    this.iApp.id = ''
+    this.nombreapp = ''
+    this.iApp.type = '' 
+    this.iApp.serv = ''
+    this.iApp.vers = ''
+    this.iApp.sope = ''
+    this.iApp.db = ''
+    this.iApp.idio = ''
+    this.iApp.obse = ''
+  }
+
+  obtenerParametros(){
+    var nombre = this.iApp.nomb;
+    if (typeof this.iApp.nomb  === 'object') nombre = this.nombreapp
+    
+    this.xAPI.parametros = this.iApp.type + "," + this.iApp.serv + "," + nombre + "," + this.iApp.vers + "," + this.iApp.sope + ","
+    this.xAPI.parametros += this.iApp.db + "," + this.iApp.idio + "," + this.iApp.obse + "," + this.iApp.user 
+    
+  }
+
+  async consultarAplicacion(){
+    this.xAPI.funcion = "ConsultarAplicacion"
+    this.xAPI.parametros = this.iApp.id
+    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        var xapp : IAplicacion
+
+        xapp = data[0]
+        this.iApp = xapp;
+
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+  
+  async guardarAplicacion(){
+    this.obtenerParametros()
+    if(this.iApp.id != ''){
+      this.xAPI.funcion = "ActualizarAplicacion"
+      this.xAPI.parametros += "," + this.iApp.id
+    } else{ 
+      this.xAPI.funcion = "AgregarAplicacion"    
+    }
+    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        console.log(data)
+        var msj = "Actualizado"
+        if(this.xAPI.funcion == "AgregarAplicacion") {
+          this.iApp.id = data.msj;
+          var msj = "Agregado"
+        }
+
+        this.toastrService.success(
+          'Se ha ' + msj + ' el registro con exito ',
+          `CodeEpic Middleware`
+        );
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+   
 
   }
+
+  async listarAppAPI(){
+    this.xAPI.funcion = "LstAppApi"
+    this.xAPI.parametros = this.iApp.id
+    this.rowData = []
+
+    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+      (data) => {        
+        data.forEach(v => {
+          this.rowData.push({
+            nombre: v.nomb,
+            funcion: v.func,
+            descripcion: v.descr,
+            parametros: v.param,
+            id: v.idfunc 
+          });
+        });
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  /**
+   * Control de acceso a las API
+   */
+  onSelectionChanged(e) {
+    var selectedRows = this.gridApi.getSelectedRows();
+    this.xAPI = selectedRows[0]
+    //console.log( this.xAPI );
+    this.bProbar = true
+  }
+ 
+  async ProbarAPI(){
+    this.xAPI.parametros = this.xparametro;
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        this.toastrService.success(
+          'la api funciona bien',
+          `CodeEpic Middleware`
+        )
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
+  async GuardarApi(){
+    const regex = /,/i;
+    var parametros = this.xparametroapi.replace(regex, ':')
+
+    this.xAPI.parametros = this.xnombreapi + ',' + this.xAPI.id + ',' + this.xAPI.funcion + ','   + this.xAPI.descripcion + ','
+    this.xAPI.parametros += parametros + ',' + this.xAPI.estatus  + ',' + this.iApp.id
+    this.xAPI.funcion = 'AgregarAppApi'
+
+    console.log( this.xAPI )
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+       
+        this.toastrService.success(
+          'la api ha sido asociada con exito ',
+          `CodeEpic Middleware`
+        )
+        this.rowData.push( {
+          nombre: this.xnombreapi,
+          funcion: this.xAPI.funcion,
+          descripcion: this.xAPI.descripcion,
+          parametros: this.xparametroapi,
+          id: this.xAPI.id 
+        } )
+        this.xparametroapi = ''
+        this.xnombreapi = ''
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
+
 
   private getDismissReason(reason: any): string {
     if (reason === ModalDismissReasons.ESC) {
@@ -155,30 +313,20 @@ export class SotfwareComponent implements OnInit {
     this.gridColumnApi = e.columnApi;
   }
 
-  onSelectionChanged() {
-    var selectedRows = this.gridApi.getSelectedRows();
-    this.API = selectedRows[0]
-    
-  }
 
   async AsignarAPI(){
-    console.log ( this.xparametro)
-    this.API.nombre = this.xnombre
-    this.API.parametros = this.xparametro
-    console.log(this.API)
     this.rowData.push(this.API)
-    this.xnombre = ''
-    this.xparametro = ''
   }
 
   activarFormulario(content){
-    if(this.xnombre == ''){
+    if(this.xnombreapi === ''){
       this.toastrService.info(
         'Debe definir un nombre para la prueba',
         `Code-Epic ESB`
       )
       return false
     }
+    this.bProbar = false
     this.modalService.open(content, {centered: true, size: 'lg', ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
       this.closeResult = `Closed with: ${result}`;
 
@@ -212,9 +360,7 @@ export class SotfwareComponent implements OnInit {
   }
 
   selTipo(){
-    this.stlFile = "none"
-    if (this.tipo == "2") this.stlFile = ""
-    
+    this.stlFile = this.iApp.type === '2'?"":"none"
   }
 
   isValidTypeBoolean: boolean = true;
@@ -236,16 +382,18 @@ export class SotfwareComponent implements OnInit {
   }
  
   stepChanged(args: StepChangedArgs) {
-    console.log(args.step);
+    //console.log(args.step);
   }
  
   
  
   isValidFunctionReturnsBoolean(args: StepValidationArgs) {
     var valor = true;
-    if(this.app == ''){
-    //   this.ngWizardService.next();
-    // }else{
+    
+    if(this.iApp.nomb != ''){ 
+       this.guardarAplicacion()
+       this.listarAppAPI()
+    }else{
       this.toastrService.warning(
         'Debe registrar o seleccionar una aplicacion ',
         `CodeEpic Middleware`

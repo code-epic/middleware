@@ -155,11 +155,10 @@ export class ComunicacionesComponent implements OnInit, OnDestroy {
     this.xAPI.funcion = "LstComunicaciones";
     this.xAPI.valores = null;
     this.xAPI.parametros = e.target.name
-
+   
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         this.rowData = data
-        //this.evaluarDataPie(data)
         this.loadingGrid = false
       },
       (error) => {
@@ -167,17 +166,7 @@ export class ComunicacionesComponent implements OnInit, OnDestroy {
         this.loadingGrid = false
       }
     )
-    // await this.comunicacionesService.Listar().subscribe(
-    //   (data) => {
-    //     this.rowData = data
-    //     this.evaluarDataPie(data)
-    //     this.loadingGrid = false;
-    //   },
-    //   (error) => {
-    //     console.log(error)
-    //     this.loadingGrid = false;
-    //   }
-    // )
+   
   }
 
   Limpiar(){

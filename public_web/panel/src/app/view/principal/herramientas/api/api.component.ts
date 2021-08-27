@@ -5,6 +5,8 @@ import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
 import { BotonComponent } from './componente/boton/boton.component';
 import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+import { ComunicacionesService } from '../../../../service/comunicaciones/comunicaciones.service';
+import { IConexiones } from '../../../../service/conexiones/conexiones.service';
 
 declare var $: any;
 
@@ -34,7 +36,7 @@ export class ApiComponent implements OnInit {
   archivos: []
   
   driver : string = '0'
-  drivers: []
+  drivers: any
 
   codigo : string = ''
   funcion : string = ''
@@ -95,7 +97,11 @@ export class ApiComponent implements OnInit {
 
   paginationPageSize = 15;
 
-  constructor(private apiService : ApiService, private ruta: Router, private modalService: NgbModal, private toastrService: ToastrService) {
+  constructor(private comunicacionesService : ComunicacionesService,
+    private apiService : ApiService, 
+    private ruta: Router, 
+    private modalService: NgbModal, 
+    private toastrService: ToastrService) {
   }
 
   ngOnInit(): void {
@@ -120,15 +126,21 @@ export class ApiComponent implements OnInit {
   async CargarDrivers(){
     this.xAPI.funcion = "LESBDrivers";
     this.xAPI.valores = null;
-    await this.apiService.Ejecutar(this.xAPI).subscribe(
-      (data) => {
-        //console.log(data)
-        this.drivers = data;
+    await this.comunicacionesService.ListarConexiones().subscribe(
+      (data) => {            
+        this.drivers = data
+        this.apiService.Ejecutar(this.xAPI).subscribe(
+          (data) => {
+              data.forEach(e => {
+                this.drivers.push(e)                
+              });
+          },
+          (error) => { console.log(error) }
+        )
       },
-      (error) => {
-        console.log(error)
-      }
+      (error) => { console.log(error) }
     )
+    
   }
 
   async CargarModulos(){

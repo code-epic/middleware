@@ -127,8 +127,8 @@ export class PrincipalComponent implements OnInit {
     
 
  
-  irA(ruta){
-    this.ruta.navigate(['principal', ruta])
+  irA(base: string, ruta: string){
+    this.ruta.navigate([base, ruta])
   }
 
 

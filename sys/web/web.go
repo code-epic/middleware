@@ -46,14 +46,17 @@ func CargarModulosPanel() {
 	Enrutador.PathPrefix("/code-epic/").Handler(prefixW)
 
 	Enrutador.HandleFunc(vAPI+"lmodulos", wUsuario.ValidarToken(wp.ListarModulos)).Methods("GET")
-	Enrutador.HandleFunc(vAPI+"lmodulox", wp.ListarModulos).Methods("GET")                                        //Listar Modulos del sistema en la carpeta www/inc
-	Enrutador.HandleFunc(vAPI+"larchivos/{id}", wUsuario.ValidarToken(wp.ListarArchivos)).Methods("GET")          //Listar archivos dentro del modulo de los inc
-	Enrutador.HandleFunc(vAPI+"phtml", wUsuario.ValidarToken(wp.ProcesarHTML)).Methods("POST")                    //Procesar archivos html a scripts
-	Enrutador.HandleFunc(vAPI+"gapihtml", wUsuario.ValidarToken(wp.GenerarAPIHTML)).Methods("POST")               //Procesar archivos html a scripts
-	Enrutador.HandleFunc(vAPI+"ccoleccion", wUsuario.ValidarToken(wp.CrearColeccion)).Methods("POST")             //Crear Conexion
-	Enrutador.HandleFunc(vAPI+"lcoleccion/{id}", wUsuario.ValidarToken(wp.ListarColecciones)).Methods("GET")      //Listar conexiones
-	Enrutador.HandleFunc(vAPI+"sh", wUsuario.ValidarToken(wp.Sh)).Methods("POST")                                 //Ejecutar Script
-	Enrutador.HandleFunc(vAPI+"drivers", wUsuario.ValidarToken(wp.Drivers)).Methods("GET")                        //Listar Drivers desde sys/drivers.json
+	Enrutador.HandleFunc(vAPI+"lmodulox", wp.ListarModulos).Methods("GET")                                   //Listar Modulos del sistema en la carpeta www/inc
+	Enrutador.HandleFunc(vAPI+"larchivos/{id}", wUsuario.ValidarToken(wp.ListarArchivos)).Methods("GET")     //Listar archivos dentro del modulo de los inc
+	Enrutador.HandleFunc(vAPI+"phtml", wUsuario.ValidarToken(wp.ProcesarHTML)).Methods("POST")               //Procesar archivos html a scripts
+	Enrutador.HandleFunc(vAPI+"gapihtml", wUsuario.ValidarToken(wp.GenerarAPIHTML)).Methods("POST")          //Procesar archivos html a scripts
+	Enrutador.HandleFunc(vAPI+"ccoleccion", wUsuario.ValidarToken(wp.CrearColeccion)).Methods("POST")        //Crear Conexion
+	Enrutador.HandleFunc(vAPI+"lcoleccion/{id}", wUsuario.ValidarToken(wp.ListarColecciones)).Methods("GET") //Listar conexiones
+	Enrutador.HandleFunc(vAPI+"sh", wUsuario.ValidarToken(wp.Sh)).Methods("POST")                            //Ejecutar Script
+
+	Enrutador.HandleFunc(vAPI+"drivers", wUsuario.ValidarToken(wp.Drivers)).Methods("GET")        //Listar Drivers desde sys/drivers.json
+	Enrutador.HandleFunc(vAPI+"conexiones", wUsuario.ValidarToken(wp.WConexiones)).Methods("GET") //Listar Drivers desde sys/driver$s.json
+
 	Enrutador.HandleFunc(vAPI+"evaluarconexion", wUsuario.ValidarToken(wp.EvaluarConexion)).Methods("POST")       //Ejecutar Evaluacion de conexion
 	Enrutador.HandleFunc(vAPI+"establecerconexion", wUsuario.ValidarToken(wp.EstablecerConexion)).Methods("POST") //Establecer conexiones
 	Enrutador.HandleFunc(vAPI+"evaluarpuente", wUsuario.ValidarToken(wp.EvaluarPuenteURL)).Methods("POST")        //Ejecutar Evaluacion puente url

@@ -162,7 +162,7 @@ func init() {
 	SystemLog.Println("Iniciando la carga del servidor post compilación")
 	util.Error(e)
 
-	CargarConexiones()
+	CargarDrivers()
 }
 
 //ConexionesDinamicas Permite establecer multiples conexiones
@@ -272,8 +272,8 @@ func (C *Config) EvaluarConexionesDinamicas(c CadenaDeConexion) (er error) {
 	return
 }
 
-//CargarConexiones
-func CargarConexiones() {
+//CargarDrivers
+func CargarDrivers() {
 	var a util.Archivo
 	a.NombreDelArchivo = "sys/drivers.json"
 	data, _ := a.LeerTodo()

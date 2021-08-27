@@ -35,19 +35,24 @@ export class ComunicacionesService {
   }
 
   Guardar(xCon : IComunicaciones, sApi : string) : Observable<any>{
-    console.log(xCon);
+    //console.log(xCon);
     var url = this.URL + sApi;
     return this.http.post<any>(url, xCon, this.httpOptions);
   }
 
   Listar() : Observable<any>{
-    console.log("Entrando en la funcion" + this.httpOptions)
+    //console.log("Entrando en la funcion" + this.httpOptions)
     var url = this.URL + 'lcoleccion/sys-conection';
     return this.http.get<any>(url, this.httpOptions);
   }
 
   ListarDrivers() : Observable<any>{
     var url = this.URL + 'drivers';
+    return this.http.get<any>(url, this.httpOptions);
+  }
+
+  ListarConexiones() : Observable<any>{
+    var url = this.URL + 'conexiones';
     return this.http.get<any>(url, this.httpOptions);
   }
 

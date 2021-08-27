@@ -34,12 +34,14 @@
                                                         <label>Modulo</label>
                                                         <div class="ng-autocomplete" > 
                                                             <ng-autocomplete 
-                                                            [data]="dataModulo"
-                                                            [searchKeyword]="keyword"
-                                                            (selected)='selectEventModulo($event)'
-                                                            [itemTemplate]="itemTemplate"
-                                                            >    
-                                                                                       
+                                                                [ngModelOptions]="{standalone: true}"
+                                                                [name]="xmodulo"
+                                                                [(ngModel)]="xmodulo"
+                                                                [data]="dataModulo"
+                                                                [searchKeyword]="keyword"
+                                                                (selected)='selectEventModulo($event)'
+                                                                (inputFocused)='onFocusedModulo($event)'
+                                                                [itemTemplate]="itemTemplate">    
                                                             </ng-autocomplete>
                                                             
                                                             <ng-template #itemTemplate let-item >
@@ -164,8 +166,11 @@
                                                             <option value=0>INACTIVO</option>
                                                         </select>
                                                         <div class="input-group-append">
-                                                                <button type="button" class="btn {{colormenu}}" (click)="GuardarMenu()">
-                                                                    <i class="icon-plus"></i></button>
+                                                                <button type="button" class="btn {{colormenu}}" 
+                                                                    [disabled]="!bGuardar"
+                                                                    (click)="GuardarMenu()">
+                                                                    <i class="icon-plus"></i>
+                                                                </button>
                                                                 
                                                         </div>
                                                     </div>
@@ -244,8 +249,7 @@
 
 <ng-template #frmAccion let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Crear Acciones</h4>
-        
+        <h6 class="modal-title" id="modal-basic-title">Crear Acciones</h6>
     </div>
     <div class="modal-body">
         <form #form="ngForm">
@@ -336,7 +340,7 @@
 
 <ng-template #frmSubMenu let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Crear SubMenus</h4>
+        <h6 class="modal-title" id="modal-basic-title">Crear SubMenus</h6>
         
     </div>
     <div class="modal-body">

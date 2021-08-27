@@ -28,11 +28,21 @@ type WPanel struct {
 //ListarModulos una interfaz blanca
 func (wp *WPanel) ListarModulos(w http.ResponseWriter, r *http.Request) {
 	Cabecera(w, r)
+
+	fmt.Println("Entrando en los datos")
+
 	var directorio util.Directorio
-	directorio.Listar("./public_web/www/inc", true)
-	j, _ := json.Marshal(directorio.Listado)
-	w.WriteHeader(http.StatusOK)
-	w.Write(j)
+	err := directorio.Listar("./public_web/www/ipostel/inc", true)
+
+	if err == nil {
+		j, _ := json.Marshal(directorio.Listado)
+		w.WriteHeader(http.StatusOK)
+		w.Write(j)
+	} else {
+		w.WriteHeader(http.StatusForbidden)
+		w.Write([]byte("Error en la lista de archivos"))
+
+	}
 }
 
 //ListarArchivos una interfaz blanca
@@ -41,7 +51,7 @@ func (wp *WPanel) ListarArchivos(w http.ResponseWriter, r *http.Request) {
 	var directorio util.Directorio
 	var codigo = mux.Vars(r)
 
-	directorio.Listar("./public_web/www/inc/"+codigo["id"], false)
+	directorio.Listar("./public_web/www/ipostel/inc/"+codigo["id"], false)
 	j, _ := json.Marshal(directorio.Listado)
 	w.WriteHeader(http.StatusOK)
 	w.Write(j)
@@ -53,16 +63,20 @@ func (wp *WPanel) ProcesarHTML(w http.ResponseWriter, r *http.Request) {
 	var Ws webscraper.WebScraping
 	e := json.NewDecoder(r.Body).Decode(&wp)
 	if e == nil {
+		Ws.Ruta = "./public_web/www/ipostel/inc/" + wp.Modulo + "/" + wp.Archivo
+		err := Ws.Leer()
+		if err != nil {
+			fmt.Println("Error. ", err.Error())
+		}
+		j := Ws.Ver()
+		w.WriteHeader(http.StatusOK)
+		w.Write(j)
+	} else {
 
+		w.WriteHeader(http.StatusForbidden)
+		w.Write([]byte("Error al procesar archivos"))
 	}
-	Ws.Ruta = "./public_web/www/inc/" + wp.Modulo + "/" + wp.Archivo
-	err := Ws.Leer()
-	if err != nil {
-		fmt.Println("Error. ", err.Error())
-	}
-	j := Ws.Ver()
-	w.WriteHeader(http.StatusOK)
-	w.Write(j)
+
 }
 
 //GenerarAPIHTML una interfaz blanca
@@ -74,7 +88,7 @@ func (wp *WPanel) GenerarAPIHTML(w http.ResponseWriter, r *http.Request) {
 	if e == nil {
 
 	}
-	ws.Ruta = "./public_web/www/inc/" + wp.Modulo + "/" + wp.Archivo
+	ws.Ruta = "./public_web/www/ipostel/inc/" + wp.Modulo + "/" + wp.Archivo
 	err := ws.Leer()
 	if err != nil {
 		fmt.Println("Error. ", err.Error())
@@ -124,6 +138,14 @@ func (wp *WPanel) Sh(w http.ResponseWriter, r *http.Request) {
 func (wp *WPanel) Drivers(w http.ResponseWriter, r *http.Request) {
 	Cabecera(w, r)
 	j, _ := json.Marshal(sys.DRIVERS)
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
+}
+
+//Conexiones una interfaz blanca para ejecutar comando del sistema operativo
+func (wp *WPanel) WConexiones(w http.ResponseWriter, r *http.Request) {
+	Cabecera(w, r)
+	j, _ := json.Marshal(sys.Conexiones)
 	w.WriteHeader(http.StatusOK)
 	w.Write(j)
 }

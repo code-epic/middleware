@@ -93,7 +93,6 @@ func (C *Core) Asignar(v map[string]interface{}) (jSon []byte, err error) {
 
 //OperarConsulta Control de resultados
 func (C *Core) OperarConsulta(v map[string]interface{}) (jSon []byte, err error) {
-
 	jSon, err = C.CrearQuery(v)
 	return
 }

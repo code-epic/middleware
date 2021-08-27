@@ -39,7 +39,7 @@ export class MenuComponent implements OnInit {
     estatus: false
   };
 
-  aplicacion :string = ""
+  aplicacion :string = ''
   rowDataAcc: any
   rowDataSub: any
   closeResult : string  = ''
@@ -50,36 +50,35 @@ export class MenuComponent implements OnInit {
   datamenu = []
 
   colormenu = "btn-success"
-  modulo : string = ""
-  menu : string = "" //id
-  menuid : string = ""
-  accionid : string = ""
-  xmenu : string = "" //nombre
-  xnombre : string = "" //nombre
-  xurl  : string = ""
-  xjs  : string = ""
-  xcss : string = ""
-  xcolor: string = ""
-  xestatus : string = "1"
+  modulo    : string = ''
+  xmodulo   : string = ''
+  moduloid  : string = ''
+  menu      : string = '' //id
+  menuid    : string = ''
+  accionid  : string = ''
+  xmenu     : string = '' //nombre
+  xnombre   : string = '' //nombre
+  xurl      : string = ''
+  xjs       : string = ''
+  xcss      : string = ''
+  xcolor    : string = ''
+  xestatus  : string = '1'
 
-  metodo: string = "0"
-  nombre: string = ""
-  funcion: string = ""
-  endpoint : string = ""
-  directiva : string = ""
+  metodo    : string = '0'
+  nombre    : string = ''
+  funcion   : string = ''
+  endpoint  : string = ''
+  directiva : string = ''
   
 
   divSubAcciones = 'none'
+  private bGuardar : boolean = false
 
   constructor(private modalService: NgbModal, private softwareService : SoftwareService) { }
 
   ngOnInit(): void {
-    
     this.lstAplicaciones()
-
-
   }
-
 
   async lstAplicaciones(){
     this.xAPI.funcion = "LstAplicaciones";
@@ -102,7 +101,7 @@ export class MenuComponent implements OnInit {
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.forEach(e => {          
-          this.dataModulo.push({id: e.id, name: e.nomb + " | " + e.descr });  
+          this.dataModulo.push({ id: e.id, name: e.nomb  });  
         });             
       },
       (error) => {
@@ -111,35 +110,46 @@ export class MenuComponent implements OnInit {
     )
   }
 
-
-
-
   selectEventModulo(item) {
-    this.modulo = item.id;
+    this.moduloid = item.id;
+    this.modulo = item.name;
     this.consultarMenu()
   }
 
-  onFocusedMenu(item) {
-    this.menu =  ""
-    this.menuid = ""
-    //this.consultarMenu()
+  onFocusedModulo(item) {
+    this.moduloid = '';
+    this.modulo = '';
   }
 
+  onFocusedMenu(item) {
+    if( this.moduloid == '' ) this.guardarModulo()
+    this.menu =  ''
+    this.menuid = ''
+  }
 
   selectEventMenu(item) {
     this.menu =  item.name
     this.menuid = item.id
-    //this.consultarMenu()
+  }
+
+  guardarModulo(){
+    this.xAPI.parametros =  this.xmodulo + "," + this.aplicacion
+    this.xAPI.funcion = "AgregarModulo"
+    this.softwareService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+       this.moduloid = data.msj
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
   }
 
   selectEventUrl(item) {
-    console.log(item)
     this.xurl = item.name;
   }
 
-
-  consultarMenu(acc : string = ""){
-    
+  consultarMenu(acc : string = ''){
     this.xAPI.funcion = "LstMenus"
     this.xAPI.parametros = this.modulo
     this.xnombre = this.menu
@@ -159,20 +169,17 @@ export class MenuComponent implements OnInit {
   }
 
   OMenuAccion(){
+    this.bGuardar = true
     this.colormenu = "btn-warning"
-    if ( this.menuid == "" ) {
+    if ( this.menuid == '' ) {
       this.xnombre = this.menu
       this.colormenu = "btn-success"
       return
     }
     this.xAPI.funcion = "OMenuAccion"
     this.xAPI.parametros = this.menuid
-    console.log("ID: " +  this.menuid)
-
-
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-       
         var i = 0
         var lista = []
         data.forEach(e => {    
@@ -194,25 +201,19 @@ export class MenuComponent implements OnInit {
         this.rowDataAcc = lista;  
       },
       (error) => {
-        console.log("")
+        console.log('')
       }
     )
   }
 
-
   GuardarMenu(){
-
-    
     this.xAPI.parametros = this.xurl + "," + this.xjs + ",icon-test,"+ this.xnombre + ","
     this.xAPI.parametros +=  this.xcss + "," + this.xcolor + "," + this.xestatus + "," + this.modulo
-    if(this.menuid == ""){
-      this.xAPI.funcion = "AgregarMenu";
-    }else{
+    this.xAPI.funcion = "AgregarMenu";
+    if(this.menuid != ''){
       this.xAPI.funcion = "ActualizarMenu";
-      console.log(this.menuid)
       this.xAPI.parametros += "," + this.menuid
-    }
-    
+    }   
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
        this.menuid = this.xAPI.funcion == "AgregarMenu"? data.msj: this.menuid
@@ -223,17 +224,9 @@ export class MenuComponent implements OnInit {
     )
   }
 
-
-
-
-
   GuardarAccion(){
     this.xAPI.funcion = "AgregarAccion";
-
-    this.xAPI.parametros = this.endpoint + "," + this.nombre + ","+ this.funcion + "," + this.directiva 
-    
-    
-    
+    this.xAPI.parametros = this.endpoint + "," + this.nombre + ","+ this.funcion + "," + this.directiva     
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         console.info(data) 
@@ -247,15 +240,12 @@ export class MenuComponent implements OnInit {
   }
 
   MenuAccionGuardar(){
-    console.log("Consultado menu ID: " + this.menuid + " @  " + this.accionid)
     this.xAPI.funcion = "AgregarAccionMenu";
-
     this.xAPI.parametros = this.menuid + "," + this.accionid
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         console.info(data) 
         this.OMenuAccion()
-        
       },
       (error) => {
         console.log(error)
@@ -264,10 +254,10 @@ export class MenuComponent implements OnInit {
   }
 
   limpiarMenu(){
-    this.xnombre = ""     
-    this.xurl = "" 
-    this.xjs = ""
-    this.xcss = ""
+    this.xnombre = ''     
+    this.xurl = '' 
+    this.xjs = ''
+    this.xcss = ''
     //this.xicon = e.icon
     //this.xcolor  = e.color
     this.xestatus = "1"
@@ -275,10 +265,10 @@ export class MenuComponent implements OnInit {
 
   limpiarMenuAcciones(){
     this.metodo= "0"
-    this.nombre = ""
-    this.funcion = ""
-    this.directiva = ""
-    this.endpoint = ""
+    this.nombre = ''
+    this.funcion = ''
+    this.directiva = ''
+    this.endpoint = ''
   }
 
   modalAccion(content){
