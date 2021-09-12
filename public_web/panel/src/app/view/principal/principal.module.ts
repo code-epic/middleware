@@ -72,6 +72,7 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 import { SubmenuComponent } from './aplicaciones/menu/submenu/submenu.component';
 import { PaqueteComponent } from './aplicaciones/sotfware/paquete/paquete.component';
+import { EventosComponent } from './aplicaciones/eventos/eventos.component';
 
 
 
@@ -92,6 +93,7 @@ import { PaqueteComponent } from './aplicaciones/sotfware/paquete/paquete.compon
     BotonComponent,
     SubmenuComponent,
     PaqueteComponent,
+    EventosComponent,
   
   ],
   imports: [

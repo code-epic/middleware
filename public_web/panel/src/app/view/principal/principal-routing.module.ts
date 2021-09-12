@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ChartsModule } from 'ng2-charts';
 import { AuthGuardGuard } from '../../service/seguridad/auth-guard.guard';
+import { EventosComponent } from './aplicaciones/eventos/eventos.component';
 import { MenuComponent } from './aplicaciones/menu/menu.component';
 import { SotfwareComponent } from './aplicaciones/sotfware/sotfware.component';
 import { ApiComponent } from './herramientas/api/api.component';
@@ -75,6 +76,11 @@ export const routes: Routes = [
       {
         path: 'monitoreo',
         component: MonitoreoComponent,
+        canActivate:[AuthGuardGuard]
+      },
+      {
+        path: 'eventos',
+        component: EventosComponent,
         canActivate:[AuthGuardGuard]
       }
     ]
