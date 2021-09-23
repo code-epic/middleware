@@ -62,6 +62,8 @@ export class MenuComponent implements OnInit {
   xjs       : string = ''
   xcss      : string = ''
   xcolor    : string = ''
+  xicono    : string = ''
+  
   xestatus  : string = '1'
 
   metodo    : string = '0'
@@ -101,7 +103,7 @@ export class MenuComponent implements OnInit {
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.forEach(e => {          
-          this.dataModulo.push({ id: e.id, name: e.nomb  });  
+          this.dataModulo.push({ id: e.id, name: e.nomb  })
         });             
       },
       (error) => {
@@ -151,10 +153,11 @@ export class MenuComponent implements OnInit {
 
   consultarMenu(acc : string = ''){
     this.xAPI.funcion = "LstMenus"
-    this.xAPI.parametros = this.modulo
+    
+    this.xAPI.parametros = this.moduloid
     this.xnombre = this.menu
     this.datamenu = []
-
+    
     this.softwareService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         

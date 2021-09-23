@@ -18,6 +18,7 @@ func (C *Core) InsertNOSQL(coleccion string, v interface{}) (jSon []byte, err er
 	rs, err := c.InsertOne(sys.Contexto, v)
 	if err != nil {
 		fmt.Println("Error creando Coleccion en Mongodb ", err.Error())
+		sys.QueryLog.Println("NoSQL: ", err.Error())
 	}
 	jSon, _ = json.Marshal(rs)
 	return

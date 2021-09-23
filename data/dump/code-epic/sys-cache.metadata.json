@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"75be4557c60d43dd8b0f29a2c2025bc5","collectionName":"sys-cache"}
