@@ -36,7 +36,6 @@ CREATE TABLE `GEO_001_Paises` (
   `nombre` varchar(128) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
---
 -- Volcado de datos para la tabla `GEO_001_Paises`
 --
 
@@ -2530,6 +2529,33 @@ CREATE TABLE `tech` (
 
 INSERT INTO `tech` (`oid`, `nombre`, `version`, `fecha`) VALUES
 (1, 'Panel', '1.0.0 RC.1', '2021-05-23 19:45:34');
+
+
+
+DROP TABLE IF EXISTS `Bots_Lenguaje`;
+CREATE TABLE `Bots_Lenguaje` (
+  `id` int UNSIGNED NOT NULL,
+  `idio` varchar(8) DEFAULT NULL,
+  `tipo` varchar(1) DEFAULT NULL,
+  `clas` varchar(32),
+  `preg` TEXT,
+  `resp` TEXT,
+  `obse` TEXT,
+  FULLTEXT (preg, resp)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+
+--
+-- Indices de la tabla `Bots_Lenguaje`
+--
+ALTER TABLE `Bots_Lenguaje`
+  ADD PRIMARY KEY (`id`);
+--
+-- AUTO_INCREMENT de la tabla `Bots_Lenguaje`
+--
+ALTER TABLE `Bots_Lenguaje`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+
 
 --
 -- Índices para tablas volcadas

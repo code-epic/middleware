@@ -31,6 +31,7 @@ type ApiCore struct {
 	Modulo       string             `json:"modulo"`
 	Driver       string             `json:"driver"`
 	Tipo         string             `json:"tipo"`
+	PreCodigo    string             `json:"precodigo"`
 	Coleccion    string             `json:"coleccion"`
 	Query        string             `json:"query"`
 	Parametros   string             `json:"parametros"`
