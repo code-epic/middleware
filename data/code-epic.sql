@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 04-07-2021 a las 15:47:46
+-- Tiempo de generación: 09-12-2021 a las 20:37:32
 -- Versión del servidor: 8.0.22
 -- Versión de PHP: 8.0.6
 
@@ -24,18 +24,57 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `BOT_001_Chat`
+--
+
+CREATE TABLE `BOT_001_Chat` (
+  `id` int UNSIGNED NOT NULL,
+  `idio` varchar(8) DEFAULT NULL,
+  `tipo` varchar(1) DEFAULT NULL,
+  `clas` varchar(32) DEFAULT NULL,
+  `preg` text,
+  `resp` text,
+  `obse` text
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+--
+-- Volcado de datos para la tabla `BOT_001_Chat`
+--
+
+INSERT INTO `BOT_001_Chat` (`id`, `idio`, `tipo`, `clas`, `preg`, `resp`, `obse`) VALUES
+(1, 'ESP', 'N', 'saludo', 'hola|Buenas|Buenos|Saludos|Quien Eres', '¡Hola! Soy Ipostelin, tu asistente virtual dispuesto a ayudarte para hacerte más fácil el día.\r\n\r\nCuéntame, ¿qué necesitas saber?', 'Saludo natural'),
+(2, 'ESP', 'I', 'localizacion', '¿Dónde se encuentra ubicado mi paquete?|como ubico mi paquete|ubicacion de mi paquete', 'Debe comunicarse con su número de envió al 0212-405 3097, 3272, 3215, 3127, 3095, 3088. También se encuentra a su disposición nuestro WhatsApp \r\n0426-2156869', 'Como puedo ubicar mi paquete'),
+(3, 'ESP', 'N', 'localizacion', '¿Cómo enviar un paquete?|como enviar paquetes', 'Desea consignar su envío desde Venezuela al extranjero o del extranjero a Venezuela?', 'envio de paquetes'),
+(4, 'ESP', 'N', 'localizacion', '¿Cuándo llega mi paquete?|cuando llega mi envio|a que numero puedo llamar', 'Debe comunicarse con su número de envió al 0212-405 3097, 3272, 3215, 3127, 3095, 3088. También se encuentra a su disposición nuestro WhatsApp \r\n0426-2156869', 'Preguntas'),
+(5, 'ESP', 'N', 'localizacion', '¿Cuál es mi oficina más cercana?', 'Por favor debe indicarnos su dirección y con gusto le informaremos cual es la oficina postal telegráfica mas cercana a su zona ', NULL),
+(6, 'ESP', 'N', 'localizacion', '¿Cuáles son las oficinas disponibles?', ' Cronograma de apertura de las oficinas (CNC)', NULL),
+(7, 'ESP', 'N', 'localizacion', '¿Cuáles son las oficinas de Caracas?', 'Cronograma de apertura de las oficinas (CNC)', NULL),
+(8, 'ESP', 'I', 'reclamo', 'Realice un reclamo y no tengo respuesta| donde puedo hacer un reclamo|deseo hacer un reclamo', 'Debe comunicarse con su número de envió y reclamo al 0212-405 3097, 3272, 3215, 3127, 3095, 3088. También se encuentra a su disposición nuestro WhatsApp \r\n0426-2156869\r\nRealice un reclamo y no tengo respuesta', 'donde hacer reclamos'),
+(9, 'ESP', 'I', 'reclamo', 'Mi encomienda, paquete, se encuentra en mal estado|encomiendo dañada|reclamar paquete', 'Usted debe comunicarse al 0212-405 3097, 3272, 3215, 3127, 3095, 3088.', NULL),
+(10, 'ESP', 'I', 'reclamo', '¿Dónde puedo llamar para hacer un reclamo formal?|deseo hacer un reclamo|donde puedo reclamar', 'Si el envío es consignación nacional. Usted debe comunicarse al 0212-405 3097, 3272, 3215, 3127, 3095, 3088. También se encuentra a su disposición nuestro WhatsApp \r\n0426-2156869.\r\n\r\nSi es consignación al extranjero. Su remitente debe dirigirse a la oficina postal internacional de origen donde consignó el envío para realizar su reclamo formal.\r\n', NULL),
+(11, 'ESP', 'I', 'reclamo', '¿Por qué mi paquete no llega?|mi paquete se extravio| envio extraviado', 'Debe comunicarse con su número de envió al 0212-405 3097, 3272, 3215, 3127, 3095, 3088.', NULL),
+(12, 'ESP', 'I', 'reclamo', '¿Me cobraron sobreprecio en el envió?', 'Usted debe comunicarse al 0212-405 3097, 3272, 3215, 3127, 3095, 3088. También se encuentra a su disposición nuestro WhatsApp \r\n0426-2156869', NULL),
+(13, 'ESP', 'I', 'reclamo', '¿Existe un lugar donde pueda ir a reclamar en persona?', 'Puede dirigirse a nuestra oficina principal ubicada en la av. José Ángel Lamas, Edificio Centro Postal Caracas PB División de reclamaciones nacionales e internacionales, San Martín 1020 Caracas o en cualquiera de nuestras oficinas Postales Telegráficas en el ámbito Nacional y con gusto le atenderán.', NULL),
+(14, 'ESP', 'I', 'asistencia', '¿Cuánto sale enviar un paquete desde, hasta?', 'Desplegar el cátalo de servicio y luego de elegido el mismo se calcula el peso volumétrico', NULL),
+(15, 'ESP', 'I', 'asistencia', '¿Qué horarios hay disponibles?', ' Cronograma de apertura de las oficinas (CNC) <a href=\'\'>Descargar</a>', NULL),
+(16, 'ESP', 'I', 'asistencia', '¿Cómo puedo saber el código de una oficina?', 'Indíqueme por favor el nombre de oficina o  dirección y con gusto le indicaremos la información.', NULL),
+(17, 'ESP', 'I', 'asistencia', '¿Cuánto tiempo tarda un envió al exterior?', 'Esta información depende del país de origen donde se realizó la consignación y el destino del mismo.', NULL);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `GEO_001_Paises`
 --
 
-DROP TABLE IF EXISTS `GEO_001_Paises`;
 CREATE TABLE `GEO_001_Paises` (
   `id` int UNSIGNED NOT NULL,
   `code` smallint DEFAULT NULL,
   `iso3166a1` char(2) DEFAULT NULL,
   `iso3166a2` char(3) DEFAULT NULL,
-  `nombre` varchar(128) DEFAULT NULL
+  `nombre` varchar(128) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
+--
 -- Volcado de datos para la tabla `GEO_001_Paises`
 --
 
@@ -284,22 +323,21 @@ INSERT INTO `GEO_001_Paises` (`id`, `code`, `iso3166a1`, `iso3166a2`, `nombre`) 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `GEO_002_Ciudades`
+-- Estructura de tabla para la tabla `GEO_002_Ciudadesx`
 --
 
-DROP TABLE IF EXISTS `GEO_002_Ciudades`;
-CREATE TABLE `GEO_002_Ciudades` (
+CREATE TABLE `GEO_002_Ciudadesx` (
   `id_ciudad` int NOT NULL,
   `id_estado` int NOT NULL,
-  `ciudad` varchar(200) NOT NULL,
+  `ciudad` varchar(200) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `capital` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `GEO_002_Ciudades`
+-- Volcado de datos para la tabla `GEO_002_Ciudadesx`
 --
 
-INSERT INTO `GEO_002_Ciudades` (`id_ciudad`, `id_estado`, `ciudad`, `capital`) VALUES
+INSERT INTO `GEO_002_Ciudadesx` (`id_ciudad`, `id_estado`, `ciudad`, `capital`) VALUES
 (1, 1, 'Maroa', 0),
 (2, 1, 'Puerto Ayacucho', 1),
 (3, 1, 'San Fernando de Atabapo', 0),
@@ -805,10 +843,9 @@ INSERT INTO `GEO_002_Ciudades` (`id_ciudad`, `id_estado`, `ciudad`, `capital`) V
 -- Estructura de tabla para la tabla `GEO_003_Estados`
 --
 
-DROP TABLE IF EXISTS `GEO_003_Estados`;
 CREATE TABLE `GEO_003_Estados` (
   `id_estado` int NOT NULL,
-  `estado` varchar(250) NOT NULL,
+  `estado` varchar(250) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `iso_3166-2` varchar(4) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;
 
@@ -849,7 +886,6 @@ INSERT INTO `GEO_003_Estados` (`id_estado`, `estado`, `iso_3166-2`) VALUES
 -- Estructura de tabla para la tabla `GEO_004_Municipios`
 --
 
-DROP TABLE IF EXISTS `GEO_004_Municipios`;
 CREATE TABLE `GEO_004_Municipios` (
   `id_municipio` int NOT NULL,
   `id_estado` int NOT NULL,
@@ -1203,7 +1239,6 @@ INSERT INTO `GEO_004_Municipios` (`id_municipio`, `id_estado`, `municipio`) VALU
 -- Estructura de tabla para la tabla `GEO_005_Parroquias`
 --
 
-DROP TABLE IF EXISTS `GEO_005_Parroquias`;
 CREATE TABLE `GEO_005_Parroquias` (
   `id_parroquia` int NOT NULL,
   `id_municipio` int NOT NULL,
@@ -2360,19 +2395,26 @@ INSERT INTO `GEO_005_Parroquias` (`id_parroquia`, `id_municipio`, `parroquia`) V
 -- Estructura de tabla para la tabla `SEC_001_Aplicacion`
 --
 
-DROP TABLE IF EXISTS `SEC_001_Aplicacion`;
 CREATE TABLE `SEC_001_Aplicacion` (
   `id` int UNSIGNED NOT NULL,
   `type` int NOT NULL,
-  `serv` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `nomb` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `vers` varchar(16) COLLATE utf8_spanish_ci NOT NULL,
-  `sope` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `db` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
-  `idio` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `user` varchar(30) COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `serv` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre de Aplicacion',
+  `vers` varchar(16) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `sope` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `db` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `idio` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `obse` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `user` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `SEC_001_Aplicacion`
+--
+
+INSERT INTO `SEC_001_Aplicacion` (`id`, `type`, `serv`, `nomb`, `vers`, `sope`, `db`, `idio`, `obse`, `user`) VALUES
+(1, 2, '127.0.1.1', 'ipostel', 'v1.0.0.1', 'LINUX', 'MYSQL', 'PHP', 'Sistema del Core Postal Venezolano', 'admin'),
+(2, 2, '127.0.1.1', 'sssifanb', 'V1.0.0.1', 'MACOS', 'POSTGRES', 'PHP', 'Sistema de Seguridad Social Integral de la Fuerza Armada Bolivariana', 'admin');
 
 -- --------------------------------------------------------
 
@@ -2380,16 +2422,28 @@ CREATE TABLE `SEC_001_Aplicacion` (
 -- Estructura de tabla para la tabla `SEC_002_Api`
 --
 
-DROP TABLE IF EXISTS `SEC_002_Api`;
 CREATE TABLE `SEC_002_Api` (
-  `id` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `nomb` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `func` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `descr` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `param` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `id` bigint UNSIGNED NOT NULL,
+  `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `idfunc` varchar(128) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Id de la Funcion HEX',
+  `func` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `descr` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `param` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `esta` int NOT NULL,
   `idapp` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `SEC_002_Api`
+--
+
+INSERT INTO `SEC_002_Api` (`id`, `nomb`, `idfunc`, `func`, `descr`, `param`, `esta`, `idapp`) VALUES
+(1, 'seguridad', '60e46a159727d7cd4fec89de', 'ListarPaises', 'Listar los paises del mundo con codigos', '', 1, 2),
+(2, 'Control', '61129ed14cb46cb19491b515', 'ListarDiezPaises', 'Diez Paises', '', 1, 2),
+(3, 'Consulta', '60e308d338db6904898622e7', 'LstComunicaciones', 'Listar consultas en general', '', 1, 1),
+(4, 'SEGURIDAD', '60e4cce514f3854d338c109d', 'LstMenus', 'Listar los menus asociados a un. modulos', '', 1, 1),
+(5, 'OPERATIVA', '61437035602b8158cbd2cf81', 'LstTaquillas', 'Listado de Taquillas activas', '', 1, 1),
+(6, 'Control', '6149e042bcf8621345919d43', 'InsertarCliente', 'Insertar un Cliente Activo', '', 1, 2);
 
 -- --------------------------------------------------------
 
@@ -2397,13 +2451,12 @@ CREATE TABLE `SEC_002_Api` (
 -- Estructura de tabla para la tabla `SEC_003_Conexion`
 --
 
-DROP TABLE IF EXISTS `SEC_003_Conexion`;
 CREATE TABLE `SEC_003_Conexion` (
-  `id` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `nomb` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `func` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `descr` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `param` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `id` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `func` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `descr` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `param` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `esta` int NOT NULL,
   `idapp` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -2414,12 +2467,20 @@ CREATE TABLE `SEC_003_Conexion` (
 -- Estructura de tabla para la tabla `SEC_004_Modulo`
 --
 
-DROP TABLE IF EXISTS `SEC_004_Modulo`;
 CREATE TABLE `SEC_004_Modulo` (
   `id` int UNSIGNED NOT NULL,
-  `descr` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `nomb` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `descr` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
   `idapp` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `SEC_004_Modulo`
+--
+
+INSERT INTO `SEC_004_Modulo` (`id`, `nomb`, `descr`, `idapp`) VALUES
+(1, 'Oficina Postal Privada', NULL, 1),
+(2, 'Nomina', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -2427,18 +2488,25 @@ CREATE TABLE `SEC_004_Modulo` (
 -- Estructura de tabla para la tabla `SEC_005_Menu`
 --
 
-DROP TABLE IF EXISTS `SEC_005_Menu`;
 CREATE TABLE `SEC_005_Menu` (
   `id` int UNSIGNED NOT NULL,
-  `url` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `js` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `icon` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `nomb` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `clase` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `color` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `url` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `js` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `icon` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `clase` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `color` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `type` int NOT NULL,
   `idmod` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `SEC_005_Menu`
+--
+
+INSERT INTO `SEC_005_Menu` (`id`, `nomb`, `url`, `js`, `icon`, `clase`, `color`, `type`, `idmod`) VALUES
+(1, 'Buzon', 'google.co.ve', 'acc', 'icon-test', 'new-top', '', 1, 1),
+(2, 'Archivos', '', 'cargarstyle()', 'icon-test', 'file-upload', '', 1, 1);
 
 -- --------------------------------------------------------
 
@@ -2446,15 +2514,14 @@ CREATE TABLE `SEC_005_Menu` (
 -- Estructura de tabla para la tabla `SEC_006_SubMenu`
 --
 
-DROP TABLE IF EXISTS `SEC_006_SubMenu`;
 CREATE TABLE `SEC_006_SubMenu` (
   `id` int UNSIGNED NOT NULL,
-  `url` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `js` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `icon` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `nomb` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `clase` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `color` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `url` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `js` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `icon` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `clase` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `color` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `type` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -2464,14 +2531,23 @@ CREATE TABLE `SEC_006_SubMenu` (
 -- Estructura de tabla para la tabla `SEC_007_Accion`
 --
 
-DROP TABLE IF EXISTS `SEC_007_Accion`;
 CREATE TABLE `SEC_007_Accion` (
   `id` int UNSIGNED NOT NULL,
-  `endpoint` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `nomb` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `func` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
-  `direc` varchar(256) COLLATE utf8_spanish_ci NOT NULL
+  `endpoint` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `func` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `direc` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `SEC_007_Accion`
+--
+
+INSERT INTO `SEC_007_Accion` (`id`, `endpoint`, `nomb`, `func`, `direc`) VALUES
+(1, '/v1/api/crud[LstPendiente]', 'Pendientes', 'Pendientes()', '@param\nestatus=0 AND fecha BETWEEN $finicio AND  $ffin;'),
+(2, '/v1/api/crud[LstProcesados]', 'Procesados', 'Procesados()', '@param\nestatus=1'),
+(3, '/v1/api/crud[LstConcilliados]', 'Conciliados', 'Conciliados()', '@param\nfech BETWEEN $finicio AND $ffin'),
+(4, 'https://localhost/v1/api/crud', 'Listar Taquillas', 'LstTaquillas()', '@import validate txtnumero:number');
 
 -- --------------------------------------------------------
 
@@ -2479,11 +2555,19 @@ CREATE TABLE `SEC_007_Accion` (
 -- Estructura de tabla para la tabla `SEC_008_Menu_Accion`
 --
 
-DROP TABLE IF EXISTS `SEC_008_Menu_Accion`;
 CREATE TABLE `SEC_008_Menu_Accion` (
   `idmenu` int UNSIGNED DEFAULT NULL,
   `idact` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `SEC_008_Menu_Accion`
+--
+
+INSERT INTO `SEC_008_Menu_Accion` (`idmenu`, `idact`) VALUES
+(1, 1),
+(1, 2),
+(1, 3);
 
 -- --------------------------------------------------------
 
@@ -2491,7 +2575,6 @@ CREATE TABLE `SEC_008_Menu_Accion` (
 -- Estructura de tabla para la tabla `SEC_009_Menu_SubMenu`
 --
 
-DROP TABLE IF EXISTS `SEC_009_Menu_SubMenu`;
 CREATE TABLE `SEC_009_Menu_SubMenu` (
   `idmenu` int UNSIGNED DEFAULT NULL,
   `idsub` int UNSIGNED DEFAULT NULL
@@ -2503,7 +2586,6 @@ CREATE TABLE `SEC_009_Menu_SubMenu` (
 -- Estructura de tabla para la tabla `SEC_010_SubMenu_Action`
 --
 
-DROP TABLE IF EXISTS `SEC_010_SubMenu_Action`;
 CREATE TABLE `SEC_010_SubMenu_Action` (
   `idsub` int UNSIGNED DEFAULT NULL,
   `idact` int UNSIGNED DEFAULT NULL
@@ -2515,11 +2597,10 @@ CREATE TABLE `SEC_010_SubMenu_Action` (
 -- Estructura de tabla para la tabla `tech`
 --
 
-DROP TABLE IF EXISTS `tech`;
 CREATE TABLE `tech` (
   `oid` int NOT NULL,
-  `nombre` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
-  `version` varchar(16) COLLATE utf8_spanish_ci NOT NULL,
+  `nombre` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  `version` varchar(16) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -2530,36 +2611,16 @@ CREATE TABLE `tech` (
 INSERT INTO `tech` (`oid`, `nombre`, `version`, `fecha`) VALUES
 (1, 'Panel', '1.0.0 RC.1', '2021-05-23 19:45:34');
 
-
-
-DROP TABLE IF EXISTS `Bots_Lenguaje`;
-CREATE TABLE `Bots_Lenguaje` (
-  `id` int UNSIGNED NOT NULL,
-  `idio` varchar(8) DEFAULT NULL,
-  `tipo` varchar(1) DEFAULT NULL,
-  `clas` varchar(32),
-  `preg` TEXT,
-  `resp` TEXT,
-  `obse` TEXT,
-  FULLTEXT (preg, resp)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
-
-
---
--- Indices de la tabla `Bots_Lenguaje`
---
-ALTER TABLE `Bots_Lenguaje`
-  ADD PRIMARY KEY (`id`);
---
--- AUTO_INCREMENT de la tabla `Bots_Lenguaje`
---
-ALTER TABLE `Bots_Lenguaje`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
-
 --
 -- Índices para tablas volcadas
 --
+
+--
+-- Indices de la tabla `BOT_001_Chat`
+--
+ALTER TABLE `BOT_001_Chat`
+  ADD PRIMARY KEY (`id`);
+ALTER TABLE `BOT_001_Chat` ADD FULLTEXT KEY `preg` (`preg`,`resp`);
 
 --
 -- Indices de la tabla `GEO_001_Paises`
@@ -2568,9 +2629,9 @@ ALTER TABLE `GEO_001_Paises`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indices de la tabla `GEO_002_Ciudades`
+-- Indices de la tabla `GEO_002_Ciudadesx`
 --
-ALTER TABLE `GEO_002_Ciudades`
+ALTER TABLE `GEO_002_Ciudadesx`
   ADD PRIMARY KEY (`id_ciudad`),
   ADD KEY `id_estado` (`id_estado`);
 
@@ -2601,6 +2662,12 @@ ALTER TABLE `SEC_001_Aplicacion`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `SEC_002_Api`
+--
+ALTER TABLE `SEC_002_Api`
+  ADD PRIMARY KEY (`id`);
+
+--
 -- Indices de la tabla `SEC_004_Modulo`
 --
 ALTER TABLE `SEC_004_Modulo`
@@ -2625,6 +2692,14 @@ ALTER TABLE `SEC_007_Accion`
   ADD PRIMARY KEY (`id`);
 
 --
+-- Indices de la tabla `SEC_008_Menu_Accion`
+--
+ALTER TABLE `SEC_008_Menu_Accion`
+  ADD UNIQUE KEY `idmenu_2` (`idmenu`,`idact`),
+  ADD KEY `idmenu` (`idmenu`),
+  ADD KEY `idact` (`idact`);
+
+--
 -- Indices de la tabla `tech`
 --
 ALTER TABLE `tech`
@@ -2635,15 +2710,21 @@ ALTER TABLE `tech`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `BOT_001_Chat`
+--
+ALTER TABLE `BOT_001_Chat`
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
 -- AUTO_INCREMENT de la tabla `GEO_001_Paises`
 --
 ALTER TABLE `GEO_001_Paises`
   MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
 
 --
--- AUTO_INCREMENT de la tabla `GEO_002_Ciudades`
+-- AUTO_INCREMENT de la tabla `GEO_002_Ciudadesx`
 --
-ALTER TABLE `GEO_002_Ciudades`
+ALTER TABLE `GEO_002_Ciudadesx`
   MODIFY `id_ciudad` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=523;
 
 --
@@ -2668,19 +2749,25 @@ ALTER TABLE `GEO_005_Parroquias`
 -- AUTO_INCREMENT de la tabla `SEC_001_Aplicacion`
 --
 ALTER TABLE `SEC_001_Aplicacion`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT de la tabla `SEC_002_Api`
+--
+ALTER TABLE `SEC_002_Api`
+  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `SEC_004_Modulo`
 --
 ALTER TABLE `SEC_004_Modulo`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `SEC_005_Menu`
 --
 ALTER TABLE `SEC_005_Menu`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `SEC_006_SubMenu`
@@ -2692,16 +2779,16 @@ ALTER TABLE `SEC_006_SubMenu`
 -- AUTO_INCREMENT de la tabla `SEC_007_Accion`
 --
 ALTER TABLE `SEC_007_Accion`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `GEO_002_Ciudades`
+-- Filtros para la tabla `GEO_002_Ciudadesx`
 --
-ALTER TABLE `GEO_002_Ciudades`
+ALTER TABLE `GEO_002_Ciudadesx`
   ADD CONSTRAINT `GEO_002_Ciudades_ibfk_1` FOREIGN KEY (`id_estado`) REFERENCES `GEO_003_Estados` (`id_estado`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --

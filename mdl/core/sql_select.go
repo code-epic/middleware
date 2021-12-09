@@ -54,15 +54,6 @@ func (C *Core) Select(v map[string]interface{}, consulta string, conexion *sql.D
 				case reflect.Slice:
 					valorstr := fmt.Sprintf("%s", contenido)
 					colassoc[col] = strings.Trim(valorstr, " ")
-
-					//colassoc[col] = util.Utf8_decode(strings.Trim(valorstr, " "))
-					/**
-						fmt.Println("----- ", valorstr)
-						fmt.Println("***** ", colassoc[col])
-						r, size := utf8.DecodeRuneInString(valorstr)
-						fmt.Println("+++++ ", r, size)
-					**/
-					//          fmt.Println("++++++ ", cadena )
 				case reflect.String:
 					colassoc[col] = evalreflect.String()
 				case reflect.Float32:
