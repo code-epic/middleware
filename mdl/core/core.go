@@ -53,6 +53,7 @@ type ApiCore struct {
 	Logs         bool               `json:"logs"`
 	Cache        int                `json:"cache"`
 	Descripcion  string             `json:"descripcion"`
+	Version      string             `json:"version"`
 	Resultado    interface{}        `json:"resultado"`
 }
 
@@ -65,7 +66,6 @@ func (C *Core) Asignar(v map[string]interface{}) (jSon []byte, err error) {
 	var Valores = false
 
 	for k, vs := range v {
-
 		if vs != nil {
 			switch k {
 			case "relacional":
@@ -79,6 +79,8 @@ func (C *Core) Asignar(v map[string]interface{}) (jSon []byte, err error) {
 				api.Query = vs.(string)
 			case "tipo":
 				api.Tipo = vs.(string)
+			case "precodigo":
+				api.PreCodigo = vs.(string)
 			}
 
 		}
@@ -98,7 +100,7 @@ func (C *Core) OperarConsulta(v map[string]interface{}) (jSon []byte, err error)
 	return
 }
 
-//actualizarEstatusAPI
+//actualizarEstatusAPI Identificar una API y cambiarle el estatus
 func actualizarEstatusAPI(fn string, estatus bool) (err error) {
 
 	c := sys.MongoDB.Collection(sys.APICORE)
@@ -112,6 +114,7 @@ func actualizarEstatusAPI(fn string, estatus bool) (err error) {
 	return
 }
 
+//parsearParametros evaluar parametros de la consultar y retornar una cadae con los reemplazos
 func parsearParametros(parametros string, consulta string) (cadena string) {
 	valores := strings.Split(parametros, ",")
 	cantidad := len(valores)

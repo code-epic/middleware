@@ -18,6 +18,7 @@ export interface IAPICore{
   relacional    ?:  boolean
   valores       ?:  any
   coleccion     ?:  string
+  version       ?:  string
   http          ?:  number
   https         ?:  number
   consumidores  ?:  string

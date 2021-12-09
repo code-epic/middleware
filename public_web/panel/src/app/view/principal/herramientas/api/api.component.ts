@@ -3,10 +3,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
 import { BotonComponent } from './componente/boton/boton.component';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
 import { ComunicacionesService } from '../../../../service/comunicaciones/comunicaciones.service';
-import { IConexiones } from '../../../../service/conexiones/conexiones.service';
 
 declare var $: any;
 
@@ -52,6 +51,8 @@ export class ApiComponent implements OnInit {
   coleccion : string = ''
   metodo : string = '0'
   consulta: string = ''
+  version: string = ''
+
   descripcion: string = ''
   prioridad : string = '0'
   log : boolean = false
@@ -74,6 +75,7 @@ export class ApiComponent implements OnInit {
     concurrencia : false,
     protocolo: '',
     ruta : '',
+    version: '',
     retorna : false,
     migrar : false,
     modulo : '',
@@ -204,6 +206,7 @@ export class ApiComponent implements OnInit {
     this.log = false
     this.cache = '0'
     this.entorno = 'desarrollo'
+    this.version = ''
     this.concurrencia = false
     this.retorna = true
   }
@@ -238,6 +241,7 @@ export class ApiComponent implements OnInit {
     this.xAPI.ruta = this.xruta
     this.xAPI.cache = parseInt(this.cache)
     this.xAPI.estatus = true
+    this.xAPI.version = this.version
     return this.xAPI
 
   }

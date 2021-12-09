@@ -158,6 +158,13 @@ Titulo: Panel de Control: APICORE
                                                                         [ngModelOptions]="{standalone: true}" [(ngModel)]="funcion"  value ="{{funcion}}">
                                                                     </div>
                                                                 </div>
+                                                                <div class="col-md-2">
+                                                                    <div class="form-group">
+                                                                        <label>Versión</label>
+                                                                        <input type="text" id="txtVersion" class="form-control" placeholder="Enter ..."  
+                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="version"  value ="{{version}}">
+                                                                    </div>
+                                                                </div>
                                                                 <div class="col-md-6">
                                                                     <div class="form-group">
                                                                         <label>Driver</label>
@@ -168,6 +175,10 @@ Titulo: Panel de Control: APICORE
                                                                         </select>
                                                                     </div>
                                                                 </div>
+                                                                
+                                                            </div>
+                                                            
+                                                            <div class="row" [ngStyle]="{'display':divConsultang}" >
                                                                 <div class="col-md-2">
                                                                     <div class="form-group">
                                                                         <label>Metodo</label>
@@ -181,9 +192,6 @@ Titulo: Panel de Control: APICORE
                                                                         </select>
                                                                     </div>
                                                                 </div>
-                                                            </div>
-                                                            
-                                                            <div class="row" [ngStyle]="{'display':divConsultang}" >
                                                                 <div class="col-md-2" >
                                                                     <div class="form-group">
                                                                         <label>Relacional</label>

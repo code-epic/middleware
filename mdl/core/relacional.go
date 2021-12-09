@@ -34,9 +34,7 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 
 		return jSon, err
 	}
-
 	consulta := parsearParametros(C.ApiCore.Parametros, C.ApiCore.Query)
-
 	if a.Coleccion != "" {
 		jSon, err = C.CrearNOSQL(C.ApiCore.Coleccion, consulta, xmongo)
 		return
@@ -74,6 +72,8 @@ func leerValores(v map[string]interface{}) (db *sql.DB, a ApiCore, mgo *mongo.Da
 	ApiCoreAux := retornaValores(v)
 	c := sys.MongoDB.Collection(sys.APICORE)
 	estatus := false
+
+	//fmt.Println("Conexiones... ", ApiCoreAux)
 
 	err := c.FindOne(sys.Contexto, bson.M{"funcion": ApiCoreAux.Funcion}).Decode(&a)
 	if err != nil {

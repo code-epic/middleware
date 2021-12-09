@@ -163,7 +163,6 @@ func (usr *Usuario) Salvar() (err error) {
 func (usr *Usuario) Validar(login string, clave string) (err error) {
 	usr.Nombre = ""
 	c := sys.MongoDB.Collection(sys.CUSUARIO)
-	//.Select(bson.M{"clave": false})
 	err = c.FindOne(sys.Contexto, bson.M{"login": login, "clave": clave}).Decode(&usr)
 	if err != nil {
 		fmt.Println("Error: Validar usuario # ", err.Error())

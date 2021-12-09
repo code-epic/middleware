@@ -89,12 +89,14 @@ func (u *WUsuario) Login(w http.ResponseWriter, r *http.Request) {
 	Cabecera(w, r)
 	e := json.NewDecoder(r.Body).Decode(&usuario)
 	util.Error(e)
-	usuario.Validar(usuario.Nombre, util.GenerarHash256([]byte(usuario.Clave)))
+	e = usuario.Validar(usuario.Nombre, util.GenerarHash256([]byte(usuario.Clave)))
+	util.Error(e)
 
 	if usuario.Login != "" {
 
 		usuario.Clave = ""
-		token := seguridad.GenerarJWT(usuario)
+		min := time.Minute * 15
+		token := seguridad.GenerarJWT(usuario, min)
 		result := seguridad.RespuestaToken{Token: token}
 		j, e := json.Marshal(result)
 
