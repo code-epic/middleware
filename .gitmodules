@@ -1,3 +1,6 @@
 [submodule "public_web/www/ipostel"]
 	path = public_web/www/ipostel
 	url = https://github.com/code-epic/ipostel
+[submodule "public_web/www/chatbot"]
+	path = public_web/www/chatbot
+	url = https://github.com/code-epic/chatbot
