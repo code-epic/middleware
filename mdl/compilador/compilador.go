@@ -7,9 +7,9 @@ type Compilador struct {
 	Codigo string `json:"codigo"`
 }
 
-//Eval La funcion evalua la expresion de una cadena y
+//EvaluarGolang La funcion evalua la expresion de una cadena y
 //la ejecuta como parte del codigo
-func (C *Compilador) Eval(codigo string) string {
+func (C *Compilador) EvaluarGolang(codigo string) string {
 	out, err := golpal.New().ExecuteRaw(codigo)
 	if err != nil {
 		return "error"

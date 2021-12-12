@@ -57,6 +57,7 @@ type Usuario struct {
 	Nombre        string       `json:"nombre" bson:"nombre"`
 	Login         string       `json:"usuario" bson:"login"`
 	Correo        string       `json:"correo" bson:"correo"`
+	Expirar       string       `json:"expirar,omitempty" bson:"expiar"`
 	Clave         string       `json:"clave,omitempty" bson:"clave"`
 	FechaCreacion time.Time    `json:"fechacreacion,omitempty" bson:"fechacreacion"`
 	Estatus       int          `json:"estatus" bson:"estatus"`

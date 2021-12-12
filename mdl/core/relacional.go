@@ -10,6 +10,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 
+	"github.com/code-epic/middleware/mdl/compilador"
 	"github.com/code-epic/middleware/sys"
 	"github.com/code-epic/middleware/util"
 	"github.com/code-epic/middleware/util/cache"
@@ -20,6 +21,8 @@ import (
 //CrearQuery Creación dinamica de Consultas
 func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 	var M util.Mensajes
+	var compilar compilador.Compilador
+
 	conexion, a, xmongo, msj := leerValores(v)
 
 	M.Tipo = 1
@@ -34,6 +37,11 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 
 		return jSon, err
 	}
+
+	//Realizar carga del Precodigo fuente Golang
+	precodigo := compilar.EvaluarGolang(C.ApiCore.PreCodigo)
+	fmt.Println(precodigo)
+
 	consulta := parsearParametros(C.ApiCore.Parametros, C.ApiCore.Query)
 	if a.Coleccion != "" {
 		jSon, err = C.CrearNOSQL(C.ApiCore.Coleccion, consulta, xmongo)
@@ -101,6 +109,7 @@ func leerValores(v map[string]interface{}) (db *sql.DB, a ApiCore, mgo *mongo.Da
 	a.Retorna = ApiCoreAux.Retorna
 	a.Estatus = estatus
 	a.Funcion = ApiCoreAux.Funcion
+
 	//fmt.Println("Driver seleccionado: ", a.Parametros, a.Coleccion)
 	return
 }
