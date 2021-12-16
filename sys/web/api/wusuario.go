@@ -95,7 +95,7 @@ func (u *WUsuario) Login(w http.ResponseWriter, r *http.Request) {
 	if usuario.Login != "" {
 
 		usuario.Clave = ""
-		min := time.Minute * 15
+		min := time.Minute * 45
 		token := seguridad.GenerarJWT(usuario, min)
 		result := seguridad.RespuestaToken{Token: token}
 		j, e := json.Marshal(result)
