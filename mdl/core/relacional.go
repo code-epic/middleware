@@ -39,8 +39,9 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 	}
 
 	//Realizar carga del Precodigo fuente Golang
-	precodigo := compilar.EvaluarGolang(C.ApiCore.PreCodigo)
-	fmt.Println(precodigo)
+	precodigo, _ := compilar.EvaluarGolang(C.ApiCore.PreCodigo, C.ApiCore.Funcion)
+
+	fmt.Println("Precodigo fuente " + precodigo)
 
 	consulta := parsearParametros(C.ApiCore.Parametros, C.ApiCore.Query)
 	if a.Coleccion != "" {
