@@ -1,11 +1,16 @@
 import { Component, OnInit } from '@angular/core';
-
 import { Router } from '@angular/router';
-import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
-import { BotonComponent } from './componente/boton/boton.component';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import { ToastrService } from 'ngx-toastr';
+
+import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
 import { ComunicacionesService } from '../../../../service/comunicaciones/comunicaciones.service';
+
+import { BotonComponent } from './componente/boton/boton.component';
+import { AccionComponent } from './componente/accion/accion.component';
+
+import JSONFormatter from 'json-formatter-js';
+
 
 declare var $: any;
 
@@ -17,12 +22,13 @@ declare var $: any;
 
 export class ApiComponent implements OnInit {
   columnDefs = [
-    { field: "#", cellRendererFramework: BotonComponent, width: 50},
-    { field: "protocolo"},
-    { field: "metodo"},
+    { field: "#", cellRendererFramework: BotonComponent, width: 40},
+    { field: "protocolo", width: 80},
+    { field: "metodo", width: 80},
     { field: "funcion"},
     { field: "entorno"},
-    { field: "driver"},
+    { field: "driver", width: 90},
+    { field: "#", cellRendererFramework: AccionComponent, width: 40},
   ];
 
   duracion = `<b>Duración:</b> 00.00.00 seg &nbsp; <b>Peso:</b> 0.00 KB<hr>`
@@ -52,6 +58,14 @@ export class ApiComponent implements OnInit {
   metodo : string = '0'
   consulta: string = ''
   version: string = ''
+
+
+  closeResult : string  = '';
+  xparametro : string = '';
+
+  query : string   = '';
+
+
 
   descripcion: string = ''
   prioridad : string = '0'
@@ -97,7 +111,7 @@ export class ApiComponent implements OnInit {
     estatus: false
   };
 
-  paginationPageSize = 15;
+  paginationPageSize = 25;
 
   constructor(private comunicacionesService : ComunicacionesService,
     private apiService : ApiService, 
@@ -117,7 +131,8 @@ export class ApiComponent implements OnInit {
   ListarApis(){
     this.apiService.Listar().subscribe(
       (data) => {
-       this.rowData = data;
+       this.rowData = data
+       
       },
       (error) => {
         console.log(error)
@@ -184,6 +199,21 @@ export class ApiComponent implements OnInit {
         this.archivos = [];
       }
     )
+
+  }
+
+  ConsultarFuncion(e){
+    var id = e.target.id
+    this.query = ''
+    document.getElementById("xrs").innerHTML = ''
+    this.rowData.forEach(api => {      
+      if (api.id == id) {
+        this.query = api.query
+        var entorno = api.entorno=="produccion"?"/v1/api/crud":"/devel/api/crud"
+        this.xruta =  entorno + ":" + api.id
+        this.xAPI = api
+      }
+    });
 
   }
 
@@ -317,6 +347,10 @@ export class ApiComponent implements OnInit {
       case 'ARCHIVO':
         
         break;
+      case 'LOGICA':
+        this.divCodigofuente = ''
+        this.divArchivosng = ''
+        break;
       case 'CONSULTA':
         this.divConsultang = ''
         break;
@@ -335,6 +369,21 @@ export class ApiComponent implements OnInit {
     this.divConsultang = 'none' 
     this.divArchivosng = 'none'
     
+  }
+
+  async ejecutarApi(){
+
+    this.xAPI.parametros = this.xparametro;
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
+      (data) => {
+        const formatter = new JSONFormatter(data);
+        document.getElementById("xrs").appendChild(formatter.render());
+      },
+      (error) => {
+        //this.resultado = error;
+        console.log(error)
+      }
+    )
   }
  
 }

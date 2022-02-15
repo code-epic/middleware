@@ -22,16 +22,6 @@ type API struct {
 	Autor  string `json:"autor"`
 }
 
-//Agregar una interfaz blanca
-func (a *API) Agregar(w http.ResponseWriter, r *http.Request) {
-
-}
-
-//Consultar una interfaz blanca
-func (a *API) Consultar(w http.ResponseWriter, r *http.Request) {
-
-}
-
 //Crud conexion para solicitud de token
 func (a *API) Crud(w http.ResponseWriter, r *http.Request) {
 	var c core.Core

@@ -190,6 +190,16 @@ func (C *Config) ConexionesDinamicas(c CadenaDeConexion) (estatus bool) {
 			Error:    er,
 		}
 		break
+	case "postgres96":
+		db, er := CPostgres(c)
+		SQLTODO[c.ID] = DriverSQL{
+			Nombre:   c.Driver,
+			DB:       db,
+			Estatus:  true,
+			Contexto: Contexto,
+			Error:    er,
+		}
+		break
 	case "mongodb":
 		db, er := CMongoDB(c)
 		NOSQLTODO[c.ID] = DriverNOSQL{

@@ -12,6 +12,98 @@ Titulo: Panel de Control: APICORE
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
+                        <div class="btn-group float-right p-0" >
+                            <button type="button" class="btn btn-pill btn-transparent" (click)="Guardar()"> 
+                                <i class="fa fa-plus" style='color:#770808; font-size: 14px;'></i> 
+                                <font color="#770808"> Registrar API</font></button>
+                        </div> 
+                        <h6>Listado de funciones</h6>
+                        <hr>
+
+
+
+                        
+                        <div class="row">
+                            <div class="col-md-4" style="height:500px; overflow-y: scroll; border-right: 1px solid #cccccc;">
+                                <!-- <img class="card-img-top" src="../../assets/img/brand/api.png" style="height: 160px;"  alt="Card image cap"> -->
+                               
+
+                                <li *ngFor="let api of rowData" style="list-style:none">
+                                    <div *ngIf=" api.metodo == 'POST';else casoContrario">
+
+                                        <span class="badge badge-success" style="font-size:13px">{{ api.metodo }}</span> &nbsp; <a (click)="ConsultarFuncion($event)" id="{{api.id}}">{{api.funcion}} </a>
+                                    </div>
+                                    
+                                    <ng-template #casoContrario>
+                                        <span class="badge badge-warning" style="font-size:13px">{{ api.metodo }}</span> &nbsp; <a (click)="ConsultarFuncion($event)" id="{{api.id}}">{{api.funcion}} </a>
+                                    </ng-template>
+
+
+                                </li>
+                                    
+                                
+                            
+                            </div>
+                            <div class="col-md-8">
+                                    <div class="container">
+                                        <div class="row">
+                                            <h4> ConsultarBeneficiarios </h4>
+                                        </div>
+                                        <div class="row">
+                                            <br>
+                                            Definición: Permite consultar los beneficiarios
+                                            <br>
+                                            TIPO: LOGICA DE NEGOCIO 
+                                        </div>
+                                        <div class="row">
+                                            <form #form="ngForm">
+                                                <div class="row">
+                                                     <div class="col-md-12" id="divConsulta">
+                                                         <div class="form-group" >
+                                                             <label>Consulta / SQL / URL</label>
+                                                             <div style="width:100%; height:100px; overflow-y: scroll; border-width: 1px;border-style: solid;border-color: #cccccc;">
+                                                                 <code id="codex" style="font-size:14px; width: 100%; height:100px;">{{query}}</code>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                     <div class="col-md-12" id="divParametro">
+                                                         <div class="form-group">
+                                                             <label>Parametros</label>
+                                                             <input style="font-size:12px;" type="text" class="form-control"  
+                                                             [ngModelOptions]="{standalone: true}" 
+                                                             [(ngModel)]="xparametro" value ="{{xparametro}}">
+                                                         </div>
+                                                     </div>
+                                                    
+                                                     <div class="col-md-12">
+                                                         <div class="input-group mb-3">
+                                                             <input style="font-size:14px;" type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="xruta"  value ="{{xruta}}" readonly>
+                                                             <div class="input-group-prepend">
+                                                                 <button type="button" class="btn btn-success" (click)="ejecutarApi()">Probar API <i class="fa fa-play"></i></button>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                     <div class="col-md-12">
+                                                         <div class="form-group">
+                                                             <label>Resultado</label>
+                                                             <div style="width:100%; height:210px;  overflow-y: scroll; border-width: 1px;border-style: solid;border-color: #cccccc;">
+                                                                 <div id="xrs" style="font-size:14px; width: 100%; height: 210px;"></div>
+                                                             </div>
+                                                         </div>
+                                                     </div>
+                                                </div>
+                                             </form>
+                                        </div>
+                                    
+                                </div>
+                            </div>
+                        </div>
+
+
+
+
+
+
                         <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
 
                             <nav ngbNav #nav="ngbNav" class="nav-tabs">
@@ -19,16 +111,27 @@ Titulo: Panel de Control: APICORE
                                 <a ngbNavLink>Listado General</a>
                                 <ng-template ngbNavContent>
                                     
-                                    <ag-grid-angular
-                                        style="width: 100%; height: 500px;"
-                                        class="ag-theme-blue" [rowData]="rowData" [columnDefs]="columnDefs"
-                                        [pagination]="true"  [paginationPageSize]="paginationPageSize"  >
-                                    </ag-grid-angular>
+
+                                     <!-- <div class="card">
+                                        <div class="card-body">
+                                           <ag-grid-angular
+                                            style="width: 100%; height: 450px;"
+                                            class="ag-theme-blue" [rowData]="rowData" [columnDefs]="columnDefs"
+                                            [pagination]="true"  [paginationPageSize]="paginationPageSize"  >
+                                        </ag-grid-angular>
+                                        </div>
+                                        <div class="card-footer">
+                                            <button type="button" class="btn btn-primary float-right" (click)="Guardar()">Crear Logica de Negocio</button> 
+                                        </div>
+                                    </div>-->
+
+                                  
+
                                 </ng-template>
                                 </ng-container>
 
                                 <ng-container ngbNavItem>
-                                    <a ngbNavLink>Listado General</a>
+                                    <a ngbNavLink>Creación de API</a>
                                     <ng-template ngbNavContent>
                                         <form role="form" id="Api">
                                             <div class="row">
@@ -86,7 +189,8 @@ Titulo: Panel de Control: APICORE
                                                                         [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}"
                                                                         (change)="onTipo($event)">>
                                                                             <option value="0">SELECCIONE</option>
-                                                                            <option value="CODIGO">CODIGO</option>
+                                                                            <option value="CODIGO">GENERAR CODIGO</option>
+                                                                            <option value="LOGICA">LOGICA DE NEGOCIO</option>
                                                                             <option value="CONSULTA">CONSULTA</option>
                                                                             <option value="INTERFAZ">INTERFAZ</option>
                                                                             <option value="ARCHIVO">ARCHIVO</option>

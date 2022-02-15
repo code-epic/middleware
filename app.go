@@ -23,6 +23,7 @@ para la comunicación a través de la red.
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -34,7 +35,7 @@ import (
 )
 
 func init() {
-
+	fmt.Println("Hola Mundo iniciando...")
 }
 
 func main() {
@@ -42,6 +43,7 @@ func main() {
 	Cyan := color.New(color.FgHiCyan)
 	BoldCyan := Cyan.Add(color.Bold)
 
+	BoldCyan.Println("Compilando servicio")
 	web.Cargar()
 	srv := &http.Server{
 		Handler:      context.ClearHandler(web.Enrutador),
@@ -50,7 +52,7 @@ func main() {
 		ReadTimeout:  3 * time.Minute,
 	}
 	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO)
-	go srv.ListenAndServe()
+	srv.ListenAndServe()
 
 	web.CargarWs()
 	wser := &http.Server{

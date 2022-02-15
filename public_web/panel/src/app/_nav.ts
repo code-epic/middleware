@@ -37,6 +37,11 @@ export const navItems: INavData[] = [
     },
     children: [
       {
+        name: 'Funciones',
+        url: '/principal/herramientas/funciones',
+        icon: 'icon-list'
+      },
+      {
         name: 'API',
         url: '/principal/herramientas/api',
         icon: 'icon-note'
@@ -83,7 +88,7 @@ export const navItems: INavData[] = [
     children: [
       {
         name: 'Roles',
-        url: '/herramientas/api',
+        url: '/principal/seguridad/rol',
         icon: 'icon-docs'
       },
       {
@@ -94,18 +99,25 @@ export const navItems: INavData[] = [
     ]
   },
   {
-    name: 'Disabled',
+    name: 'Opciones',
     url: '/dashboard',
     icon: 'icon-ban',
     badge: {
       variant: 'secondary',
-      text: 'NEW'
+      text: 'PRONTO'
     },
     attributes: { disabled: true },
+  },
+  {
+    name: 'Cerrar sesion',
+    url: '/principal/opciones/cerrar',
+    icon: 'icon-close',
+    class: 'mt-auto',
+    variant: 'warning'
   }
-  //,
+  // ,
   // {
-  //   name: 'Download CoreUI',
+  //   name: 'Cerrar sesion',
   //   url: 'http://coreui.io/angular/',
   //   icon: 'icon-cloud-download',
   //   class: 'mt-auto',

@@ -23,19 +23,18 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 	var M util.Mensajes
 	var compilar compilador.Compilador
 
-	conexion, a, xmongo, msj := leerValores(v)
-
+	M.Fecha = time.Now()
 	M.Tipo = 1
+
+	conexion, a, xmongo, msj := leerValores(v)
 	C.ApiCore = a
 
-	M.Fecha = time.Now()
 	if !a.Estatus {
 		M.Msj = msj
 		M.Tipo = 0
 		jSon, _ = json.Marshal(M)
-		err = actualizarEstatusAPI(a.Funcion, false)
 
-		return jSon, err
+		return
 	}
 
 	//Realizar carga del Precodigo fuente Golang

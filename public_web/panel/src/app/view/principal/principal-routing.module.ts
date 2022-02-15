@@ -6,6 +6,8 @@ import { EventosComponent } from './aplicaciones/eventos/eventos.component';
 import { MenuComponent } from './aplicaciones/menu/menu.component';
 import { SotfwareComponent } from './aplicaciones/sotfware/sotfware.component';
 import { ApiComponent } from './herramientas/api/api.component';
+import { FuncionesComponent } from './herramientas/funciones/funciones.component';
+import { CerrarComponent } from './opciones/cerrar/cerrar.component';
 import { PrincipalComponent } from './principal.component';
 import { ComunicacionesComponent } from './redes/comunicaciones/comunicaciones.component';
 import { ConexionesComponent } from './redes/conexiones/conexiones.component';
@@ -54,6 +56,11 @@ export const routes: Routes = [
         path: 'api',
         component: ApiComponent,
         canActivate:[AuthGuardGuard],
+      },
+      {
+        path: 'funciones',
+        component: FuncionesComponent,
+        canActivate:[AuthGuardGuard],
       }
     ]
   },
@@ -82,6 +89,19 @@ export const routes: Routes = [
         path: 'eventos',
         component: EventosComponent,
         canActivate:[AuthGuardGuard]
+      }
+    ]
+  },
+  {
+    path: 'opciones',
+    data: {
+      title: 'Opciones'
+    },
+    children: [
+      {
+        path: 'cerrar',
+        component: CerrarComponent,
+        canActivate:[AuthGuardGuard],
       }
     ]
   },

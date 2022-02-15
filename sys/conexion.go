@@ -36,16 +36,17 @@ func CPostgres(c CadenaDeConexion) (DB *sql.DB, err error) {
 	cadena := "user=" + c.Usuario + " dbname=" + c.Basedatos + " password=" + c.Clave + " host=" + c.Host + " sslmode=disable"
 	DB, err = sql.Open("postgres", cadena)
 	if err != nil {
-		color.Red("... Host: "+c.Host+" Base De Datos: ( "+c.Basedatos+" ) Error... ", err.Error())
+		color.Red("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  Error...")
 	} else {
 		err = DB.Ping()
 		if err != nil {
-			color.Red("... Host: "+c.Host+" Base De Datos: ( "+c.Basedatos+" ) Error...", err.Error())
+			color.Red("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  Error...")
 			color.Red(err.Error())
 			return
 		}
 
-		color.Green("... Host: " + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK... ")
+		color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
+		//color.Green("... Host: " + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK... ")
 	}
 	return
 }

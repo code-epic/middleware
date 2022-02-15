@@ -10,6 +10,7 @@ import (
 )
 
 const vAPI string = "/v1/api/"
+const vDev string = "/devel/api/"
 
 var (
 	//Enrutador de API
@@ -39,7 +40,7 @@ func CargarModulosPanel() {
 	BoldFgBlue.Println("..........................................................")
 	BoldFgBlue.Println("...                                                       ")
 	BoldFgBlue.Println("... Iniciando Carga de Elementos Para el Servidor Angular ")
-	BoldFgBlue.Println("...              Módulos de Angular 11                    ")
+	BoldFgBlue.Println("...              Módulos de Angular 12                    ")
 	BoldFgBlue.Println("..........................................................")
 	BoldFgBlue.Println("")
 	prefixW := http.StripPrefix("/code-epic/", http.FileServer(http.Dir("public_web/panel/dist")))
@@ -74,7 +75,7 @@ func WMAdminLTE() {
 	BoldCyan.Println("..........................................................")
 	BoldCyan.Println("...                                                       ")
 	BoldCyan.Println("... Iniciando Carga de Elementos Para el Servidor WEB     ")
-	BoldCyan.Println("...              Módulos de AdminLTE V 3.5                ")
+	BoldCyan.Println("...                                                       ")
 	BoldCyan.Println("..........................................................")
 	BoldCyan.Println("")
 
@@ -88,23 +89,22 @@ func CargarModulosWeb() {
 
 	var ap api.API
 	Enrutador.HandleFunc("/", Principal)
-	Enrutador.HandleFunc(vAPI+"crud/{id}", wUsuario.ValidarToken(ap.Consultar)).Methods("GET")
 
-	Enrutador.HandleFunc(vAPI+"crud", wUsuario.ValidarToken(ap.Crud)).Methods("GET")
-	Enrutador.HandleFunc(vAPI+"crud", wUsuario.ValidarToken(ap.Crud)).Methods("POST")
-	Enrutador.HandleFunc(vAPI+"crud", wUsuario.ValidarToken(ap.Crud)).Methods("PUT")
-	Enrutador.HandleFunc(vAPI+"crud", wUsuario.ValidarToken(ap.Crud)).Methods("DELETE")
-	Enrutador.HandleFunc(vAPI+"crud", wUsuario.ValidarToken(ap.Crud)).Methods("OPTIONS")
+	//Calidad y Produccion
+	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("GET")
+	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("POST")
+	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("PUT")
+	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("DELETE")
+	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("OPTIONS")
 	Enrutador.HandleFunc(vAPI+"listar", wUsuario.ValidarToken(ap.Listar)).Methods("GET")
-	Enrutador.HandleFunc(vAPI+"file", wUsuario.ValidarToken(ap.Listar)).Methods("GET")
 
-	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("GET")
-	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("POST")
-	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("PUT")
-	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("DELETE")
-	Enrutador.HandleFunc("/devel/api/crud", ap.Crud).Methods("OPTIONS")
-
-	Enrutador.HandleFunc("/devel/api/listar", ap.Listar).Methods("GET")
+	//Desarrollo
+	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("GET")
+	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("POST")
+	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("PUT")
+	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("DELETE")
+	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("OPTIONS")
+	Enrutador.HandleFunc(vDev+"listar", ap.Listar).Methods("GET")
 
 }
 

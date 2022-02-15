@@ -61,7 +61,6 @@ export class ApiService {
 
   Listar() : Observable<any>{
     var url = this.URL + 'listar';
-    //console.log(url, this.httpOptions);
     return this.http.get<any>(url, this.httpOptions);
   }
   
@@ -71,7 +70,6 @@ export class ApiService {
     if( xAPI.valores  != undefined ){
         xAPI.valores = JSON.parse(xAPI.parametros);
     } 
-    console.info("Ejecucion ", xAPI);
     return this.http.post<any>(url, xAPI, this.httpOptions);
   }
 
