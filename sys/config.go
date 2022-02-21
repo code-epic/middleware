@@ -46,7 +46,7 @@ type DriverNOSQL struct {
 
 //Variables del modelo
 var (
-	Version           string = "V.2.1.2"
+	Version           string = "V.2.2.4"
 	MySQL             bool   = false
 	BaseDeDatos       BaseDatos
 	MGConexion        *Mongo
@@ -230,6 +230,16 @@ func (C *Config) ConexionesDinamicas(c CadenaDeConexion) (estatus bool) {
 			Error:    er,
 		}
 		break
+	case "oracle19c":
+		db, er := CSQLOracle(c)
+		SQLTODO[c.ID] = DriverSQL{
+			Nombre:   c.Driver,
+			DB:       db,
+			Estatus:  true,
+			Contexto: Contexto,
+			Error:    er,
+		}
+		break
 	case "puenteurl":
 		SQLTODO[c.ID] = DriverSQL{
 			Nombre:   c.Driver,
@@ -269,8 +279,11 @@ func (C *Config) EvaluarConexionesDinamicas(c CadenaDeConexion) (er error) {
 	case "mariadb":
 		_, er = CMySQL(c)
 		break
-	case "puenteurl":
+	case "oracle19c":
+		_, er = CSQLOracle(c)
+		break
 
+	case "puenteurl":
 		break
 	default:
 		errString := "Driver: no funciona para " + c.Driver

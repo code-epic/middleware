@@ -78,7 +78,7 @@ export class ApiComponent implements OnInit {
 
   divCodigofuente = 'none'
   divConsultang = 'none'
-  divArchivosng = 'none'
+  divArchivosng = 'none' 
 
   loading : boolean = false
 

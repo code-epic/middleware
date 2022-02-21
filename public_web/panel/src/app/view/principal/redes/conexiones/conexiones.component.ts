@@ -4,6 +4,7 @@ import { ToastrService } from 'ngx-toastr';
 import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
 import { ComunicacionesService } from '../../../../service/comunicaciones/comunicaciones.service';
 import { ConexionesService, IConexiones } from '../../../../service/conexiones/conexiones.service';
+import { NgxUiLoaderService } from "ngx-ui-loader";
 
 @Component({
   selector: 'app-conexiones',
@@ -85,12 +86,17 @@ export class ConexionesComponent implements OnInit {
 
 
   constructor(private comunicacionesService : ComunicacionesService, private apiService : ApiService, 
-    private conexionesService : ConexionesService, private toastrService: ToastrService) {
+    private conexionesService : ConexionesService, 
+    private toastrService: ToastrService,
+    private ngxService: NgxUiLoaderService) {
 
       this.rowSelection = 'single';
    }
 
   ngOnInit(): void {
+    this.ngxService.start(); 
+   
+
     this.ListarIP()
     this.CargarDrivers()
     this.ListarConexiones()
@@ -164,6 +170,11 @@ export class ConexionesComponent implements OnInit {
     }else{
       this.divDBng = ''
       this.divURLng = 'none'
+      if (this.driver == 'oracle19c') {
+        document.getElementById("lblnbd").innerHTML = "Oracle_SID"
+      }else{
+        document.getElementById("lblnbd").innerHTML = "Base de Datos"
+      }
     }
   }
 
@@ -221,7 +232,7 @@ export class ConexionesComponent implements OnInit {
       );
       return false;
     }
-    this.loading = true;
+    this.ngxService.startLoader("loader-01");
     await this.conexionesService.EvaluarConexion(this.Obtener(), 'evaluarconexion').subscribe(
       (data)=>{
         this.toastrService.success(
@@ -229,7 +240,7 @@ export class ConexionesComponent implements OnInit {
           `CodeEpic Middleware`
         );
         this.estatus = 1
-        this.loading = false;
+        this.ngxService.stopLoader("loader-01");
       },
       (errot)=>{
         this.toastrService.warning(
@@ -237,7 +248,7 @@ export class ConexionesComponent implements OnInit {
           `CodeEpic Middleware`
         );
         this.estatus = 0
-        this.loading = false;
+        this.ngxService.stopLoader("loader-01");
       }
     )
   }

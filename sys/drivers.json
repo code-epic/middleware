@@ -27,5 +27,9 @@
         "ID": "sqlserver17",
         "Nombre": "SQL Server 17",
         "Descripcion": "ODBC 64 Bits 17"
+    },{
+        "ID": "oracle19c",
+        "Nombre": "Oracle Database 19c",
+        "Descripcion": "Oracle Database 19c"
     }
 ]

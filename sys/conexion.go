@@ -12,6 +12,7 @@ import (
 	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/fatih/color"
 	_ "github.com/go-sql-driver/mysql"
+	_ "github.com/godror/godror"
 	_ "github.com/lib/pq"
 )
 
@@ -68,7 +69,7 @@ func CSQLServer(c CadenaDeConexion) (DB *sql.DB, err error) {
 	return
 }
 
-//CPostgres Funcion para conectarnos al driver de postgresSQL
+//CMySQL Funcion para conectarnos al driver de postgresSQL
 func CMySQL(c CadenaDeConexion) (DB *sql.DB, err error) {
 	cadena := c.Usuario + ":" + c.Clave + "@tcp(" + c.Host + ":" + c.Puerto + ")/" + c.Basedatos
 	DB, err = sql.Open("mysql", cadena)
@@ -82,6 +83,25 @@ func CMySQL(c CadenaDeConexion) (DB *sql.DB, err error) {
 			return
 		}
 		color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
+	}
+	return
+}
+
+//CSQLOracle Funcion de Conexion a SQL SERVER
+func CSQLOracle(c CadenaDeConexion) (DB *sql.DB, err error) {
+	DB, err = sql.Open("godror", `user="`+c.Usuario+`" password="`+c.Clave+
+		`" connectString="`+c.Host+`:`+c.Puerto+`/`+c.Basedatos+`" libDir="drivers/oracle"`)
+
+	if err != nil {
+		color.Red("... Host: "+c.Host+" Base De Datos: ( "+c.Basedatos+" ) Error...", err.Error())
+	} else {
+		err = DB.Ping()
+		if err != nil {
+			color.Red("... Host: "+c.Host+" Base De Datos: ( "+c.Basedatos+" ) Error...", err.Error())
+			color.Red(err.Error())
+			return
+		}
+		color.Green("... Host: " + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
 	}
 	return
 }

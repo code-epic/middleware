@@ -23,7 +23,6 @@ para la comunicación a través de la red.
 package main
 
 import (
-	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -35,7 +34,6 @@ import (
 )
 
 func init() {
-	fmt.Println("Hola Mundo iniciando...")
 }
 
 func main() {
@@ -52,8 +50,7 @@ func main() {
 		ReadTimeout:  3 * time.Minute,
 	}
 	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO)
-	srv.ListenAndServe()
-
+	go srv.ListenAndServe()
 	web.CargarWs()
 	wser := &http.Server{
 		Handler:      context.ClearHandler(web.WsEnrutador),
@@ -79,4 +76,5 @@ func main() {
 
 	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO_SSL)
 	log.Fatal(server.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key"))
+
 }
