@@ -34,6 +34,8 @@ export interface IAPICore{
   entorno       ?:  string
   cache         ?:  number
   estatus       ?:  boolean
+  categoria     ?:  string
+  funcionalidad ?:  string
 }
 
 
@@ -44,18 +46,20 @@ export class ApiService {
    //Dirección Get para servicios en la página WEB
    URL =  '/v1/api/';
 
+   hash = ':c521f27fb1b3311d686d511b668e5bd4'
+
    httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json',
     'Authorization': 'Bearer ' + sessionStorage.getItem('token') })
   };
 
   constructor(private router: Router, private http : HttpClient) {
-   
+    
   }
 
   Guardar(xAPI : IAPICore, sApi : string) : Observable<any>{
     console.log(xAPI);
-    var url = this.URL + sApi;
+    var url = this.URL + sApi + this.hash;
     return this.http.post<any>(url, xAPI, this.httpOptions);
   }
 
@@ -66,7 +70,7 @@ export class ApiService {
   
   //Ejecutar Api generales
   Ejecutar(xAPI : IAPICore) : Observable<any>{
-    var url = this.URL + "crud";
+    var url = this.URL + "crud" + this.hash;
     if( xAPI.valores  != undefined ){
         xAPI.valores = JSON.parse(xAPI.parametros);
     } 

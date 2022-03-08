@@ -40,6 +40,18 @@ import { CerrarComponent } from './opciones/cerrar/cerrar.component';
 import { AccionComponent } from './herramientas/api/componente/accion/accion.component';
 
 
+import { MatListModule } from '@angular/material/list';
+import { MatButtonModule } from '@angular/material/button';
+import { MatDividerModule } from '@angular/material/divider';
+import { MatIconModule } from '@angular/material/icon';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatTabsModule } from '@angular/material/tabs';
+import { MatPaginatorModule } from '@angular/material/paginator';
+import { RegistrarComponent } from './herramientas/api/registrar/registrar.component';
+
+
+//import { NgxEditorModule } from 'ngx-editor';
+
 const ngWizardConfig: NgWizardConfig = {
   theme: THEME.default
 };
@@ -96,7 +108,9 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     EventosComponent,
     FuncionesComponent,
     CerrarComponent,
-    AccionComponent
+    //NgxEditorModule,
+    AccionComponent,
+    RegistrarComponent
   
   ],
   imports: [
@@ -112,6 +126,13 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     AngularFileUploaderModule,
     AutocompleteLibModule,
     NgbModule,
+    MatListModule,
+    MatButtonModule,
+    MatDividerModule,
+    MatIconModule,
+    MatExpansionModule,
+    MatTabsModule,
+    MatPaginatorModule,
   ]
 })
 export class PrincipalModule { }

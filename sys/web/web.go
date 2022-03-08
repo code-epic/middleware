@@ -10,6 +10,7 @@ import (
 )
 
 const vAPI string = "/v1/api/"
+const vQua string = "/quality/api/"
 const vDev string = "/devel/api/"
 
 var (
@@ -90,7 +91,7 @@ func CargarModulosWeb() {
 	var ap api.API
 	Enrutador.HandleFunc("/", Principal)
 
-	//Calidad y Produccion
+	//Produccion
 	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("GET")
 	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("POST")
 	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("PUT")
@@ -98,12 +99,20 @@ func CargarModulosWeb() {
 	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("OPTIONS")
 	Enrutador.HandleFunc(vAPI+"listar", wUsuario.ValidarToken(ap.Listar)).Methods("GET")
 
+	//Calidad
+	Enrutador.HandleFunc(vQua+"crud:{id}", ap.Crud).Methods("GET")
+	Enrutador.HandleFunc(vQua+"crud:{id}", ap.Crud).Methods("POST")
+	Enrutador.HandleFunc(vQua+"crud:{id}", ap.Crud).Methods("PUT")
+	Enrutador.HandleFunc(vQua+"crud:{id}", ap.Crud).Methods("DELETE")
+	Enrutador.HandleFunc(vQua+"crud:{id}", ap.Crud).Methods("OPTIONS")
+	Enrutador.HandleFunc(vQua+"listar", ap.Listar).Methods("GET")
+
 	//Desarrollo
-	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("GET")
-	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("POST")
-	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("PUT")
-	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("DELETE")
-	Enrutador.HandleFunc(vDev+"crud", ap.Crud).Methods("OPTIONS")
+	Enrutador.HandleFunc(vDev+"crud:{id}", ap.Crud).Methods("GET")
+	Enrutador.HandleFunc(vDev+"crud:{id}", ap.Crud).Methods("POST")
+	Enrutador.HandleFunc(vDev+"crud:{id}", ap.Crud).Methods("PUT")
+	Enrutador.HandleFunc(vDev+"crud:{id}", ap.Crud).Methods("DELETE")
+	Enrutador.HandleFunc(vDev+"crud:{id}", ap.Crud).Methods("OPTIONS")
 	Enrutador.HandleFunc(vDev+"listar", ap.Listar).Methods("GET")
 
 }

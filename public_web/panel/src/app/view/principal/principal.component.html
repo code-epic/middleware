@@ -1,107 +1,116 @@
 
-<div class="card">
-    <div class="card-body">
-      <div class="row">
-        <div class="col-sm-2">
-          <div class="callout callout-info">
-            <small class="text-muted">Servidores</small><br>
-            <strong class="h4">9,123</strong>
-          </div>
-        </div><!--/.col-->
-        <div class="col-sm-2">
-          <div class="callout callout-danger">
-            <small class="text-muted">Conexiones</small><br>
-            <strong class="h4">22,643</strong>
-          </div>
-        </div><!--/.col-->
-        <div class="col-sm-2">
-          <div class="callout callout-warning">
-            <small class="text-muted">Aplicaciones</small><br>
-            <strong class="h4">78,623</strong>
-          </div>
-        </div><!--/.col-->
-        <div class="col-sm-2">
-          <div class="callout callout-success">
-            <small class="text-muted">Api Core</small><br>
-            <strong class="h4">49,123</strong>
-          </div>
-        </div><!--/.col-->
-        <div class="col-sm-2">
-          <div class="callout">
-            <small class="text-muted">Reportes</small><br>
-            <strong class="h4">23</strong>
-          </div>
-        </div><!--/.col-->
-        <div class="col-sm-2">
-          <div class="callout callout-primary">
-            <small class="text-muted">Pruebas</small><br>
-            <strong class="h4">5</strong>
-          </div>
-        </div><!--/.col-->
-      </div><!--/.row-->
-    </div>
-  </div>
+
   
-  <div class="animated fadeIn" >
-  <div class="card-deck">
-    
-    <div class="card">
-      <img class="card-img-top" src="../../assets/img/brand/10101.jpeg" style="height: 160px;" alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">Servidores</h5>
-        <p class="card-text">Los servidores operan a través de una arquitectura cliente-servidor. Los servidores son programas de computadora en ejecución que atienden las peticiones de otros programas.</p>
-      </div>
-      <div class="card-footer text-center">
-        <small class="text-muted">
-          <button type="button" class="btn btn-pill btn-primary " (click)='irA("principal/redes", "comunicaciones")'><i class="icon-note"></i> Agregar</button>
-        </small>
-      </div>
-    </div>
-    
-    <div class="card">
-      <img class="card-img-top" src="../../assets/img/brand/control.png" style="height: 160px;" alt="Card image cap">
-      <div class="card-body">
+  <section class="animated fadeIn" >
+   
+        <div class="card-deck">
+          
+          <div class="card"  (click)='irA("principal/redes", "comunicaciones")'>
+            
+              <img 
+                class="card-img-top" 
+                src="../../assets/img/brand/10101.jpeg" 
+                style="height: 160px; padding:10px">
+           
+            <div class="card-body">
+              <h3 class="card-title" style="font-size:19px">Servidores</h3>
+              <p class="card-text">Los servidores operan a través de una arquitectura cliente-servidor. 
+                Los servidores son programas de computadora en ejecución.</p>
+            </div>                  
+          </div>
+          
+          <div class="card" (click)='irA("principal/redes", "conexiones")'>
+           
+              <img 
+                class="card-img-top" 
+                src="../../assets/img/brand/control.png" 
+                style="height: 160px;padding:10px">
+          
+            <div class="card-body">                
+              <h3 class="card-title" style="font-size:19px">Conexiones</h3>
+              <p class="card-text">La conexión es el enlace que se establece entre el emisor y el 
+                receptor a través del que se envía el mensaje.</p>
+            </div>
+            
+          </div>
+
+          
+          <div class="card"  (click)='irA("principal/herramientas", "api")'>
+  
+              <img 
+                class="card-img-top" 
+                src="../../assets/img/brand/api.png" 
+                style="height: 160px;padding:10px">
+       
+              <div class="card-body">
+              <h3 class="card-title" style="font-size:19px">API REST</h3>
+              <p class="card-text">Es una interfaz de programación de aplicaciones (Application Programming Interface).</p>
+            </div>
+          
+          </div>
         
-        <h5 class="card-title">Conexiones</h5>
-        <p class="card-text">La conexión es el enlace que se establece entre el emisor y el receptor a través del que se envía el mensaje. Comúnmente puede referirse al tipo de enlace</p>
-      </div>
-      <div class="card-footer text-center">
-        <small class="text-muted">
-          <button type="button" class="btn btn-pill btn-primary " (click)='irA("principal/redes", "conexiones")'><i class="icon-note"></i> Agregar</button>
-        </small>
-      </div>
-    </div>
-    
-    <div class="card">
-      <img class="card-img-top" src="../../assets/img/brand/api.png" style="height: 160px;"  alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">API REST</h5>
-        <p class="card-text">Es una interfaz de programación de aplicaciones (Application Programming Interface). Es un conjunto de rutinas que provee acceso a funciones de un software.</p>
-      </div>
-      <div class="card-footer text-center">
-        <small class="text-muted">
-          <button type="button" class="btn btn-pill bg-primary" (click)='irA("principal/herramientas", "api")'><i class="icon-note"></i> Agregar</button>
-        </small>
-      </div>
-    </div>
-  
-    <div class="card">
-      <img class="card-img-top" src="../../assets/img/brand/seguridad2.jpeg" style="height: 160px;"  alt="Card image cap">
-      <div class="card-body">
-        <h5 class="card-title">Seguridad</h5>
-        <p class="card-text">Se puede referir a la ausencia de riesgo o a la confianza en algo o en alguien. 
-          Sin embargo, el término puede tomar diversos sentidos según el área o campo al que haga referencia en la seguridad.</p>
-      </div>
-      <div class="card-footer text-center">
-        <small class="text-muted">
-          <button type="button" class="btn btn-pill bg-primary" ><i class="icon-note"></i> Agregar</button>
-        </small>
-      </div>
-    </div>
-  
-  </div>
-  
-  </div>
+          <div class="card">
+            
+              <img class="card-img-top" src="../../assets/img/brand/seguridad2.jpeg" style="height: 160px;padding:10px">
+            
+            <div class="card-body">
+              <h3 class="card-title" style="font-size:19px">Seguridad</h3>
+              <p class="card-text">Se puede referir a la ausencia de riesgo o a la confianza en algo o en alguien.</p>
+            </div>
+            
+          </div>
+        
+        </div>
+
+        <br>
+        <div class="card-deck">
+          <div class="card">
+            <div class="card-body">
+              <h3 class="text-center" style="font-size:26px">Integraciones</h3>
+              <hr>
+              <div class="row">
+
+                <div class="col-md-2 text-center" >
+                  <div style="circle">
+                    <img src="../../assets/img/brand/mongodb.png" style="height: 80px;padding:4px" >
+                  </div> 
+                </div> 
+                <div class="col-md-2 text-center">
+                  <div style="circle">
+                    <img src="../../assets/img/brand/mysql.png" style="height: 80px;padding:4px" >
+                  </div> 
+                </div>
+                <div class="col-md-2 text-center">
+                  <div style="circle">
+                    <img src="../../assets/img/brand/postgres.png" style="height: 80px;padding:4px" >
+                  </div> 
+                </div>
+                <div class="col-md-2 text-center">
+                  <div style="circle">
+                    <img src="../../assets/img/brand/oracle.jpg" style="height: 80px;padding:4px" >
+                  </div> 
+                </div>
+                <div class="col-md-2 text-center">
+                  <div style="circle">
+                    <img src="../../assets/img/brand/sqlserver.png" style="height: 80px;padding:4px" >
+                  </div> 
+                </div>
+
+                <div class="col-md-2 text-center">
+                  <div style="circle">
+                    <img src="../../assets/img/brand/rethink.png" style="height: 80px;padding:4px" >
+                  </div> 
+                </div>
+
+              </div>    <!-- Fin de Filas  -->
+
+            </div>
+            
+          </div>
+        </div>
+      
+  </section>
+
   
   
   

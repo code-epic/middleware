@@ -126,11 +126,23 @@ export class SotfwareComponent implements OnInit {
     this.lstAplicaciones()
   }
 
+  async ListarIP(){
+    
+    await this.comunicacionesService.Listar().subscribe(
+      (data) => {
+        
+        this.hosts = data
+      },
+      (error) => {
+        console.log(error)
+      }
+    )
+  }
   async lstAplicaciones(){
     this.xAPI.funcion = "LstAplicaciones";
     this.xAPI.valores = null;
 
-    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         console.log(data)
         data.forEach(e => {          
@@ -335,18 +347,7 @@ export class SotfwareComponent implements OnInit {
     });
   }
 
-  async ListarIP(){
-    
-    await this.comunicacionesService.Listar().subscribe(
-      (data) => {
-        
-        this.hosts = data
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
-  }
+ 
 
   ListarApis(){
     this.apiService.Listar().subscribe(

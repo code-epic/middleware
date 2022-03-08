@@ -3,6 +3,7 @@ package core
 import (
 	"strconv"
 	"strings"
+	"time"
 
 	"github.com/code-epic/middleware/sys"
 	"go.mongodb.org/mongo-driver/bson"
@@ -11,50 +12,62 @@ import (
 
 //Core Ejecucion
 type Core struct {
-	Sistema  string `json:"sistema"`
-	Consulta string `json:"consulta"`
-	Ruta     string `json:"ruta"`
-	Autor    string `json:"autor"`
+	Sistema   string `json:"sistema"`
+	Consulta  string `json:"consulta"`
+	Ruta      string `json:"ruta"`
+	Autor     string `json:"autor"`
+	Resultado RS     `json:"Resultado"`
 	ApiCore
 }
 
-//Oficina Describe una oficinas
-type Oficina struct {
-	ID            string `json:"id"`
-	CodigoOficina string `json:"codigo"`
-	Descripcion   string `json:"descripcion"`
+//RS Establece la respuesta de la API
+type RS struct {
+	Cabecera []Definicion `json:"Cabecera"`
+	Cuerpo   interface{}  `json:"Cuerpo"`
+	Pie      interface{}  `json:"Pie"`
+}
+
+//Definicion Describe una oficinas
+type Definicion struct {
+	Nombre string `json:"nombre"`
+	Tipo   string `json:"tipo"`
 }
 
 //ApiCore Estructura de conexion
 type ApiCore struct {
-	ID           primitive.ObjectID `json:"id" bson:"_id"`
-	Modulo       string             `json:"modulo"`
-	Driver       string             `json:"driver"`
-	Tipo         string             `json:"tipo"`
-	PreCodigo    string             `json:"precodigo"`
-	Coleccion    string             `json:"coleccion"`
-	Query        string             `json:"query"`
-	Parametros   string             `json:"parametros"`
-	Ruta         string             `json:"ruta"`
-	Funcion      string             `json:"funcion"`
-	Retorna      bool               `json:"retorna"`
-	Concurrencia bool               `json:"concurrencia"`
-	Migrar       bool               `json:"migrar"`
-	Metodo       string             `json:"metodo"`
-	Destino      string             `json:"destino"`
-	PuertoHttp   int                `json:"puertohttp"`
-	PuertoHttps  int                `json:"puertohttps"`
-	Protocolo    string             `json:"protocolo"`
-	Prioridad    string             `json:"prioridad"`
-	Entorno      string             `json:"entorno"`
-	Estatus      bool               `json:"estatus" bson:"estatus,omitempty"`
-	Relacional   bool               `json:"relacional"`
-	Valores      interface{}        `json:"valores" bson:"valores,omitempty"`
-	Logs         bool               `json:"logs"`
-	Cache        int                `json:"cache"`
-	Descripcion  string             `json:"descripcion"`
-	Version      string             `json:"version"`
-	Resultado    interface{}        `json:"resultado"`
+	ID            primitive.ObjectID `json:"id" bson:"_id"`
+	Modulo        string             `json:"modulo"`
+	Driver        string             `json:"driver"`
+	Tipo          string             `json:"tipo"`
+	PreCodigo     string             `json:"precodigo"`
+	Coleccion     string             `json:"coleccion"`
+	Accion        string             `json:"accion"` //Define el origen para la accion de mongo update, find, delete
+	Query         string             `json:"query"`
+	Parametros    string             `json:"parametros"`
+	Ruta          string             `json:"ruta"`
+	Funcion       string             `json:"funcion"`
+	Retorna       bool               `json:"retorna"`
+	Concurrencia  bool               `json:"concurrencia"`
+	Migrar        bool               `json:"migrar"`
+	Metodo        string             `json:"metodo"`
+	Destino       string             `json:"destino"`
+	PuertoHttp    int                `json:"puertohttp"`
+	PuertoHttps   int                `json:"puertohttps"`
+	Protocolo     string             `json:"protocolo"`
+	Prioridad     string             `json:"prioridad"`
+	Entorno       string             `json:"entorno"`
+	Estatus       bool               `json:"estatus" bson:"estatus,omitempty"`
+	Relacional    bool               `json:"relacional"`
+	Valores       interface{}        `json:"valores" bson:"valores,omitempty"`
+	Logs          bool               `json:"logs"`
+	Cache         int                `json:"cache"`
+	Descripcion   string             `json:"descripcion"`
+	Version       string             `json:"version"`
+	Categoria     string             `json:"categoria"`
+	Funcionalidad string             `json:"funcionalidad"`
+	Resultado     interface{}        `json:"resultado"`
+	Fecha         time.Time          `json:"fecha"`
+	Autor         string             `json:"autor"`
 }
 
 //Object Objeto para reflexiones

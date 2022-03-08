@@ -14,7 +14,8 @@ export class CerrarComponent implements OnInit {
   }
 
   cerrar(){
-    sessionStorage.removeItem("token")
-    this.ruta.navigate(["", ""])
+    sessionStorage.removeItem('token')
+    window.location.href = '/';
+    
   }
 }

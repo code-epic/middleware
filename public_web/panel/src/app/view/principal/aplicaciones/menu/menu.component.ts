@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
-import { IAPICore } from '../../../../service/apicore/api.service';
-import { SoftwareService } from '../../../../service/aplicaciones/software.service';
+import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
 
 @Component({
   selector: 'app-menu',
@@ -76,7 +75,7 @@ export class MenuComponent implements OnInit {
   divSubAcciones = 'none'
   private bGuardar : boolean = false
 
-  constructor(private modalService: NgbModal, private softwareService : SoftwareService) { }
+  constructor(private modalService: NgbModal, private apiService : ApiService) { }
 
   ngOnInit(): void {
     this.lstAplicaciones()
@@ -85,10 +84,10 @@ export class MenuComponent implements OnInit {
   async lstAplicaciones(){
     this.xAPI.funcion = "LstAplicaciones";
     this.xAPI.valores = null;
-    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        
-        this.lstApps = data
+        console.info(data)
+        this.lstApps = data.Cuerpo
       },
       (error) => {
         console.error(error)
@@ -100,9 +99,9 @@ export class MenuComponent implements OnInit {
     this.xAPI.funcion = "LstModulos";
     this.xAPI.parametros = this.aplicacion;
     this.dataModulo = [];
-    this.softwareService.Ejecutar(this.xAPI).subscribe(
+    this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        data.forEach(e => {          
+        data.Cuerpo.forEach(e => {          
           this.dataModulo.push({ id: e.id, name: e.nomb  })
         });             
       },
@@ -137,7 +136,7 @@ export class MenuComponent implements OnInit {
   guardarModulo(){
     this.xAPI.parametros =  this.xmodulo + "," + this.aplicacion
     this.xAPI.funcion = "AgregarModulo"
-    this.softwareService.Ejecutar(this.xAPI).subscribe(
+    this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
        this.moduloid = data.msj
       },
@@ -158,10 +157,10 @@ export class MenuComponent implements OnInit {
     this.xnombre = this.menu
     this.datamenu = []
     
-    this.softwareService.Ejecutar(this.xAPI).subscribe(
+    this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         
-        data.forEach(e => {          
+        data.Cuerpo.forEach(e => {          
           this.datamenu.push({id: e.id, name: e.nomb });  
         });       
       },
@@ -181,11 +180,11 @@ export class MenuComponent implements OnInit {
     }
     this.xAPI.funcion = "OMenuAccion"
     this.xAPI.parametros = this.menuid
-    this.softwareService.Ejecutar(this.xAPI).subscribe(
+    this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         var i = 0
         var lista = []
-        data.forEach(e => {    
+        data.Cuerpo.forEach(e => {    
           if(i == 0 ) {
             this.xnombre = e.nomb     
             this.xurl = e.url 
@@ -217,7 +216,7 @@ export class MenuComponent implements OnInit {
       this.xAPI.funcion = "ActualizarMenu";
       this.xAPI.parametros += "," + this.menuid
     }   
-    this.softwareService.Ejecutar(this.xAPI).subscribe(
+    this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
        this.menuid = this.xAPI.funcion == "AgregarMenu"? data.msj: this.menuid
       },
@@ -230,7 +229,7 @@ export class MenuComponent implements OnInit {
   GuardarAccion(){
     this.xAPI.funcion = "AgregarAccion";
     this.xAPI.parametros = this.endpoint + "," + this.nombre + ","+ this.funcion + "," + this.directiva     
-    this.softwareService.Ejecutar(this.xAPI).subscribe(
+    this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         console.info(data) 
         this.accionid = data.msj
@@ -245,7 +244,7 @@ export class MenuComponent implements OnInit {
   MenuAccionGuardar(){
     this.xAPI.funcion = "AgregarAccionMenu";
     this.xAPI.parametros = this.menuid + "," + this.accionid
-    this.softwareService.Ejecutar(this.xAPI).subscribe(
+    this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         console.info(data) 
         this.OMenuAccion()

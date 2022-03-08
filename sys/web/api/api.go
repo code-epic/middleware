@@ -7,20 +7,14 @@ import (
 
 	"github.com/code-epic/middleware/mdl/core"
 	"github.com/code-epic/middleware/sys/seguridad"
+	"github.com/code-epic/middleware/util"
 )
 
 //UsuarioConectado Seguridad Informatica
 var UsuarioConectado seguridad.Usuario
 
 //API estructuras generales
-type API struct {
-	OID    int    `json:"oid"`
-	Source string `json:"source"`
-	Urls   string `json:"urls"`
-	Base   string `json:"base"`
-	Query  string `json:"query"`
-	Autor  string `json:"autor"`
-}
+type API struct{}
 
 //Crud conexion para solicitud de token
 func (a *API) Crud(w http.ResponseWriter, r *http.Request) {
@@ -33,11 +27,10 @@ func (a *API) Crud(w http.ResponseWriter, r *http.Request) {
 		w.WriteHeader(http.StatusForbidden)
 		return
 	}
-	//fmt.Println("%s", v)
 	j, _ := c.Asignar(v)
 	w.WriteHeader(http.StatusOK)
-	w.Write(j)
-
+	_, e = w.Write(j)
+	util.Error(e)
 }
 
 //Listar conexion para solicitud de token
@@ -46,6 +39,7 @@ func (a *API) Listar(w http.ResponseWriter, r *http.Request) {
 	Cabecera(w, r)
 	j, _ := xcore.Listar()
 	w.WriteHeader(http.StatusOK)
-	w.Write(j)
+	_, e := w.Write(j)
+	util.Error(e)
 
 }

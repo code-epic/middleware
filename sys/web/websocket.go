@@ -170,8 +170,10 @@ func (Wsc *WebSocketCodeEpic) Analizar() {
 		var xSer XServidor
 		xSer = v
 		xSer.Estatus = false
+
 		if util.ShPing("xping.sh", "", v.Host) {
 			xSer.Estatus = true
+
 		}
 		lstSerSalida = append(lstSerSalida, xSer)
 
@@ -180,7 +182,8 @@ func (Wsc *WebSocketCodeEpic) Analizar() {
 	M.Msj = "Escaneo de la red"
 	M.Contenido = lstSerSalida
 	Wsc.EnviarMensajeSistema("panel", M)
-	time.Sleep(3 * time.Second)
+	time.Sleep(5 * time.Second)
+	//fmt.Println("Pasando por el ping ", lstSerSalida)
 	Wsc.Analizar()
 
 }

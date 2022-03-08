@@ -41,7 +41,6 @@ func main() {
 	Cyan := color.New(color.FgHiCyan)
 	BoldCyan := Cyan.Add(color.Bold)
 
-	BoldCyan.Println("Compilando servicio")
 	web.Cargar()
 	srv := &http.Server{
 		Handler:      context.ClearHandler(web.Enrutador),

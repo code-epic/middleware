@@ -6,429 +6,337 @@ Titulo: Panel de Control: APICORE
  -->
 
 
- <div class="animated fadeIn">
+ <div class="animated fadeIn" [ngStyle]="{'display':sectionConsultar}">
     <section class="esb">        
         <div class="row">
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <div class="btn-group float-right p-0" >
-                            <button type="button" class="btn btn-pill btn-transparent" (click)="Guardar()"> 
-                                <i class="fa fa-plus" style='color:#770808; font-size: 14px;'></i> 
-                                <font color="#770808"> Registrar API</font></button>
+                        <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+                        <div class="btn-group float-right" >
+                            <button type="button" class="btn btn-pill bg-primary" (click)="seccionRegistrar('')" > Registrar Nueva API</button>
+                            
+                            
+                        
                         </div> 
-                        <h6>Listado de funciones</h6>
-                        <hr>
-
-
+                        
 
                         
-                        <div class="row">
-                            <div class="col-md-4" style="height:500px; overflow-y: scroll; border-right: 1px solid #cccccc;">
-                                <!-- <img class="card-img-top" src="../../assets/img/brand/api.png" style="height: 160px;"  alt="Card image cap"> -->
-                               
 
-                                <li *ngFor="let api of rowData" style="list-style:none">
-                                    <div *ngIf=" api.metodo == 'POST';else casoContrario">
-
-                                        <span class="badge badge-success" style="font-size:13px">{{ api.metodo }}</span> &nbsp; <a (click)="ConsultarFuncion($event)" id="{{api.id}}">{{api.funcion}} </a>
-                                    </div>
-                                    
-                                    <ng-template #casoContrario>
-                                        <span class="badge badge-warning" style="font-size:13px">{{ api.metodo }}</span> &nbsp; <a (click)="ConsultarFuncion($event)" id="{{api.id}}">{{api.funcion}} </a>
-                                    </ng-template>
-
-
-                                </li>
-                                    
-                                
-                            
-                            </div>
-                            <div class="col-md-8">
-                                    <div class="container">
-                                        <div class="row">
-                                            <h4> ConsultarBeneficiarios </h4>
-                                        </div>
-                                        <div class="row">
-                                            <br>
-                                            Definición: Permite consultar los beneficiarios
-                                            <br>
-                                            TIPO: LOGICA DE NEGOCIO 
-                                        </div>
-                                        <div class="row">
-                                            <form #form="ngForm">
-                                                <div class="row">
-                                                     <div class="col-md-12" id="divConsulta">
-                                                         <div class="form-group" >
-                                                             <label>Consulta / SQL / URL</label>
-                                                             <div style="width:100%; height:100px; overflow-y: scroll; border-width: 1px;border-style: solid;border-color: #cccccc;">
-                                                                 <code id="codex" style="font-size:14px; width: 100%; height:100px;">{{query}}</code>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                     <div class="col-md-12" id="divParametro">
-                                                         <div class="form-group">
-                                                             <label>Parametros</label>
-                                                             <input style="font-size:12px;" type="text" class="form-control"  
-                                                             [ngModelOptions]="{standalone: true}" 
-                                                             [(ngModel)]="xparametro" value ="{{xparametro}}">
-                                                         </div>
-                                                     </div>
-                                                    
-                                                     <div class="col-md-12">
-                                                         <div class="input-group mb-3">
-                                                             <input style="font-size:14px;" type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="xruta"  value ="{{xruta}}" readonly>
-                                                             <div class="input-group-prepend">
-                                                                 <button type="button" class="btn btn-success" (click)="ejecutarApi()">Probar API <i class="fa fa-play"></i></button>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                     <div class="col-md-12">
-                                                         <div class="form-group">
-                                                             <label>Resultado</label>
-                                                             <div style="width:100%; height:210px;  overflow-y: scroll; border-width: 1px;border-style: solid;border-color: #cccccc;">
-                                                                 <div id="xrs" style="font-size:14px; width: 100%; height: 210px;"></div>
-                                                             </div>
-                                                         </div>
-                                                     </div>
-                                                </div>
-                                             </form>
-                                        </div>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-4"></div>
+                                <div class="col-md-5 text-center">
+                                    <img class="card-img-top" 
+                                        src="../../assets/img/brand/api-logo.png" 
+                                        style="height: 200px; width: 90%"  
+                                    alt="Card image cap">
                                     
                                 </div>
+                                <div class="col-md-3"></div>
                             </div>
+
+                            <div class="row">
+                                <div class="col-md-3 text-right">
+                                    <h1> API RestFul </h1>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                  
+                                  <form class="navbar-search">
+                                    <div class="form-group" [ngClass]="{ 'focused': focus === true }">
+                                      <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                          </div>
+                                        <input class="form-control" placeholder="Buscar" type="text" (focus)="focus = true"  (blur)="focus = false">
+                                          <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-sliders"></i></span>
+                                          </div>
+                                        
+                                      </div>
+                                    </div>
+                                  </form>
+                                  
+                                </div>
+                                <div class="col-md-3">
+                      
+                                </div>
+
+                            </div>
+                            
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <!--  -->
+                                    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs" (selectedIndexChange)="CargarListadoAPI($event)">
+                                        <mat-tab>
+                                            <ng-template mat-tab-label>
+                                            <mat-icon class="example-tab-icon">source</mat-icon>
+                                            &nbsp;DESARROLLO
+                                            </ng-template>
+                                            <mat-accordion class="example-headers-align">
+                                                <mat-expansion-panel hideToggle *ngFor="let api of lst">
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        <b> {{ api.funcion }} </b>
+                                                    </mat-panel-title>
+                                                    <mat-panel-description>
+                                                        <div class="col-md-4"> {{ api.metodo }} </div>
+                                                        <div class="col-md-3"> {{ api.categoria }} </div>
+                                                        <div class="col-md-3"> {{ api.driver }} </div>
+                                                        <div class="col-md-2"><span class="float-right badge me-1 bg-primary">{{ api.version }}</span></div>
+                                                    </mat-panel-description>
+                                                </mat-expansion-panel-header>
+                                                <mat-divider></mat-divider>
+                                                <br>
+                                                <table class="table table-striped border datatable">
+                                                    <thead>
+                                                      <tr>
+                                                        <th>Hash</th>
+                                                        <th>Funcionalidad</th>
+                                                        <th>Tipo</th>
+                                                        <th>Cache</th>
+                                                        <th>Log</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="align-middle">
+                                                          <td>{{ api.id }}</td>
+                                                          <td>{{ api.funcionalidad }}</td>
+                                                          <td>{{ api.tipo }} </td>
+                                                          <td>{{ api.cache }}</td>
+                                                          <td>{{ api.logs }}</td>
+                                                        </tr>
+                                                        <tr class="align-middle">
+                                                            <td colspan="5">
+                                                                {{ api.descripcion }}  
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                
+                                                <p class="card-text text-justify">
+                                                    
+                                                   
+                                                                                   
+                                              
+                                                   <br>
+                                                   
+                                                    <code>
+                                                        {{ api.query }}
+                                                    </code>
+                                                </p>
+                                                <mat-action-row>
+                                                    <div class="col-md-6">
+                                                        <button class="btn btn-sm btn-primary " type="button">Promover</button>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <button class="btn btn-sm btn-warning" type="button">Modificar</button>
+                                                        <button class="btn btn-sm btn-info" type="button" (click)="activarFormulario( frmSQL, api )">Probar</button>
+                                                    </div>
+                                                    
+                                                </mat-action-row>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+                                            <mat-paginator [length]="lengthOfi"
+                                                (page)="pageChangeEvent($event)"
+                                                [pageSize]="pageSizeOfi"
+                                                [pageSizeOptions]="pageSizeOptions"
+                                                (page)="pageEvent = $event"
+                                                aria-label="Seleccionar">
+                                            </mat-paginator>
+                              
+                              
+                                        </mat-tab>
+                                        <!-- 
+                                            <mat-tab>
+                                                <ng-template mat-tab-label>
+                                                <mat-icon class="example-tab-icon">hourglass_bottom</mat-icon>
+                                                &nbsp;TESTING
+                                                </ng-template>
+                                            </mat-tab> 
+                                        -->
+                                        <mat-tab>
+                                            <ng-template mat-tab-label>
+                                            <mat-icon class="example-tab-icon">add_task</mat-icon>
+                                            &nbsp;CALIDAD
+                                            </ng-template>
+                                            <mat-accordion class="example-headers-align">
+                                                <mat-expansion-panel hideToggle *ngFor="let api of lst">
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        <b> {{ api.funcion }} </b>
+                                                    </mat-panel-title>
+                                                    <mat-panel-description>
+                                                        <div class="col-md-4"> {{ api.metodo }} </div>
+                                                        <div class="col-md-3"> {{ api.categoria }} </div>
+                                                        <div class="col-md-3"> {{ api.driver }} </div>
+                                                        <div class="col-md-2"><span class="float-right badge me-1 bg-primary">{{ api.version }}</span></div>
+                                                    </mat-panel-description>
+                                                </mat-expansion-panel-header>
+                                                <mat-divider></mat-divider>
+                                                <br>
+                                                <table class="table table-striped border datatable">
+                                                    <thead>
+                                                      <tr>
+                                                        <th>Funcionalidad</th>
+                                                        <th>Tipo</th>
+                                                        <th>Log</th>
+                                                        <th>Cache</th>
+                                                        <th>Actions</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="align-middle">
+                                                          <td>{{ api.funcionalidad }}</td>
+                                                          <td>{{ api.tipo }} </td>
+                                                          <td>{{ api.tipo }}</td>
+                                                          <td></td>
+                                                          <td></td>
+                                                        </tr>
+                                                        <tr class="align-middle">
+                                                            <td colspan="5">
+                                                                {{ api.descripcion }}  
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                
+                                                <p class="card-text text-justify">
+                                                    
+                                                   
+                                                                                   
+                                              
+                                                   <br>
+                                                   
+                                                    <code>
+                                                        {{ api.query }}
+                                                    </code>
+                                                </p>
+                                                <mat-action-row>
+                                                    <div class="col-md-6">
+                                                        <button class="btn btn-sm btn-danger " type="button">Reversar a desarrollo</button> 
+                                                        <button class="btn btn-sm btn-primary " type="button">Instalar</button>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <button class="btn btn-sm btn-info" type="button">Probar versión</button>
+                                                    </div>
+                                                    
+                                                </mat-action-row>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+                                            <mat-paginator [length]="lengthOfi"
+                                                (page)="pageChangeEvent($event)"
+                                                [pageSize]="pageSizeOfi"
+                                                [pageSizeOptions]="pageSizeOptions"
+                                                (page)="pageEvent = $event"
+                                                aria-label="Seleccionar">
+                                            </mat-paginator>
+                                        
+                                        
+                                        </mat-tab>
+                                        <mat-tab>
+                                            <ng-template mat-tab-label>
+                                            <mat-icon class="example-tab-icon">tips_and_updates</mat-icon>
+                                            &nbsp;PRODUCCIÓN
+                                            </ng-template>
+                                            <mat-accordion class="example-headers-align">
+                                                <mat-expansion-panel hideToggle *ngFor="let api of lst">
+                                                <mat-expansion-panel-header>
+                                                    <mat-panel-title>
+                                                        <b> {{ api.funcion }} </b>
+                                                    </mat-panel-title>
+                                                    <mat-panel-description>
+                                                        <div class="col-md-4"> {{ api.metodo }} </div>
+                                                        <div class="col-md-3"> {{ api.categoria }} </div>
+                                                        <div class="col-md-3"> {{ api.driver }} </div>
+                                                        <div class="col-md-2"><span class="float-right badge me-1 bg-primary">{{ api.version }}</span></div>
+                                                    </mat-panel-description>
+                                                </mat-expansion-panel-header>
+                                                <mat-divider></mat-divider>
+                                                <br>
+                                                <table class="table table-striped border datatable">
+                                                    <thead>
+                                                      <tr>
+                                                        <th>Funcionalidad</th>
+                                                        <th>Tipo</th>
+                                                        <th>Log</th>
+                                                        <th>Cache</th>
+                                                        <th>Actions</th>
+                                                      </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr class="align-middle">
+                                                          <td>{{ api.funcionalidad }}</td>
+                                                          <td>{{ api.tipo }} </td>
+                                                          <td>{{ api.tipo }}</td>
+                                                          <td></td>
+                                                          <td></td>
+                                                        </tr>
+                                                        <tr class="align-middle">
+                                                            <td colspan="5">
+                                                                {{ api.descripcion }}  
+                                                            </td>
+                                                        </tr>
+                                                    </tbody>
+                                                </table>
+
+                                                
+                                                <p class="card-text text-justify">
+                                                    
+                                                   
+                                                                                   
+                                              
+                                                   <br>
+                                                   
+                                                    <code>
+                                                        {{ api.query }}
+                                                    </code>
+                                                </p>
+                                                <mat-action-row>
+                                                    <div class="col-md-6">
+                                                        <button class="btn btn-sm btn-danger " type="button">Reversar a desarrollo</button>
+                                                    </div>
+                                                    <div class="col-md-6 text-right">
+                                                        <button class="btn btn-sm btn-primary" type="button">Cerrar versión</button>
+                                                    </div>
+                                                    
+                                                </mat-action-row>
+                                                </mat-expansion-panel>
+                                            </mat-accordion>
+                                            <mat-paginator [length]="lengthOfi"
+                                                (page)="pageChangeEvent($event)"
+                                                [pageSize]="pageSizeOfi"
+                                                [pageSizeOptions]="pageSizeOptions"
+                                                (page)="pageEvent = $event"
+                                                aria-label="Seleccionar">
+                                            </mat-paginator>
+                              
+                                        
+                                        
+                                        </mat-tab>
+                                    </mat-tab-group>
+
+                                
+                                </div>
+                            </div>
+    
                         </div>
 
+                        
 
 
 
 
 
-                        <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
 
-                            <nav ngbNav #nav="ngbNav" class="nav-tabs">
-                                <ng-container ngbNavItem>
-                                <a ngbNavLink>Listado General</a>
-                                <ng-template ngbNavContent>
-                                    
 
-                                     <!-- <div class="card">
-                                        <div class="card-body">
-                                           <ag-grid-angular
-                                            style="width: 100%; height: 450px;"
-                                            class="ag-theme-blue" [rowData]="rowData" [columnDefs]="columnDefs"
-                                            [pagination]="true"  [paginationPageSize]="paginationPageSize"  >
-                                        </ag-grid-angular>
-                                        </div>
-                                        <div class="card-footer">
-                                            <button type="button" class="btn btn-primary float-right" (click)="Guardar()">Crear Logica de Negocio</button> 
-                                        </div>
-                                    </div>-->
-
-                                  
-
-                                </ng-template>
-                                </ng-container>
-
-                                <ng-container ngbNavItem>
-                                    <a ngbNavLink>Creación de API</a>
-                                    <ng-template ngbNavContent>
-                                        <form role="form" id="Api">
-                                            <div class="row">
-                                                <div class="col-md-12">
-                                                    <div class="card">
-                                                        <div class="card-body">
-                                                            <div class="row">
-                                                                <div class="col-sm-4">
-                                                                    <div class="form-group">    
-                                                                            <label>HTTP / Puerto</label>                                              
-                                                                            <div class="input-group">
-                                                                            <div class="input-group-prepend">
-                                                                                <span class="input-group-text">
-                                                                                    <input type="checkbox" id="chkhttp" 
-                                                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="http"  value ="{{http}}"  disabled>
-                                                                                </span>
-                                                                            </div>
-                                                                                <select class="form-control selected" id="cmbpuertohttp" (change)="SeleccionarChk(this.puertohttp)" 
-                                                                                [ngModelOptions]="{standalone: true}" [(ngModel)]="puertohttp"  value ="{{puertohttp}}">
-                                                                                    <option value=0>SELECCIONE</option>
-                                                                                    <option value=8012>8012</option>
-                                                                                    <option value=8013>8013</option>
-                                                                                </select>
-                                                                            </div>
-                                                                            <!-- /input-group -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-sm-4">
-                                                                    <div class="form-group">    
-                                                                            <label>HTTPS / Puerto</label>                                              
-                                                                        <div class="input-group">
-                                                                            <div class="input-group-prepend">
-                                                                                <span class="input-group-text">
-                                                                                    <input type="checkbox" id="chkhttps" 
-                                                                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="https"  value ="{{https}}" disabled>
-                                                                                </span>
-                                                                            </div>
-                                                                            <select class="form-control selected" id="cmbpuertohttps" (change)="SeleccionarChks(this.puertohttps)" 
-                                                                            [ngModelOptions]="{standalone: true}" [(ngModel)]="puertohttps"  value ="{{puertohttps}}">
-                                                                                <option value=0>SELECCIONE</option>
-                                                                                <option value=2286>2286</option>
-                                                                                <option value=2385>2385</option>
-                                                                            </select>
-                                                                            <div class="input-group-append">
-                                                                                <span class="input-group-text"><i class="fa fa-eye"></i></span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- /input-group -->
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label>Tipo</label>
-                                                                        <select id="cmbTipo" class="form-control selected"  
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}"
-                                                                        (change)="onTipo($event)">>
-                                                                            <option value="0">SELECCIONE</option>
-                                                                            <option value="CODIGO">GENERAR CODIGO</option>
-                                                                            <option value="LOGICA">LOGICA DE NEGOCIO</option>
-                                                                            <option value="CONSULTA">CONSULTA</option>
-                                                                            <option value="INTERFAZ">INTERFAZ</option>
-                                                                            <option value="ARCHIVO">ARCHIVO</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                    
-                                                            </div>
-                                                            
-                                                            <div class="row" [ngStyle]="{'display':divArchivosng}">
-                                                                
-                                                                <div class="col-md-4" >
-                                                                    <div class="form-group">
-                                                                        <label>Relacional</label>
-                                                                        <select id="cmbRelacional" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="relacional" value ="{{relacional}}" >
-                                                                        
-                                                                            <option value=false>NO</option>
-                                                                            <option value=true>SI</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4" >
-                                                                    <div class="form-group">
-                                                                        <label>Módulo</label>
-                                                                        <select id="cmbModulo" class="form-control selected" (change)="CargarArchivos()" 
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="modulo"  >
-                                                                            <option value="0">SELECCIONE</option>
-                                                                            <option *ngFor="let mdl of modulos" value="{{mdl}}" >{{ mdl }}</option> 
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-4" >
-                                                                    <div class="form-group">    
-                                                                            <label>Seleccionar archivos (opcional)</label>                                              
-                                                                        <div class="input-group">
-                                                                            <select class="form-control selected" id="cmbArchivos"  [ngModelOptions]="{standalone: true}" [(ngModel)]="archivo"  >
-                                                                                <option value="0">SELECCIONE</option>
-                                                                                <option *ngFor="let mdl of archivos" value="{{ mdl }}" >{{ mdl }}</option> 
-                                                                            </select>
-                                                                            <div class="input-group-append">
-                                                                                <span class="input-group-text" (click)="ProcesarArchivos()"><i class="fa fa-play"></i></span>
-                                                                            </div>
-                                                                        </div>
-                                                                        <!-- /input-group -->
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                            </div>
-                                                            <div class="row" [ngStyle]="{'display':divCodigofuente}">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label>Codigo Fuente </label>
-                                                                        <textarea class="form-control" rows="8" id="txtCodigo" placeholder="Enter ..."  
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="codigo"  value ="{{codigo}}"></textarea>
-                                                                        
-                                                                    </div>
-                                                                </div>
-                                                            
-                                                                <div class="col-md-7"></div>
-                                                                <div class="col-md-5" id="duracion" style="text-align: right;">
-                                                                    <b>Duración:</b> 00.00.00 seg &nbsp; <b>Peso:</b> 0.00 KB<hr>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label>Función</label>
-                                                                        <input type="text" id="txtFuncion" class="form-control" placeholder="Enter ..."  
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="funcion"  value ="{{funcion}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <div class="form-group">
-                                                                        <label>Versión</label>
-                                                                        <input type="text" id="txtVersion" class="form-control" placeholder="Enter ..."  
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="version"  value ="{{version}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>Driver</label>
-                                                                        <select id="cmbDriver" class="form-control selected"
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="driver"  value ="{{driver}}">
-                                                                            <option value="0">SELECCIONE</option>
-                                                                            <option *ngFor="let mdl of drivers" value="{{mdl.id}}" >{{mdl.id}} | {{ mdl.basedatos }}</option> 
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                
-                                                            </div>
-                                                            
-                                                            <div class="row" [ngStyle]="{'display':divConsultang}" >
-                                                                <div class="col-md-2">
-                                                                    <div class="form-group">
-                                                                        <label>Metodo</label>
-                                                                        <select id="cmbMetodo" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="metodo"  value ="{{metodo}}">
-                                                                            <option value="0" selected>SELECCIONE</option>
-                                                                            <option value="GET">GET</option>
-                                                                            <option value="POST">POST</option>
-                                                                            <option value="PUT">PUT</option>
-                                                                            <option value="DELETE">DELETE</option>
-                                                                            <option value="OPTIONS">OPTIONS</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-2" >
-                                                                    <div class="form-group">
-                                                                        <label>Relacional</label>
-                                                                        <select id="cmbRelacional" class="form-control selected"  
-                                                                            [ngModelOptions]="{standalone: true}" 
-                                                                            [(ngModel)]="xrelacional"  value ="{{xrelacional}}">
-                                                                            <option value=false>NO</option>
-                                                                            <option value=true>SI</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                            
-                                                                <div class="col-md-4">
-                                                                    <div class="form-group">
-                                                                        <label>Colección en caso de ser NOSQL</label>
-                                                                        <input type="text" id="txtColeccion" class="form-control" [disabled]="xrelacional"
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="coleccion"  value ="{{coleccion}}">
-                                                                    </div>
-                                                                </div>
-                                
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label>Consulta / SQL / NOSQL </label>
-                                                                        <textarea class="form-control" rows="5" id="txtConsulta" placeholder="Enter ..." 
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="consulta"  value ="{{consulta}}"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            <div class="row">
-                                                                <div class="col-md-12">
-                                                                    <div class="form-group">
-                                                                        <label>Incluir una breve descripción:</label>
-                                                                        <textarea class="form-control" rows="3" id="txtDescripcion" placeholder="Enter ..."
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion"  value ="{{descripcion}}"></textarea>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                            
-                                
-                                                            <div class="row">
-                                                                
-                                                                <div class="col-md-2">
-                                                                    <div class="form-group">
-                                                                        <label>Consumidores</label>
-                                                                        <input type="number" id="txtConsumidores" class="form-control" 
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="consumidores"  value ="{{consumidores}}">
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <div class="form-group">
-                                                                        <label>Cache</label>
-                                                                        <select id="cmbCache" class="form-control selected"  
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="cache"  value ="{{cache}}">
-                                                                            <option value=0>NINGUNO</option>
-                                                                            <option value=1>INCLUSIVO</option>
-                                                                            <option value=2>EXCLUSIVO</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-2">
-                                                                    <div class="form-group">
-                                                                        <label>Logs</label>
-                                                                        <select id="cmbLog" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="log"  value ="{{log}}">
-                                                                            <option value=true>SI</option>
-                                                                            <option value=false>NO</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label>Concurrente</label>
-                                                                        <select id="cmbConcurrencia" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="concurrencia"  value ="{{concurrencia}}">
-                                                                            <option value=true>SI</option>
-                                                                            <option value=false>NO</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label>Retorno</label>
-                                                                        <select id="cmbRetorno" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="retorna"  value ="{{retorna}}">
-                                                                            <option value=true>SI</option>
-                                                                            <option value=false>NO</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label>Prioridad</label>
-                                                                        <select id="cmbPrioridad" class="form-control selected"
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="prioridad"  value ="{{prioridad}}">
-                                                                            <option value="0">BAJA</option>
-                                                                            <option value="1">MEDIA</option>
-                                                                            <option value="2">ALTA</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-3">
-                                                                    <div class="form-group">
-                                                                        <label>Entorno</label>
-                                                                        <select id="cmbEntorno" class="form-control selected"
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="entorno"  value ="{{entorno}}">
-                                                                            <option value="desarrollo" selected>DESARROLLO</option>
-                                                                            <option value="calidad">CALIDAD</option>
-                                                                            <option value="produccion">PRODUCCION</option>
-                                                                        </select>
-                                                                    </div>
-                                                                </div>
-                                                                <div class="col-md-6">
-                                                                    <div class="form-group">
-                                                                        <label>URL</label>
-                                                                        <input type="text" id="txtUrl" class="form-control" placeholder="http://...:xxxx/..."  
-                                                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="xruta"  value ="{{xruta}}"
-                                                                        readonly>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                        <div class="card-footer">
-                                                            <button type="button" class="btn btn-success" (click)="Guardar()">Registrar</button>
-                                                            <button type="button" class="btn btn-danger float-right">Cancelar</button>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </form>
-
-                                    </ng-template>
-                                </ng-container>
-
-                            </nav>
-
-                            <div [ngbNavOutlet]="nav" class="mt-2"></div>
+                       
+                        
+                         
 
                     </div>
                 </div>
@@ -436,6 +344,105 @@ Titulo: Panel de Control: APICORE
         </div>
     </section>
  </div>
+
+
+
+ <div class="animated fadeIn"  [ngStyle]="{'display':sectionRegistar}" >
+    <section class="esb">        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <ngx-ui-loader [loaderId]="'loader-02'"></ngx-ui-loader>
+                        <div class="btn-group float-right" style="padding:3px">
+                            <button type="button" class="btn btn-pill bg-light" (click)="seccionRegistrar('none')" >
+                                Consultar Listado de API's
+                            </button>
+                            
+                            
+                        
+                        </div> 
+                        <h4>Registar una Nueva API</h4>
+                        <hr>
+
+                        <app-registrar></app-registrar>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ </div>
+
+
+
+
+
+
+<ng-template #frmSQL let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ejecución de API</h4>
+    </div>
+    <div class="modal-body">
+        <form #form="ngForm">
+           <div class="row">
+                <div class="col-md-12" id="divParametro">
+                    <div class="form-group">
+                        <label>Parametros</label>
+                        <input style="font-size:11px;" type="text" class="form-control"  
+                        [ngModelOptions]="{standalone: true}" 
+                        [(ngModel)]="xparametro" value ="{{xparametro}}">
+                    </div>
+                </div>
+               
+                <div class="col-md-12">
+                    <div class="input-group mb-3">
+                        <input style="font-size:14px;" type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="xentorno"  value ="{{xentorno}}" readonly>
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-success" (click)="ejecutarApi()"><i class="fa fa-play"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Resultado</label>
+                        <div style="width:100%; height:150px; overflow: scroll;">
+                            <div id="xrs" style="font-size:11px; width: 100%; height: 150px;"></div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-right" (click)="modal.dismiss('Cross click')">Cancelar</button>
+    </div>
+</ng-template>                    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 
 

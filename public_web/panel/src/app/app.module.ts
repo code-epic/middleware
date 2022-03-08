@@ -47,6 +47,8 @@ import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { AuthGuardGuard } from './service/seguridad/auth-guard.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridModule } from 'ag-grid-angular';
+//import { NgxEditorModule } from 'ngx-editor';
+
 
 //const oToastr = ;
 
@@ -71,13 +73,14 @@ import { AgGridModule } from 'ag-grid-angular';
     NgbModule,
     PrincipalModule,
     ToastContainerModule,
+    //NgxEditorModule,
     ToastrModule.forRoot({
       closeButton: false,
       newestOnTop: false,
       progressBar: true,
       positionClass: "toast-top-right",
       preventDuplicates: false    }),
-      AgGridModule.withComponents([]),
+    AgGridModule.withComponents([]),
   ],
   declarations: [
     AppComponent,
@@ -86,7 +89,7 @@ import { AgGridModule } from 'ag-grid-angular';
   ],
   providers: [
     {
-      provide: [ LocationStrategy, AuthGuardGuard, JsonPipe],
+      provide: [ LocationStrategy, AuthGuardGuard,  JsonPipe],
       useClass: HashLocationStrategy
     },
     IconSetService,
