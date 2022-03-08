@@ -4,6 +4,7 @@ import { ChartsModule } from 'ng2-charts';
 import { FormsModule } from '@angular/forms';
 import { AgGridModule } from 'ag-grid-angular';
 import { AngularFileUploaderModule } from 'angular-file-uploader';
+import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderModule,  NgxUiLoaderConfig } from "ngx-ui-loader";
@@ -123,6 +124,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     NgWizardModule.forRoot(ngWizardConfig),
     PrincipalRoutingModule,
     AngularFileUploaderModule,
+    AutocompleteLibModule,
     NgbModule,
     MatListModule,
     MatButtonModule,
