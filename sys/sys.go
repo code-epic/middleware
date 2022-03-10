@@ -13,6 +13,7 @@ const (
 	CTRAZA            string = "traza"
 	CCATEGORIA        string = "categoria"
 	CUSUARIO          string = "usuario"
+	CFUNCIONES        string = "funciones"
 	WUSUARIO          string = "wusuario"
 	CREDUCCION        string = "reduccion"
 	CTAREASPENDIENDTE string = "tareaspendientes"
