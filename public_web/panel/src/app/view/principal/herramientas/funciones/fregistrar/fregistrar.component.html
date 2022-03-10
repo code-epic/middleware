@@ -1,0 +1,228 @@
+<ngx-ui-loader [loaderId]="'loader-fregistrar'"></ngx-ui-loader>
+<div class="container">
+    
+        <div class="col-md-12 text-justify">
+            <form role="form" id="Api">
+
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="form-group">
+                            <label>Nombre</label>
+                            <input type="text" id="txtNombre" class="form-control" placeholder="Enter ..."  
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="nombre"  value ="{{nombre}}">
+                        </div>
+                    </div>
+                    <div class="col-md-2">
+                        <div class="form-group">
+                            <label>Versión</label>
+                            <input type="text" id="txtVersion" class="form-control" placeholder="Enter ..."  
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="version"  value ="{{version}}">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Lenguaje</label>
+                            <select id="cmbLenguaje" class="form-control selected"
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="lenguaje"  value ="{{lenguaje}}">
+                                <option value="S">SELECCIONE</option>
+                                <option value='GO'>GOLANG</option>
+                                    <option value='PHP'>PHP +7</option>
+                                    <option value='NJS'>NODE JS</option>
+                                    <option value='TSC'>ANGULAR</option>
+                                    <option value='VBA'>VISUAL BASIC</option>
+                                    <option value='VBN'>VISUAL STUDIO .NET</option>
+                                    <option value='PYC'>PYTHON</option>
+                                    <option value='C++'>C++</option>
+                                    <option value='C'>C</option>
+                            </select>
+                        </div>
+                    </div>
+                    
+                </div>
+                
+
+                <div class="row">
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Categoria</label>
+                            <select id="cmbCategoria" class="form-control selected"  
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="categoria"  value ="{{categoria}}">
+                                <option value="S">SELECCIONE</option>
+                                <option value="SCRIPT">SCRIPT</option>
+                                <option value="PROGRAM">TAREAS PROGRAMADAS</option>
+                                
+                            </select>
+                        </div>
+                    </div>
+                    
+               
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label>Tipo</label>
+                            <select id="cmbTipo" class="form-control selected"  
+                                [ngModelOptions]="{standalone: true}" 
+                                [(ngModel)]="tipo"  value ="{{tipo}}">
+                                <option value="S">SELECCIONE</option>
+                                <option value="LOGICA">LOGICA</option>
+                                <option value="MATEMATICA">MATEMATICA</option>
+                              
+                            </select>
+                        </div>
+                    </div>
+
+                </div>
+               
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label>Incluir una descripción:</label>
+                            <textarea class="form-control" rows="5" id="txtDescripcion" placeholder="Enter ..."
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion"  value ="{{descripcion}}"></textarea>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="form-group">
+                                
+                            </div>
+                        </div>
+                </div>
+
+
+           
+                
+                <ng-wizard [config]="config" (stepChanged)="stepChanged($event)" >
+
+                    <ng-wizard-step [title]="'Paso 1'" [description]="'Definición y clasificación'"
+                        [canEnter]="isValidTypeBoolean" [canExit]="isValidFunctionReturnsBoolean.bind(this)">
+                        <br>
+                     
+
+                       
+
+                    
+
+                    </ng-wizard-step>
+
+
+                    <ng-wizard-step [title]="'Paso 2'" [description]="'Detalles del Codigo'">
+                        <br>
+                        <div class="container" style="padding:3px">
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+                                    <div class="form-group">
+                                        <label>Consulta / SQL / NOSQL </label>
+                                        
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>RETORNO </label>
+                                        <select id="cmbRetorno" class="form-control selected"  
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="retorno"  value ="{{retorno}}">
+                                            <option value="0" selected>SELECCIONE</option>
+                                            <option value="SUM">SUMA</option>
+                                            <option value="PROM">PROMEDIO</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                
+                            </div>
+
+                        </div>
+                     
+                    </ng-wizard-step>
+
+                
+                    <!-- <ng-wizard-step [title]="'Paso 3'" [description]="'Configuraciones generales'">
+                        <br>
+                        <div class="row">
+                                
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Consumidores</label>
+                                    <input type="number" id="txtConsumidores" class="form-control" 
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="consumidores"  value ="{{consumidores}}">
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Cache</label>
+                                    <select id="cmbCache" class="form-control selected"  
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="cache"  value ="{{cache}}">
+                                        <option value=0>NINGUNO</option>
+                                        <option value=1>INCLUSIVO</option>
+                                        <option value=2>EXCLUSIVO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-2">
+                                <div class="form-group">
+                                    <label>Logs</label>
+                                    <select id="cmbLog" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="log"  value ="{{log}}">
+                                        <option value=true>SI</option>
+                                        <option value=false>NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Concurrente</label>
+                                    <select id="cmbConcurrencia" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="concurrencia"  value ="{{concurrencia}}">
+                                        <option value=true>SI</option>
+                                        <option value=false>NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Retorno</label>
+                                    <select id="cmbRetorno" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="retorna"  value ="{{retorna}}">
+                                        <option value=true>SI</option>
+                                        <option value=false>NO</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Prioridad</label>
+                                    <select id="cmbPrioridad" class="form-control selected"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="prioridad"  value ="{{prioridad}}">
+                                        <option value="0">BAJA</option>
+                                        <option value="1">MEDIA</option>
+                                        <option value="2">ALTA</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="form-group">
+                                    <label>Entorno</label>
+                                    <select id="cmbEntorno" class="form-control selected"
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="entorno"  value ="{{entorno}}">
+                                        <option value="desarrollo" selected>DESARROLLO</option>
+                                        <option value="calidad">CALIDAD</option>
+                                        <option value="produccion">PRODUCCION</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>URL</label>
+                                    <input type="text" id="txtUrl" class="form-control" placeholder="http://...:xxxx/..."  
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="xruta"  value ="{{xruta}}"
+                                    readonly>
+                                </div>
+                            </div>
+                        </div>
+                    </ng-wizard-step> -->
+                </ng-wizard>
+            
+            </form>
+        </div> 
+        
+   
+</div>

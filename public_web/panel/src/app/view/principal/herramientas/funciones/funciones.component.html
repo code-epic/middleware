@@ -1,1 +1,165 @@
-<p>funciones works!</p>
+
+<!--
+Realizado por: Yasmin Vicuña Rondon
+Fecha: 23-11-2020
+Titulo: Panel de Control: APICORE
+ -->
+
+
+ <div class="animated fadeIn" [ngStyle]="{'display':sectionConsultar}">
+    <section class="esb">        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body" style="padding:0px;height:100%">
+                        <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+                                    
+                       
+                        <div class="row">
+                            <div class="col-md-12" >
+
+                                <ngx-codemirror
+                                style="height:100%"
+                                [ngModelOptions]="{standalone: true}" 
+                                [(ngModel)]="contenido"
+                                [options]="{
+                                    theme: 'monokai',
+                                    matchBrackets: true,
+                                    indentUnit: 4,
+                                    tabSize: 4,
+                                    indentWithTabs: true,
+                                    mode: 'text/x-idn',
+                                    lineNumbers: true}"
+                                ></ngx-codemirror>
+                            
+                            </div>
+                        </div>
+    
+                       
+
+                        
+
+
+
+
+
+
+
+                       
+                        
+                         
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ </div>
+
+
+
+ <div class="animated fadeIn"  [ngStyle]="{'display':sectionRegistar}" >
+    <section class="esb">        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <ngx-ui-loader [loaderId]="'loader-02'"></ngx-ui-loader>
+                        <div class="btn-group float-right" style="padding:3px">
+                            <button type="button" class="btn btn-pill bg-primary" (click)="seccionRegistrar('none')" >
+                                Consultar Listado de Funciones
+                            </button>
+                            
+                            
+                        
+                        </div> 
+                        <h4>Registar una Nueva Función</h4>
+                        <hr>
+
+                        <app-fregistrar></app-fregistrar>
+
+
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ </div>
+
+
+
+
+<!-- 
+
+<ng-template #frmSQL let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Ejecución de API</h4>
+    </div>
+    <div class="modal-body">
+        <form #form="ngForm">
+           <div class="row">
+                <div class="col-md-12" id="divParametro">
+                    <div class="form-group">
+                        <label>Parametros</label>
+                        <input style="font-size:11px;" type="text" class="form-control"  
+                        [ngModelOptions]="{standalone: true}" 
+                        [(ngModel)]="xparametro" value ="{{xparametro}}">
+                    </div>
+                </div>
+               
+                <div class="col-md-12">
+                    <div class="input-group mb-3">
+                        <input style="font-size:14px;" type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="xentorno"  value ="{{xentorno}}" readonly>
+                        <div class="input-group-prepend">
+                            <button type="button" class="btn btn-success" (click)="ejecutarApi()"><i class="fa fa-play"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-md-12">
+                    <div class="form-group">
+                        <label>Resultado</label>
+                        <div style="width:100%; height:150px; overflow: scroll;">
+                            <div id="xrs" style="font-size:11px; width: 100%; height: 150px;"></div>
+                        </div>
+                    </div>
+                </div>
+           </div>
+        </form>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-secondary float-right" (click)="modal.dismiss('Cross click')">Cancelar</button>
+    </div>
+</ng-template>                    
+
+
+
+
+
+
+
+
+
+
+
+ -->
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

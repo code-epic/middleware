@@ -80,3 +80,11 @@ $ng-theme: mat-light-theme((
 @import '~ng-wizard/themes/ng_wizard_theme_arrows.min.css';
 @import '~ng-wizard/themes/ng_wizard_theme_circles.min.css';
 @import '~ng-wizard/themes/ng_wizard_theme_dots.min.css';
+
+@import '~codemirror/lib/codemirror';
+@import '~codemirror/theme/material';
+@import '~codemirror/theme/material-ocean';
+@import '~codemirror/theme/solarized';
+@import '~codemirror/theme/monokai';
+@import '~codemirror/theme/idea';
+@import '~codemirror/theme/eclipse';

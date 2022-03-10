@@ -6,7 +6,7 @@ import { AgGridModule } from 'ag-grid-angular';
 import { AngularFileUploaderModule } from 'angular-file-uploader';
 import { AutocompleteLibModule } from 'angular-ng-autocomplete';
 import { TabsModule } from 'ngx-bootstrap/tabs';
-import { NgbModule  } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { NgxUiLoaderModule,  NgxUiLoaderConfig } from "ngx-ui-loader";
 import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { NgWizardModule, NgWizardConfig, THEME } from 'ng-wizard';
@@ -48,7 +48,8 @@ import { MatExpansionModule } from '@angular/material/expansion';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { RegistrarComponent } from './herramientas/api/registrar/registrar.component';
-
+import { FregistrarComponent } from './herramientas/funciones/fregistrar/fregistrar.component';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 //import { NgxEditorModule } from 'ngx-editor';
 
@@ -110,7 +111,8 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     CerrarComponent,
     //NgxEditorModule,
     AccionComponent,
-    RegistrarComponent
+    RegistrarComponent,
+    FregistrarComponent
   
   ],
   imports: [
@@ -133,6 +135,7 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     MatExpansionModule,
     MatTabsModule,
     MatPaginatorModule,
+    CodemirrorModule
   ]
 })
 export class PrincipalModule { }
