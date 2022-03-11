@@ -50,6 +50,9 @@ import { MatPaginatorModule } from '@angular/material/paginator';
 import { RegistrarComponent } from './herramientas/api/registrar/registrar.component';
 import { FregistrarComponent } from './herramientas/funciones/fregistrar/fregistrar.component';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { RolComponent } from './seguridad/rol/rol.component';
+import { PerfilComponent } from './seguridad/perfil/perfil.component';
+import { RegistrarRolComponent } from './seguridad/rol/registrar-rol/registrar-rol.component';
 
 //import { NgxEditorModule } from 'ngx-editor';
 
@@ -112,7 +115,10 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     //NgxEditorModule,
     AccionComponent,
     RegistrarComponent,
-    FregistrarComponent
+    FregistrarComponent,
+    RolComponent,
+    PerfilComponent,
+    RegistrarRolComponent
   
   ],
   imports: [

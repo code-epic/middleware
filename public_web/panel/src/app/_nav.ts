@@ -92,8 +92,13 @@ export const navItems: INavData[] = [
         icon: 'icon-docs'
       },
       {
+        name: 'Perfil',
+        url: '/principal/seguridad/perfil',
+        icon: 'icon-docs'
+      },
+      {
         name: 'Usuarios',
-        url: '/principal/seguridad/usaurio',
+        url: '/principal/seguridad/usuario',
         icon: 'icon-user-following'
       }
     ]

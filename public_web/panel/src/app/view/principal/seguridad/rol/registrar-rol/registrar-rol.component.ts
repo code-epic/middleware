@@ -141,12 +141,12 @@ export class RegistrarRolComponent implements OnInit {
   consultarMenu(acc : string = ''){
     this.xAPI.funcion = "LstMenus"
     
-    this.xAPI.parametros = this.moduloid
+    this.xAPI.parametros = acc
     this.xnombre = this.menu
     this.datamenu = []
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        console.log(data)
+        console.log(acc)
         data.Cuerpo.forEach(e => {          
           this.datamenu.push({id: e.id, name: e.nomb });  
         });       
