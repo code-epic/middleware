@@ -2,13 +2,13 @@ import { Component, OnInit } from '@angular/core';
 import { ApiService, IAPICore } from '../../../../../service/apicore/api.service';
 
 
-
 @Component({
   selector: 'app-registrar-rol',
   templateUrl: './registrar-rol.component.html',
   styleUrls: ['./registrar-rol.component.scss']
 })
 export class RegistrarRolComponent implements OnInit {
+
 
   public xAPI : IAPICore = {
     funcion: '',
@@ -63,7 +63,7 @@ export class RegistrarRolComponent implements OnInit {
 
 
 
-  constructor(private apiService : ApiService) { }
+  constructor(private apiService : ApiService,) { }
 
   ngOnInit(): void {
     this.lstAplicaciones()
@@ -146,7 +146,6 @@ export class RegistrarRolComponent implements OnInit {
     this.datamenu = []
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        console.log(acc)
         data.Cuerpo.forEach(e => {          
           this.datamenu.push({id: e.id, name: e.nomb });  
         });       
@@ -157,16 +156,20 @@ export class RegistrarRolComponent implements OnInit {
     )
   }
 
-  OMenuAccion(){
+  ObjJSONRol(){
+    alert("Hola")
+  }
+
+  OMenuAccion(menuId : string = ''){
     this.bGuardar = true
     this.colormenu = "btn-warning"
-    if ( this.menuid == '' ) {
+    if ( menuId == '' ) {
       this.xnombre = this.menu
       this.colormenu = "btn-success"
       return
     }
     this.xAPI.funcion = "OMenuAccion"
-    this.xAPI.parametros = this.menuid
+    this.xAPI.parametros = menuId
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         var i = 0

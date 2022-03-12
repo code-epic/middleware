@@ -1,9 +1,20 @@
 <br>
 <div class="row">
+    <div class="col-md-12">
+        <div class="form-group">
+            <label>Aplicacion</label>
+            <select id="cmbAplicacion" class="form-control selected"
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="aplicacion"  value ="{{aplicacion}}"
+                style="display: flex; justify-content: center;" (change)="selModulo()">
+                <option value="0">SELECCIONE</option>
+                <option  *ngFor="let xapp of lstApps" value="{{xapp.id}}">{{xapp.nomb}} : {{xapp.vers}}</option>
+            </select>
+        </div>
+    </div>
     <div class="col-md-4">
         <div class="form-group">
             <label>Nombre</label>
-            <input type="text" id="txtFuncion" class="form-control" placeholder="Enter ..."  
+            <input type="text" id="txtName" class="form-control" placeholder="Enter ..."  
             [ngModelOptions]="{standalone: true}" [(ngModel)]="funcion"  value ="{{funcion}}"
             (onBlur) = "seleccionarUrl()">
         </div>
@@ -17,18 +28,7 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-md-3">
-        <div class="form-group">
-            <label>Aplicacion</label>
-            <select id="cmbAplicacion" class="form-control selected"
-                [ngModelOptions]="{standalone: true}" [(ngModel)]="aplicacion"  value ="{{aplicacion}}"
-                style="display: flex; justify-content: center;" (change)="selModulo()">
-                <option value="0">SELECCIONE</option>
-                <option  *ngFor="let xapp of lstApps" value="{{xapp.id}}">{{xapp.nomb}} : {{xapp.vers}}</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label>Modulo</label>
                 <select id="cmbModulo" class="form-control selected"
@@ -41,13 +41,14 @@
                 </select>
         </div>
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label>Menu</label>
             <select id="cmbMenu" class="form-control selected"
                 [ngModelOptions]="{standalone: true}"
                 [name]="menu"
                 [(ngModel)]="menu"
+                (change)='OMenuAccion($event.target.value)'
                 attr.data="{{datamenu}}">     
                 <option value="0">SELECCIONE</option>
                  <option  *ngFor="let item of datamenu" value="{{item.id}}">{{item.name}}</option> 
@@ -56,7 +57,7 @@
         </div>
     </div>
 
-    <div class="col-md-3">
+    <div class="col-md-4">
         <div class="form-group">
             <label>SubMenu</label>
             <select id="cmbTipo" class="form-control selected"  
@@ -67,13 +68,17 @@
     </div>
         
 </div>
+
  
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            <label>Incluir Privilegios:</label>
+            <label>Seleccionar Privilegios</label>
+            <div class="col-md-12" align="right">
+                <button mat-raised-button color="primary" type="submit" (click)="ObjJSONRol()">Adjuntar</button>
+            </div>
   <!-- Scroll bar present and enabled when more contents -->        
-  <div style="width: 100%; height: 300px; overflow-y: scroll;">
+  <div style="width: 100%; height: 200px; overflow-y: scroll;">
     <table class="table">
         <thead>
           <tr>
@@ -85,75 +90,30 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <th scope="row">1</th>
-            <td>Listar</td>
-            <td>xxx</td>
-            <td>xxx</td>
+          <tr *ngFor="let item of rowDataAcc">
+            <th scope="row">{{ item.accid }}</th>
+            <td>{{ item.nomb }}</td>
+            <td>{{ item.func }}</td>
+            <td>{{ item.endpoint }}</td>
             <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                <input type="checkbox" class="switch-input" id="1" checked>
-                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-              </label></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Editar</td>
-            <td>xxx</td>
-            <td>xxx</td>
-            <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                <input type="checkbox" class="switch-input" id="2" >
-                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-              </label></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Guardar</td>
-            <td>xxx</td>
-            <td>xxx</td>
-            <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                <input type="checkbox" class="switch-input" id="3">
-                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-              </label></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Eliminar</td>
-            <td>xxx</td>
-            <td>xxx</td>
-            <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                <input type="checkbox" class="switch-input" id="4">
-                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
-              </label></td>
-          </tr>
-          <tr>
-            <th scope="row">1</th>
-            <td>Buscar</td>
-            <td>xxx</td>
-            <td>xxx</td>
-            <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                <input type="checkbox" class="switch-input" id="5" checked>
-                <span class="switch-slider" data-checked="On" data-unchecked="Off"></span>
+                <input type="checkbox" class="switch-input">
+                <span class="switch-slider" data-checked="Si" data-unchecked="No"></span>
               </label></td>
           </tr>
         </tbody>
       </table>
-
   </div>
         </div>
     </div>
 </div>
 
 
-<div class="col-md-12" align="right">
-    <button mat-raised-button color="primary">Guardar</button>
-    </div>
-
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
-            <label>Listado de Provilegios:</label>
+            <label>Listado de Rol - Privilegios</label>
   <!-- Scroll bar present and enabled when more contents -->        
-  <div style="width: 100%; height: 300px; overflow-y: scroll;">
+  <div style="width: 100%; height: 200px; overflow-y: scroll;">
     <table class="table">
         <thead>
           <tr>
@@ -190,5 +150,5 @@
 </div>
 
 <div class="col-md-12" align="center">
-<button mat-raised-button color="primary">Guardar Rol</button>
+<button mat-raised-button color="primary">Guardar</button>
 </div>
