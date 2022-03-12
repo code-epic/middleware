@@ -25,7 +25,7 @@ func (C *Core) Select(v map[string]interface{}, consulta string, conexion *sql.D
 		M.Msj = "Select fallo"
 		M.Tipo = 0
 		M.Fecha = time.Now()
-		sys.QueryLog.Println("Core.Select: ", consulta, err.Error())
+		sys.QueryLog.Println("Core.Select: ", consulta, e.Error())
 		jSon, err = json.Marshal(M)
 		return
 	}

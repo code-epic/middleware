@@ -24,8 +24,13 @@ export class FregistrarComponent implements OnInit {
   public lenguaje : string = 'S'
   public tipo : string = 'S'
   public categoria : string = 'S' 
+  public entrada : string = 'S' 
+  public esquemaEntrada : string = '' 
+  public salida : string = 'S' 
+  public esquemaSalida : string = '' 
 
-  public contenido : string = 'S' 
+
+  public contenido : string = '' 
 
   public descripcion : string = ''
   public retorno : string = ''
@@ -51,6 +56,32 @@ export class FregistrarComponent implements OnInit {
     }
   }
 
+  codeMirrorOptions: any = {
+    theme: 'idea',
+    mode: 'text/x-idn',
+    lineNumbers: true,
+    lineWrapping: true,
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    lint: true,
+    indentUnit: 2,
+    tabSize: 2,
+    indentWithTabs: true
+  };
+  codeMOEsquemaJson: any = {
+    theme: 'idea',
+    mode: 'application/ld+json',
+    lineNumbers: true,
+    lineWrapping: true,
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    lint: true
+  };
+
 
   constructor(  private comunicacionesService : ComunicacionesService,
     private apiService : ApiService, 
@@ -60,11 +91,33 @@ export class FregistrarComponent implements OnInit {
     private ngxService: NgxUiLoaderService) {
      
 
-     }
+  }
+
+  setEditorContent(event) {
+    // console.log(event, typeof event);
+    console.log(this.contenido);
+  }
 
   ngOnInit(): void {
   }
 
+  cambiarModo(){
+    var idioma = 'text/x-idn'
+    switch (this.lenguaje)  {
+      case "GO":
+        idioma = 'text/x-go'
+        break;
+      case "PHP":
+        idioma = 'text/x-php'
+        break;
+      case "RDN":
+        idioma = 'text/x-idn'
+        break;    
+    }
+    
+    this.codeMirrorOptions.mode = idioma
+    
+  }
     
   isValidTypeBoolean: boolean = true;
 

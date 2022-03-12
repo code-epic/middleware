@@ -88,3 +88,6 @@ $ng-theme: mat-light-theme((
 @import '~codemirror/theme/monokai';
 @import '~codemirror/theme/idea';
 @import '~codemirror/theme/eclipse';
+
+@import '~codemirror/addon/fold/foldgutter.css';
+@import '~codemirror/addon/lint/lint.css';

@@ -14,28 +14,28 @@ Titulo: Panel de Control: APICORE
                     <div class="card-body" style="padding:0px;height:100%">
                         <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
                                     
-                       
-                        <div class="row">
-                            <div class="col-md-12" >
-
-                                <ngx-codemirror
-                                style="height:100%"
-                                [ngModelOptions]="{standalone: true}" 
-                                [(ngModel)]="contenido"
-                                [options]="{
-                                    theme: 'monokai',
-                                    matchBrackets: true,
-                                    indentUnit: 4,
-                                    tabSize: 4,
-                                    indentWithTabs: true,
-                                    mode: 'text/x-idn',
-                                    lineNumbers: true}"
-                                ></ngx-codemirror>
+                        <mat-tab-group mat-stretch-tabs class="example-stretched-tabs" (selectedIndexChange)="CargarListadoAPI($event)">                
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                <mat-icon class="example-tab-icon">add_task</mat-icon>
+                                &nbsp;REGISTRAR FUNCIONES
+                                </ng-template>
+                               
+                                <app-fregistrar></app-fregistrar>
                             
-                            </div>
-                        </div>
-    
-                       
+                            </mat-tab>
+                            <mat-tab>
+                                <ng-template mat-tab-label>
+                                <mat-icon class="example-tab-icon">tips_and_updates</mat-icon>
+                                &nbsp;CONSULTAR FUNCIONES
+                                </ng-template>
+                          
+                  
+                            
+                            
+                            </mat-tab>
+                        </mat-tab-group>
+                        
 
                         
 
@@ -57,34 +57,6 @@ Titulo: Panel de Control: APICORE
  </div>
 
 
-
- <div class="animated fadeIn"  [ngStyle]="{'display':sectionRegistar}" >
-    <section class="esb">        
-        <div class="row">
-            <div class="col-md-12">
-                <div class="card">
-                    <div class="card-body">
-                        <ngx-ui-loader [loaderId]="'loader-02'"></ngx-ui-loader>
-                        <div class="btn-group float-right" style="padding:3px">
-                            <button type="button" class="btn btn-pill bg-primary" (click)="seccionRegistrar('none')" >
-                                Consultar Listado de Funciones
-                            </button>
-                            
-                            
-                        
-                        </div> 
-                        <h4>Registar una Nueva Función</h4>
-                        <hr>
-
-                        <app-fregistrar></app-fregistrar>
-
-
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
- </div>
 
 
 
