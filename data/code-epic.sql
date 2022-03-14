@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 09-12-2021 a las 20:37:32
+-- Tiempo de generación: 14-03-2022 a las 19:47:24
 -- Versión del servidor: 8.0.22
 -- Versión de PHP: 8.0.6
 
@@ -27,15 +27,17 @@ SET time_zone = "+00:00";
 -- Estructura de tabla para la tabla `BOT_001_Chat`
 --
 
-CREATE TABLE `BOT_001_Chat` (
-  `id` int UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `BOT_001_Chat`;
+CREATE TABLE IF NOT EXISTS `BOT_001_Chat` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `idio` varchar(8) DEFAULT NULL,
   `tipo` varchar(1) DEFAULT NULL,
   `clas` varchar(32) DEFAULT NULL,
   `preg` text,
   `resp` text,
-  `obse` text
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `obse` text,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=48 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `BOT_001_Chat`
@@ -58,7 +60,32 @@ INSERT INTO `BOT_001_Chat` (`id`, `idio`, `tipo`, `clas`, `preg`, `resp`, `obse`
 (14, 'ESP', 'I', 'asistencia', '¿Cuánto sale enviar un paquete desde, hasta?', 'Desplegar el cátalo de servicio y luego de elegido el mismo se calcula el peso volumétrico', NULL),
 (15, 'ESP', 'I', 'asistencia', '¿Qué horarios hay disponibles?', ' Cronograma de apertura de las oficinas (CNC) <a href=\'\'>Descargar</a>', NULL),
 (16, 'ESP', 'I', 'asistencia', '¿Cómo puedo saber el código de una oficina?', 'Indíqueme por favor el nombre de oficina o  dirección y con gusto le indicaremos la información.', NULL),
-(17, 'ESP', 'I', 'asistencia', '¿Cuánto tiempo tarda un envió al exterior?', 'Esta información depende del país de origen donde se realizó la consignación y el destino del mismo.', NULL);
+(17, 'ESP', 'I', 'asistencia', '¿Cuánto tiempo tarda un envió al exterior?', 'Esta información depende del país de origen donde se realizó la consignación y el destino del mismo.', NULL),
+(18, 'ESP', 'I', 'pregunta frecuente', 'modalidad de envio|modalidades de envio|forma de envio|logistica de envio', 'Tres Modalidades <br>\r\n1.- Integral:\r\nNos adaptamos a la necesidad, Solicite la asesoría de un ejecutivo de ventas. <br>\r\n2.- Taquilla:\r\nTraslado de paquetería hasta 30 kilos Por pieza, en mas de 200 Oficinas. <br>\r\n3.- Flete:\r\nTraslados urbanos y nacionales, dispones de vehículos Pick Up, Camiones\r\n350, 750 y NPR.', 'extraido del catalogoservicios.pdf'),
+(19, 'ESP', 'N', 'preguntas frecuentes', 'que es EEB|envios expresos bolivariano| eeb| envio expreso| envios expresos ', 'Servicio Expreso de envió de\r\nCorrespondencia, Documentos\r\ncon Cobertura Nacional.', 'extraido del catalogoservicios.pdf'),
+(20, 'ESP', 'N', 'preguntas frecuentes ', 'cual es la cobertura del eeb| cobertura de los envios expresos bolivarianos ', 'cobertura de los envios expresos bolivarianos (EEB):\r\n1.- Urbano:\r\nPiezas Consignadas en una Ciudad con\r\ndestino dentro de la misma Ciudad. <br>\r\n2.- Intraestatal:\r\nPiezas Consignadas en una Ciudad con\r\ndestino a otra Ciudad en el mismo Estado. <br>\r\n3.- Nacional:\r\nPiezas Consignadas en Estado con\r\ndestino a otro Estado.', 'extraido del catalogoservicios.pdf'),
+(21, 'ESP', 'N', 'preguntas frecuentes ', 'cual es la cobertura del eeb| cobertura de los envios expresos bolivarianos ', 'cobertura de los envios expresos bolivarianos (EEB):<br>\r\n1.- Urbano:\r\nPiezas Consignadas en una Ciudad con\r\ndestino dentro de la misma Ciudad. <br>\r\n2.- Intraestatal:\r\nPiezas Consignadas en una Ciudad con\r\ndestino a otra Ciudad en el mismo Estado. <br>\r\n3.- Nacional:\r\nPiezas Consignadas en Estado con\r\ndestino a otro Estado.', 'extraido del catalogoservicios.pdf'),
+(22, 'ESP', 'N', 'preguntas frecuentes', 'que es express mail service | que es ems| express mail service ', 'servicio expreso de recepción y envíos de paquetes, documentos y mercaderías internacional.', 'extraido del catalogoservicios.pdf'),
+(23, 'ESP', 'N', 'preguntas frecuentes', 'cual es la cobertura EMS| cobertura express mail service| cobertura ems', 'la cobertura internacional del express mail service (EMS): <br>\r\nA.- América y el Caribe. <br>\r\nB.- Europa. <br>\r\nC.- África, Asia y Oceanía.\r\n', 'extraido del catalogoservicios.pdf'),
+(24, 'ESP', 'I', 'preguntas frecuentes', 'Características del Servicio EMS| caracteristicas del express mail service', 'Características del Express Mail Service (EMS): <br>\r\n✓ Seguimiento y Rastreo a través del “Sistema Internacional Postal System (IPS).<br>\r\n✓ Limite de peso hasta 30 kilos.<br>\r\n✓ Cobertura Nacional.<br>\r\n✓ Entrega rápida y segura.<br>\r\n✓ Pago de contado o crédito.>br>\r\n✓ Tarifas económicas por peso volumétrico. <br>', 'extraido del catalogoservicios.pdf'),
+(27, 'ESP', 'I', 'preguntas frecuentes', 'peso volumetrico EMS| peso volumetrico del espress mail service', 'A todos nuestros servicios de paquetería, se le aplica el calculo de peso volumétrico.<br>\r\nEnvíos Nacionales: <br>\r\nlargo cm x ancho cm x alto (cm)/5000 (cm3) <br>\r\nEnvíos Internacionales: <br>\r\nlargo cm x ancho cm x alto (cm)/6000 (cm3) ', 'extraido del catalogoservicios.pdf'),
+(29, 'ESP', 'I', 'preguntas frecuentes', 'Limites de Dimensiones Admitidas en el express mail service| Limites de Dimensiones Admitidas del EMS', 'Limites de Dimensiones Admitidas en el express mail service (EMS): <br>\r\nQue no excedan de dos (2) metros en\r\ncualquier de sus lados, ni de tres (3) metros La suma de su Largo, ancho y alto.', 'extraido del catalogoservicios.pdf'),
+(30, 'ESP', 'I', 'preguntas frecuentes', 'requisitos para el retiro de encomiendas EMS| requisitos para el retiro de pequeños paquetes EMS sujetos a control de aduanas| requisitos para el retiro de encomiendas express mail service| requisitos para el retiro de pequeños paquetes express mail service sujetos a control de aduanas', 'Requisitos para el retiro de pequeños paquetes del express mail service (EMS) sujetos a control de aduanas: <br>\r\n1.- Persona Natural: <br>\r\n01 fotocopia de la cédula de identidad.>br>\r\nTimbres fiscales por 0.25 (U.T) <br>\r\n01 estampilla postal (bs). <br>\r\n01 Fotocopia del RIF personal. <br>\r\n(Adicional): <br>\r\n2.- Persona Jurídica: <br>\r\n01 Fotocopia del registro mercantil. <br>\r\n01 Fotocopia del RIF empresarial. <br>\r\n3.- Autorizado: <br>\r\nAutorización original y copia. <br>\r\n01 copia de la fotocopia de la cédula del que autoriza.\r\n01 fotocopia del RIF del que autoriza.\r\n', 'extraido del catalogoservicios.pdf'),
+(32, 'ESP', 'I', 'preguntas frecuentes', 'pasos para el retiro de encomiendas EMS| pasos para el retiro de encomiendas Express Mail Service', 'Pasos para el retiro de encomiendas Express Mail Service (EMS): <br>\r\n1.- Solicita el envió en taquilla. <br>\r\n2.- Realiza reconocimiento ante el Seniat. <br>\r\n3.- Efectúa el pago en el banco. <br>\r\n4.- Retira el Envió.', 'extraido del catalogoservicios.pdf'),
+(33, 'ESP', 'N', 'preguntas frecuentes', 'sevicios postales internacionales| spu| que es servicios postales universales| concepto servicios postales universales ', 'Es el conjunto de servicios postales\r\nbásicos de calidad, disponibles a todos y\r\ntodas los habitantes del territorio\r\nnacional en todo momento, con un valor\r\nasequible cuya prestación es de carácter\r\nobligatorio por el operador designado', 'extraido del catalogoservicios.pdf'),
+(34, 'ESP', 'N', 'preguntas frecuentes', 'cual es la Cobertura Nacional e Internacional de servicios postales universales| cual es la Cobertura Nacional e Internacional de spu', '✓ Cartas. <br>\r\n✓ Impresos. <br>\r\n✓ Tarjetas Postales. <br>\r\n✓ Cecograma ( envíos para personas con discapacidad visual).<br>\r\n✓ Pequeño Paquete. <br>\r\n', 'extraido del catalogoservicios.pdf'),
+(35, 'ESP', 'N', 'preguntas frecuentes', 'que es el Apartado Postal| apartado postal| ap', 'Domicilio postal, el cual consiste en una casilla numerada, de que se otorga en\r\narrendamiento a las personas Naturales y Jurídicas con el objeto de recibir su\r\ncorrespondencia nacional e internacional.\r\n*Todo envió postal mayor a dos 2 kilos entrega por taquilla y paga la tarifa correspondiente.', 'extraido del catalogoservicios.pdf'),
+(36, 'ESP', 'N', 'preguntas frecuentes', 'que es una Encomienda Internacionale| que son las Encomiendas Internacionales| EI| encomienda internacional', 'Paquetes y bultos que contienen mercaderías con un peso unitario máximo de veinte 20\r\nkilos, con seguimiento a través del Sistema Postal Internacional “Internacional Postal System”.', 'extraido del catalogoservicios.pdf'),
+(37, 'ESP', 'N', 'preguntas frecuentes ', 'que es el servicio telegrafico| telegrafo| telegrafia| st', 'Escrito destinado a ser escrito por\r\ntelegrafía, para ser entregado al\r\ndestinatarios con cobertura nacional.<br>\r\nTelegrama Ordinario:<br>\r\nEscrito cuya aceptación es obligatoria y\r\nno lleva ninguna indicación de servicio.<br>Telegrama Urgente:<br>\r\nEscrito que se le da prioridad para su\r\ntransmisión y entrega al destinatario.\r\n\r\n\r\n', 'extraido del catalogoservicios.pdf'),
+(38, 'ESP', 'I', 'preguntas frecuentes', 'servicios de telegrama| tipos de servicios de telegramas| servicio telegrafico ', 'servicios telegraficos:<br>\r\n1.- Copia certificada: Servicio donde el expedidor o destinatarios tiene derecho de solicitar una copia certificada de su telegrama.<br>\r\n2.- Petición de Confirmación de Entrega (PC): Es un aviso de servicio donde se le informa al remitente, fecha y datos personales de quién recibe el telegrama.<br>\r\n3.- Telefonograma: Consiste en consignar telegramas con destino nacional, a través de una llamada telefónica desde su casa u oficina marcando el numero telefónico 0800- IPOSTEL y/o (0212) 405-30-78.\r\n\r\n', 'extraido del catalogoservicios.pdf'),
+(39, 'ESP', 'N', 'preguntas frecuentes', 'que es la filatelia| filatelia|f', 'la filatelia: <br>\r\nEs el arte del conocimiento, estudio y coleccionismo de los sellos\r\npostales, a través del cual se muestra la historia, cultura, ciencia,\r\ndeporte, política, paisajes naturales, arte, flora, el universo entre otros.', 'extraido del catalogoservicios.pdf'),
+(40, 'ESP', 'I', 'preguntas frecuentes', 'Servicio de Abonados de filatelia| servicos abonados| filatelia ipostel| ', 'servicios abonados:\r\n<br>Consiste en la suscripción y asignación de un numero de registro mediante el cual\r\nlos interesados realizan abonos anticipados por una determinada cantidad de\r\nbolívares, en aras de garantizar la recepción de nuevas emisiones filatélicas una vez puestas en circulación. <br>\r\nLa suscripción es gratuita y podrá realizarse a través del siguiente correo electrónico:<br>\r\nfilatelia.ipostel@gmail.com', 'extraido del catalogoservicios.pdf'),
+(41, 'ESP', 'I', 'preguntas frecuentes', 'Servicio de Abonados de filatelia| servicos abonados| filatelia ipostel| ', 'servicios abonados:\r\n<br>Consiste en la suscripción y asignación de un numero de registro mediante el cual\r\nlos interesados realizan abonos anticipados por una determinada cantidad de\r\nbolívares, en aras de garantizar la recepción de nuevas emisiones filatélicas una vez puestas en circulación. <br>\r\nLa suscripción es gratuita y podrá realizarse a través del siguiente correo electrónico:<br>\r\nfilatelia.ipostel@gmail.com', 'extraido del catalogoservicios.pdf'),
+(42, 'ESP', 'N', 'preguntas frecuentes', 'cuales son los Elementos Filatelicos| elementos filatelicos| ef| filatelia ipostel', 'Elementos Filatélicos:<br>\r\n✓ Estampilla Postal.<br>\r\n✓ Sobre del primer día de circulación.<br>\r\n✓ Boletín informativo.<br>\r\n✓ Matasello.<br>\r\n✓ Tarjetas Postales.<br>\r\n✓ Porta estampilla.<br>\r\n✓ Álbum Filatélico.<br>', 'extraido del catalogoservicios.pdf'),
+(43, 'ESP', 'N', 'preguntas frecuentes', 'que es la imprenta postal| imprenta postal| ip', 'imprenta postal: <br>Servicio de Impresión en general, publicidad y nuestros servicios\r\npropaganda a precio justo.', 'extraido del catalogoservicios.pdf'),
+(44, 'ESP', 'N', 'preguntas frecuentes ', 'impresiones de| impresiones| servicios de impresiones| tipo de impresiones ', 'servios de impresiones de: <br>\r\nTrípticos, Dípticos, Leyes, Afiches, Poster, Volantes, Agendas, Block, Carpetas.<br>\r\nCatálogos, Calcomanías, Calendarios, Producción de Editorial, Propaganda, Panfletos, Impresión de libros, Impresión de alta calidad, Impresión Offset, Etiquetas.', 'extraido del catalogoservicios.pdf'),
+(45, 'ESP', 'N', 'preguntas frecuentes', 'cual es la estructura unica de la direccion postal en Venezuela| estructura de la direccion postal de Venezuela | direccion postal de Venezuela\r\n', 'Estructura única de la dirección postal en Venezuela: <br>\r\nRecuerda Mantener este Orden. <br>\r\n✓ Nombre de Persona Natural o Jurídica. <br>\r\n✓ Localidad. <br>\r\n✓ Inmueble. <br>\r\n✓ Parroquia. <br>\r\n✓ Municipio. <br>\r\n✓ Cuidad o Pueblo. <br>\r\n✓ Estado. <br>\r\n✓ País (Envíos con destinos Internacionales). <br>\r\n✓ Zona Posta. <br>', 'extraido del catalogoservicios.pdf'),
+(47, 'ESP', 'N', 'preguntas frecuentes', 'Le enviarán una encomienda desde el exterior|Necesita realizar una compra electrónica internacional| pasos para recibir encomiendas internacionales| ei| encomiendas internacionales', 'Pasos para recibir encomiendas internacionales: <br>\r\n1.- Realice su compra en\r\nla tienda online de su preferencia. <br>\r\n2.- Gestione el envió a través del correo oficial del país. <br>\r\n3.- Asegúrese que el envió tenga el número de seguimiento (Tracking). <br>\r\n4.- Realice el envió a través de: 0800-IPOSTEL, www.ipostel.gob.ve <br>\r\n5.- Deberá pagar al Seniat si el valor del contenido excede de USD 100. <br>\r\n6.- Reciba su envió en un tiempo promedio: <br> * Desde América: 7 días.<br>\r\n* Otro Origen: 8 dias.\r\n\r\n\r\n\r\n', 'extraido del catalogoservicios.pdf');
 
 -- --------------------------------------------------------
 
@@ -66,13 +93,15 @@ INSERT INTO `BOT_001_Chat` (`id`, `idio`, `tipo`, `clas`, `preg`, `resp`, `obse`
 -- Estructura de tabla para la tabla `GEO_001_Paises`
 --
 
-CREATE TABLE `GEO_001_Paises` (
-  `id` int UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `GEO_001_Paises`;
+CREATE TABLE IF NOT EXISTS `GEO_001_Paises` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `code` smallint DEFAULT NULL,
   `iso3166a1` char(2) DEFAULT NULL,
   `iso3166a2` char(3) DEFAULT NULL,
-  `nombre` varchar(128) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `nombre` varchar(128) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=241 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `GEO_001_Paises`
@@ -323,21 +352,24 @@ INSERT INTO `GEO_001_Paises` (`id`, `code`, `iso3166a1`, `iso3166a2`, `nombre`) 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `GEO_002_Ciudadesx`
+-- Estructura de tabla para la tabla `GEO_002_Ciudades`
 --
 
-CREATE TABLE `GEO_002_Ciudadesx` (
-  `id_ciudad` int NOT NULL,
+DROP TABLE IF EXISTS `GEO_002_Ciudades`;
+CREATE TABLE IF NOT EXISTS `GEO_002_Ciudades` (
+  `id_ciudad` int NOT NULL AUTO_INCREMENT,
   `id_estado` int NOT NULL,
   `ciudad` varchar(200) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `capital` tinyint(1) NOT NULL DEFAULT '0'
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `capital` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id_ciudad`),
+  KEY `id_estado` (`id_estado`)
+) ENGINE=InnoDB AUTO_INCREMENT=523 DEFAULT CHARSET=utf8;
 
 --
--- Volcado de datos para la tabla `GEO_002_Ciudadesx`
+-- Volcado de datos para la tabla `GEO_002_Ciudades`
 --
 
-INSERT INTO `GEO_002_Ciudadesx` (`id_ciudad`, `id_estado`, `ciudad`, `capital`) VALUES
+INSERT INTO `GEO_002_Ciudades` (`id_ciudad`, `id_estado`, `ciudad`, `capital`) VALUES
 (1, 1, 'Maroa', 0),
 (2, 1, 'Puerto Ayacucho', 1),
 (3, 1, 'San Fernando de Atabapo', 0),
@@ -843,11 +875,13 @@ INSERT INTO `GEO_002_Ciudadesx` (`id_ciudad`, `id_estado`, `ciudad`, `capital`) 
 -- Estructura de tabla para la tabla `GEO_003_Estados`
 --
 
-CREATE TABLE `GEO_003_Estados` (
-  `id_estado` int NOT NULL,
+DROP TABLE IF EXISTS `GEO_003_Estados`;
+CREATE TABLE IF NOT EXISTS `GEO_003_Estados` (
+  `id_estado` int NOT NULL AUTO_INCREMENT,
   `estado` varchar(250) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `iso_3166-2` varchar(4) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `iso_3166-2` varchar(4) NOT NULL,
+  PRIMARY KEY (`id_estado`)
+) ENGINE=InnoDB AUTO_INCREMENT=26 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `GEO_003_Estados`
@@ -886,11 +920,14 @@ INSERT INTO `GEO_003_Estados` (`id_estado`, `estado`, `iso_3166-2`) VALUES
 -- Estructura de tabla para la tabla `GEO_004_Municipios`
 --
 
-CREATE TABLE `GEO_004_Municipios` (
-  `id_municipio` int NOT NULL,
+DROP TABLE IF EXISTS `GEO_004_Municipios`;
+CREATE TABLE IF NOT EXISTS `GEO_004_Municipios` (
+  `id_municipio` int NOT NULL AUTO_INCREMENT,
   `id_estado` int NOT NULL,
-  `municipio` varchar(100) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `municipio` varchar(100) NOT NULL,
+  PRIMARY KEY (`id_municipio`),
+  KEY `id_estado` (`id_estado`)
+) ENGINE=InnoDB AUTO_INCREMENT=463 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `GEO_004_Municipios`
@@ -1239,11 +1276,14 @@ INSERT INTO `GEO_004_Municipios` (`id_municipio`, `id_estado`, `municipio`) VALU
 -- Estructura de tabla para la tabla `GEO_005_Parroquias`
 --
 
-CREATE TABLE `GEO_005_Parroquias` (
-  `id_parroquia` int NOT NULL,
+DROP TABLE IF EXISTS `GEO_005_Parroquias`;
+CREATE TABLE IF NOT EXISTS `GEO_005_Parroquias` (
+  `id_parroquia` int NOT NULL AUTO_INCREMENT,
   `id_municipio` int NOT NULL,
-  `parroquia` varchar(250) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+  `parroquia` varchar(250) NOT NULL,
+  PRIMARY KEY (`id_parroquia`),
+  KEY `id_municipio` (`id_municipio`)
+) ENGINE=InnoDB AUTO_INCREMENT=1139 DEFAULT CHARSET=utf8;
 
 --
 -- Volcado de datos para la tabla `GEO_005_Parroquias`
@@ -2395,8 +2435,9 @@ INSERT INTO `GEO_005_Parroquias` (`id_parroquia`, `id_municipio`, `parroquia`) V
 -- Estructura de tabla para la tabla `SEC_001_Aplicacion`
 --
 
-CREATE TABLE `SEC_001_Aplicacion` (
-  `id` int UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `SEC_001_Aplicacion`;
+CREATE TABLE IF NOT EXISTS `SEC_001_Aplicacion` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `type` int NOT NULL,
   `serv` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre de Aplicacion',
@@ -2405,8 +2446,9 @@ CREATE TABLE `SEC_001_Aplicacion` (
   `db` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `idio` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `obse` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `user` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `user` varchar(30) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=MyISAM AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `SEC_001_Aplicacion`
@@ -2422,16 +2464,18 @@ INSERT INTO `SEC_001_Aplicacion` (`id`, `type`, `serv`, `nomb`, `vers`, `sope`, 
 -- Estructura de tabla para la tabla `SEC_002_Api`
 --
 
-CREATE TABLE `SEC_002_Api` (
-  `id` bigint UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `SEC_002_Api`;
+CREATE TABLE IF NOT EXISTS `SEC_002_Api` (
+  `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT,
   `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `idfunc` varchar(128) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Id de la Funcion HEX',
   `func` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `descr` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `param` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `esta` int NOT NULL,
-  `idapp` int UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idapp` int UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `SEC_002_Api`
@@ -2451,7 +2495,8 @@ INSERT INTO `SEC_002_Api` (`id`, `nomb`, `idfunc`, `func`, `descr`, `param`, `es
 -- Estructura de tabla para la tabla `SEC_003_Conexion`
 --
 
-CREATE TABLE `SEC_003_Conexion` (
+DROP TABLE IF EXISTS `SEC_003_Conexion`;
+CREATE TABLE IF NOT EXISTS `SEC_003_Conexion` (
   `id` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `func` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
@@ -2467,12 +2512,14 @@ CREATE TABLE `SEC_003_Conexion` (
 -- Estructura de tabla para la tabla `SEC_004_Modulo`
 --
 
-CREATE TABLE `SEC_004_Modulo` (
-  `id` int UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `SEC_004_Modulo`;
+CREATE TABLE IF NOT EXISTS `SEC_004_Modulo` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `nomb` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
   `descr` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci DEFAULT NULL,
-  `idapp` int UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idapp` int UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `SEC_004_Modulo`
@@ -2480,7 +2527,8 @@ CREATE TABLE `SEC_004_Modulo` (
 
 INSERT INTO `SEC_004_Modulo` (`id`, `nomb`, `descr`, `idapp`) VALUES
 (1, 'Oficina Postal Privada', NULL, 1),
-(2, 'Nomina', NULL, 2);
+(2, 'Nomina', NULL, 2),
+(3, 'Configuraciones', NULL, 2);
 
 -- --------------------------------------------------------
 
@@ -2488,8 +2536,9 @@ INSERT INTO `SEC_004_Modulo` (`id`, `nomb`, `descr`, `idapp`) VALUES
 -- Estructura de tabla para la tabla `SEC_005_Menu`
 --
 
-CREATE TABLE `SEC_005_Menu` (
-  `id` int UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `SEC_005_Menu`;
+CREATE TABLE IF NOT EXISTS `SEC_005_Menu` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `url` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `js` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
@@ -2497,8 +2546,9 @@ CREATE TABLE `SEC_005_Menu` (
   `clase` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `color` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `type` int NOT NULL,
-  `idmod` int UNSIGNED DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `idmod` int UNSIGNED DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `SEC_005_Menu`
@@ -2514,15 +2564,17 @@ INSERT INTO `SEC_005_Menu` (`id`, `nomb`, `url`, `js`, `icon`, `clase`, `color`,
 -- Estructura de tabla para la tabla `SEC_006_SubMenu`
 --
 
-CREATE TABLE `SEC_006_SubMenu` (
-  `id` int UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `SEC_006_SubMenu`;
+CREATE TABLE IF NOT EXISTS `SEC_006_SubMenu` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `url` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `js` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `icon` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `clase` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `color` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `type` int NOT NULL
+  `type` int NOT NULL,
+  PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 -- --------------------------------------------------------
@@ -2531,13 +2583,15 @@ CREATE TABLE `SEC_006_SubMenu` (
 -- Estructura de tabla para la tabla `SEC_007_Accion`
 --
 
-CREATE TABLE `SEC_007_Accion` (
-  `id` int UNSIGNED NOT NULL,
+DROP TABLE IF EXISTS `SEC_007_Accion`;
+CREATE TABLE IF NOT EXISTS `SEC_007_Accion` (
+  `id` int UNSIGNED NOT NULL AUTO_INCREMENT,
   `endpoint` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `nomb` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `func` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `direc` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+  `direc` varchar(256) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
 -- Volcado de datos para la tabla `SEC_007_Accion`
@@ -2555,9 +2609,13 @@ INSERT INTO `SEC_007_Accion` (`id`, `endpoint`, `nomb`, `func`, `direc`) VALUES
 -- Estructura de tabla para la tabla `SEC_008_Menu_Accion`
 --
 
-CREATE TABLE `SEC_008_Menu_Accion` (
+DROP TABLE IF EXISTS `SEC_008_Menu_Accion`;
+CREATE TABLE IF NOT EXISTS `SEC_008_Menu_Accion` (
   `idmenu` int UNSIGNED DEFAULT NULL,
-  `idact` int UNSIGNED DEFAULT NULL
+  `idact` int UNSIGNED DEFAULT NULL,
+  UNIQUE KEY `idmenu_2` (`idmenu`,`idact`),
+  KEY `idmenu` (`idmenu`),
+  KEY `idact` (`idact`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -2575,7 +2633,8 @@ INSERT INTO `SEC_008_Menu_Accion` (`idmenu`, `idact`) VALUES
 -- Estructura de tabla para la tabla `SEC_009_Menu_SubMenu`
 --
 
-CREATE TABLE `SEC_009_Menu_SubMenu` (
+DROP TABLE IF EXISTS `SEC_009_Menu_SubMenu`;
+CREATE TABLE IF NOT EXISTS `SEC_009_Menu_SubMenu` (
   `idmenu` int UNSIGNED DEFAULT NULL,
   `idsub` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -2586,7 +2645,8 @@ CREATE TABLE `SEC_009_Menu_SubMenu` (
 -- Estructura de tabla para la tabla `SEC_010_SubMenu_Action`
 --
 
-CREATE TABLE `SEC_010_SubMenu_Action` (
+DROP TABLE IF EXISTS `SEC_010_SubMenu_Action`;
+CREATE TABLE IF NOT EXISTS `SEC_010_SubMenu_Action` (
   `idsub` int UNSIGNED DEFAULT NULL,
   `idact` int UNSIGNED DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
@@ -2597,11 +2657,13 @@ CREATE TABLE `SEC_010_SubMenu_Action` (
 -- Estructura de tabla para la tabla `tech`
 --
 
-CREATE TABLE `tech` (
+DROP TABLE IF EXISTS `tech`;
+CREATE TABLE IF NOT EXISTS `tech` (
   `oid` int NOT NULL,
   `nombre` varchar(64) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
   `version` varchar(16) CHARACTER SET utf8 COLLATE utf8_spanish_ci NOT NULL,
-  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
+  `fecha` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`oid`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 --
@@ -2611,6 +2673,193 @@ CREATE TABLE `tech` (
 INSERT INTO `tech` (`oid`, `nombre`, `version`, `fecha`) VALUES
 (1, 'Panel', '1.0.0 RC.1', '2021-05-23 19:45:34');
 
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_001_Definicion`
+--
+
+DROP TABLE IF EXISTS `WKF_001_Definicion`;
+CREATE TABLE IF NOT EXISTS `WKF_001_Definicion` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nomb` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `WKF_001_Definicion`
+--
+
+INSERT INTO `WKF_001_Definicion` (`id`, `nomb`, `obse`, `fech`) VALUES
+(1, 'Gestión de Funciones', 'Orden de funciones middleware', '2022-02-28 21:15:10'),
+(2, 'Gestión de Documentos', 'Control de Gestión para Documentos', '2022-02-28 21:16:37');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_002_Serie`
+--
+
+DROP TABLE IF EXISTS `WKF_002_Serie`;
+CREATE TABLE IF NOT EXISTS `WKF_002_Serie` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `cod` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `long` int NOT NULL,
+  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `WKF_002_Serie`
+--
+
+INSERT INTO `WKF_002_Serie` (`id`, `cod`, `long`, `fech`, `obse`) VALUES
+(1, 'API', 8, '2022-02-28 21:15:10', 'Generacion de Fnx Middleware');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_003_Estado`
+--
+
+DROP TABLE IF EXISTS `WKF_003_Estado`;
+CREATE TABLE IF NOT EXISTS `WKF_003_Estado` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nomb` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+--
+-- Volcado de datos para la tabla `WKF_003_Estado`
+--
+
+INSERT INTO `WKF_003_Estado` (`id`, `nomb`, `obse`) VALUES
+(1, 'Registro', 'Recepción y registro de documentos del Despacho MPPD.'),
+(2, 'Control y Gestión', 'Recepción y registro de documentos del Despacho MPPD.'),
+(3, 'Secretaría', 'Procesamiento de solicitudes de puntos de cuenta.'),
+(4, 'Resoluciones', 'Documentos para ordenes y gestión.'),
+(5, 'Ayudantía', 'Gestión del Director del despacho'),
+(6, 'Timonel', ''),
+(7, 'Acami', ''),
+(8, 'Personal', '');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_004_Transiciones`
+--
+
+DROP TABLE IF EXISTS `WKF_004_Transiciones`;
+CREATE TABLE IF NOT EXISTS `WKF_004_Transiciones` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `func` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_005_Red`
+--
+
+DROP TABLE IF EXISTS `WKF_005_Red`;
+CREATE TABLE IF NOT EXISTS `WKF_005_Red` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `eo` int NOT NULL,
+  `tr` int NOT NULL,
+  `ed` int NOT NULL,
+  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `usua` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_006_Documento`
+--
+
+DROP TABLE IF EXISTS `WKF_006_Documento`;
+CREATE TABLE IF NOT EXISTS `WKF_006_Documento` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nomb` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `tipo` tinyint(1) NOT NULL,
+  `esta` tinyint(1) NOT NULL,
+  `usua` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_007_Documento_Ubicacion`
+--
+
+DROP TABLE IF EXISTS `WKF_007_Documento_Ubicacion`;
+CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Ubicacion` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `idd` int NOT NULL,
+  `ide` int NOT NULL,
+  `esta` tinyint(1) NOT NULL,
+  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `responsable` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `usua` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_008_Alerta`
+--
+
+DROP TABLE IF EXISTS `WKF_008_Alerta`;
+CREATE TABLE IF NOT EXISTS `WKF_008_Alerta` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `idd` int NOT NULL,
+  `nomb` varchar(64) COLLATE utf8_spanish_ci NOT NULL,
+  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `tipo` tinyint(1) NOT NULL,
+  `esta` tinyint(1) NOT NULL,
+  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `usua` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `WKF_009_Traza`
+--
+
+DROP TABLE IF EXISTS `WKF_009_Traza`;
+CREATE TABLE IF NOT EXISTS `WKF_009_Traza` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `idd` int NOT NULL,
+  `ide` int NOT NULL,
+  `obse` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `esta` tinyint(1) NOT NULL,
+  `usua` varchar(256) COLLATE utf8_spanish_ci NOT NULL,
+  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
+
 --
 -- Índices para tablas volcadas
 --
@@ -2618,177 +2867,16 @@ INSERT INTO `tech` (`oid`, `nombre`, `version`, `fecha`) VALUES
 --
 -- Indices de la tabla `BOT_001_Chat`
 --
-ALTER TABLE `BOT_001_Chat`
-  ADD PRIMARY KEY (`id`);
 ALTER TABLE `BOT_001_Chat` ADD FULLTEXT KEY `preg` (`preg`,`resp`);
-
---
--- Indices de la tabla `GEO_001_Paises`
---
-ALTER TABLE `GEO_001_Paises`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `GEO_002_Ciudadesx`
---
-ALTER TABLE `GEO_002_Ciudadesx`
-  ADD PRIMARY KEY (`id_ciudad`),
-  ADD KEY `id_estado` (`id_estado`);
-
---
--- Indices de la tabla `GEO_003_Estados`
---
-ALTER TABLE `GEO_003_Estados`
-  ADD PRIMARY KEY (`id_estado`);
-
---
--- Indices de la tabla `GEO_004_Municipios`
---
-ALTER TABLE `GEO_004_Municipios`
-  ADD PRIMARY KEY (`id_municipio`),
-  ADD KEY `id_estado` (`id_estado`);
-
---
--- Indices de la tabla `GEO_005_Parroquias`
---
-ALTER TABLE `GEO_005_Parroquias`
-  ADD PRIMARY KEY (`id_parroquia`),
-  ADD KEY `id_municipio` (`id_municipio`);
-
---
--- Indices de la tabla `SEC_001_Aplicacion`
---
-ALTER TABLE `SEC_001_Aplicacion`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `SEC_002_Api`
---
-ALTER TABLE `SEC_002_Api`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `SEC_004_Modulo`
---
-ALTER TABLE `SEC_004_Modulo`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `SEC_005_Menu`
---
-ALTER TABLE `SEC_005_Menu`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `SEC_006_SubMenu`
---
-ALTER TABLE `SEC_006_SubMenu`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `SEC_007_Accion`
---
-ALTER TABLE `SEC_007_Accion`
-  ADD PRIMARY KEY (`id`);
-
---
--- Indices de la tabla `SEC_008_Menu_Accion`
---
-ALTER TABLE `SEC_008_Menu_Accion`
-  ADD UNIQUE KEY `idmenu_2` (`idmenu`,`idact`),
-  ADD KEY `idmenu` (`idmenu`),
-  ADD KEY `idact` (`idact`);
-
---
--- Indices de la tabla `tech`
---
-ALTER TABLE `tech`
-  ADD PRIMARY KEY (`oid`);
-
---
--- AUTO_INCREMENT de las tablas volcadas
---
-
---
--- AUTO_INCREMENT de la tabla `BOT_001_Chat`
---
-ALTER TABLE `BOT_001_Chat`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
-
---
--- AUTO_INCREMENT de la tabla `GEO_001_Paises`
---
-ALTER TABLE `GEO_001_Paises`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
-
---
--- AUTO_INCREMENT de la tabla `GEO_002_Ciudadesx`
---
-ALTER TABLE `GEO_002_Ciudadesx`
-  MODIFY `id_ciudad` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=523;
-
---
--- AUTO_INCREMENT de la tabla `GEO_003_Estados`
---
-ALTER TABLE `GEO_003_Estados`
-  MODIFY `id_estado` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
-
---
--- AUTO_INCREMENT de la tabla `GEO_004_Municipios`
---
-ALTER TABLE `GEO_004_Municipios`
-  MODIFY `id_municipio` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=463;
-
---
--- AUTO_INCREMENT de la tabla `GEO_005_Parroquias`
---
-ALTER TABLE `GEO_005_Parroquias`
-  MODIFY `id_parroquia` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1139;
-
---
--- AUTO_INCREMENT de la tabla `SEC_001_Aplicacion`
---
-ALTER TABLE `SEC_001_Aplicacion`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `SEC_002_Api`
---
-ALTER TABLE `SEC_002_Api`
-  MODIFY `id` bigint UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `SEC_004_Modulo`
---
-ALTER TABLE `SEC_004_Modulo`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `SEC_005_Menu`
---
-ALTER TABLE `SEC_005_Menu`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
-
---
--- AUTO_INCREMENT de la tabla `SEC_006_SubMenu`
---
-ALTER TABLE `SEC_006_SubMenu`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT;
-
---
--- AUTO_INCREMENT de la tabla `SEC_007_Accion`
---
-ALTER TABLE `SEC_007_Accion`
-  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- Restricciones para tablas volcadas
 --
 
 --
--- Filtros para la tabla `GEO_002_Ciudadesx`
+-- Filtros para la tabla `GEO_002_Ciudades`
 --
-ALTER TABLE `GEO_002_Ciudadesx`
+ALTER TABLE `GEO_002_Ciudades`
   ADD CONSTRAINT `GEO_002_Ciudades_ibfk_1` FOREIGN KEY (`id_estado`) REFERENCES `GEO_003_Estados` (`id_estado`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
