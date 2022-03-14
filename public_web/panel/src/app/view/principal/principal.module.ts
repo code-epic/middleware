@@ -37,7 +37,7 @@ import { UsuarioComponent } from './seguridad/usuario/usuario.component';
 import { BotonComponent } from './herramientas/api/componente/boton/boton.component';
 import { FuncionesComponent } from './herramientas/funciones/funciones.component';
 import { CerrarComponent } from './opciones/cerrar/cerrar.component';
-import { AccionComponent } from './herramientas/api/componente/accion/accion.component';
+
 
 
 import { MatListModule } from '@angular/material/list';
@@ -110,7 +110,6 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     FuncionesComponent,
     CerrarComponent,
     //NgxEditorModule,
-    AccionComponent,
     RegistrarComponent,
     FregistrarComponent
   

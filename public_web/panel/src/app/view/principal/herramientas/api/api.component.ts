@@ -46,6 +46,7 @@ export class ApiComponent implements OnInit {
   closeResult : string  = ''
   xAPI : IAPICore;
   xentorno : string = ''
+  pageEvent : any
 
   constructor(
     private apiService : ApiService, 

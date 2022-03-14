@@ -42,6 +42,9 @@ export class FuncionesComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  CargarListadoAPI(e){
+    
+  }
 
   seccionRegistrar( valor ){
     if (valor != '') {

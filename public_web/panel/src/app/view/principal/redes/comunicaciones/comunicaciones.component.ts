@@ -94,6 +94,7 @@ export class ComunicacionesComponent implements OnInit, OnDestroy {
     entorno: '',
     logs : false
   };
+  paginationPageSize = 10
 
 
   constructor(private comunicacionesService : ComunicacionesService, private ruta: Router, 

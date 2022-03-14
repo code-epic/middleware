@@ -59,7 +59,8 @@ export class MonitoreoComponent implements OnInit {
   }]
   public pieChartType = 'pie';
 
-
+  rowDataSwitch = []
+  rowDataSitemas = []
 
     // lineChart4
     public lineChart4Data: Array<any> = [

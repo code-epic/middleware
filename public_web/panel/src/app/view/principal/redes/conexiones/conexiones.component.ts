@@ -80,7 +80,8 @@ export class ConexionesComponent implements OnInit {
   }
 
   rowSelection = ''
-
+  paginationPageSize = 10 
+  
   private gridApi;
   private gridColumnApi;
 
@@ -286,7 +287,7 @@ export class ConexionesComponent implements OnInit {
     )
   }
 
-  onSelectionChanged(){
+  onSelectionChanged(e){
     var selectedRows = this.gridApi.getSelectedRows();
   }
 

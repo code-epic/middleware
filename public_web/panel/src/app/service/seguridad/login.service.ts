@@ -36,7 +36,8 @@ export class LoginService {
    urlGet = '';
 
   constructor(private router: Router, private http : HttpClient) {
-    this.urlGet = environment.Url;
+    //environment.Url +
+    this.urlGet = environment.API;
     
     
   }
@@ -47,6 +48,7 @@ export class LoginService {
       "clave" : clave,
     };
     var url = this.urlGet + 'wusuario/login';
+    console.info(url)
     return this.http.post<IToken>(url, usuario );
   }
   

@@ -92,6 +92,7 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   codigo : string = ''
   funcion : string = ''
   query : string   = '';
+  columna : string   = '';
 
   loading : boolean = false
 

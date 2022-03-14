@@ -44,8 +44,8 @@ func CargarModulosPanel() {
 	BoldFgBlue.Println("...              Módulos de Angular 12                    ")
 	BoldFgBlue.Println("..........................................................")
 	BoldFgBlue.Println("")
-	prefixW := http.StripPrefix("/code-epic/", http.FileServer(http.Dir("public_web/panel/dist")))
-	Enrutador.PathPrefix("/code-epic/").Handler(prefixW)
+	prefixW := http.StripPrefix("/consola", http.FileServer(http.Dir("public_web/panel/dist")))
+	Enrutador.PathPrefix("/consola").Handler(prefixW)
 
 	Enrutador.HandleFunc(vAPI+"lmodulos", wUsuario.ValidarToken(wp.ListarModulos)).Methods("GET")
 	Enrutador.HandleFunc(vAPI+"lmodulox", wp.ListarModulos).Methods("GET")                                   //Listar Modulos del sistema en la carpeta www/inc
@@ -80,8 +80,8 @@ func WMAdminLTE() {
 	BoldCyan.Println("..........................................................")
 	BoldCyan.Println("")
 
-	prefix := http.StripPrefix("/app", http.FileServer(http.Dir("public_web/www")))
-	Enrutador.PathPrefix("/app").Handler(prefix)
+	prefix := http.StripPrefix("/", http.FileServer(http.Dir("public_web/www")))
+	Enrutador.PathPrefix("/").Handler(prefix)
 
 }
 
@@ -89,7 +89,7 @@ func WMAdminLTE() {
 func CargarModulosWeb() {
 
 	var ap api.API
-	Enrutador.HandleFunc("/", Principal)
+	//Enrutador.HandleFunc("/", Principal)
 
 	//Produccion
 	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("GET")
@@ -136,6 +136,18 @@ func CargarModulosSeguridad() {
 	Enrutador.HandleFunc(vAPI+"wusuario/crear", wUsuario.ValidarToken(wUsuario.Crear)).Methods("POST")
 	Enrutador.HandleFunc(vAPI+"wusuario/cambiarclave", wUsuario.ValidarToken(wUsuario.CambiarClave)).Methods("PUT")
 	Enrutador.HandleFunc(vAPI+"wusuario/cambiarclave", wUsuario.ValidarToken(wUsuario.Opciones)).Methods("OPTIONS")
+
+	Enrutador.HandleFunc(vDev+"wusuario/login", wUsuario.Login).Methods("POST")
+	Enrutador.HandleFunc(vDev+"wusuario/login", wUsuario.Opciones).Methods("OPTIONS")
+
+	Enrutador.HandleFunc(vDev+"wusuario/validar", wUsuario.ValidarToken(wUsuario.Autorizado)).Methods("GET")
+	Enrutador.HandleFunc(vDev+"wusuario/listar", wUsuario.ValidarToken(wUsuario.Listar)).Methods("GET")
+
+	Enrutador.HandleFunc(vDev+"wusuario/obtenerjwt", wUsuario.Crear).Methods("POST")
+
+	Enrutador.HandleFunc(vDev+"wusuario/crear", wUsuario.ValidarToken(wUsuario.Crear)).Methods("POST")
+	Enrutador.HandleFunc(vDev+"wusuario/cambiarclave", wUsuario.ValidarToken(wUsuario.CambiarClave)).Methods("PUT")
+	Enrutador.HandleFunc(vDev+"wusuario/cambiarclave", wUsuario.ValidarToken(wUsuario.Opciones)).Methods("OPTIONS")
 
 }
 

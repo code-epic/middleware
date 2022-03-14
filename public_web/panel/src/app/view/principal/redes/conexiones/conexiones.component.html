@@ -175,13 +175,12 @@
                             class="ag-theme-blue"
                             [rowData]="rowData"
                             [columnDefs]="columnDefs"
-                            [pagination]="true"
-                            [paginationPageSize]="paginationPageSize"
-                            [rowSelection]="rowSelection"
-                            [rowData]="rowData"
-                            (selectionChanged)="onSelectionChanged($event)"
-                            (gridReady)="onGridReady($event)"
+                            [pagination]="true"            
                         >
+                        <!-- [paginationPageSize]="paginationPageSize"
+                            [rowSelection]="rowSelection"                            
+                            (selectionChanged)="onSelectionChanged($event)"
+                            (gridReady)="onGridReady($event)" -->
                         </ag-grid-angular>
                     </div>
                 </div>
