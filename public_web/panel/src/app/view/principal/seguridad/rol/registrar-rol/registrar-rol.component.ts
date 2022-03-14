@@ -32,6 +32,7 @@ export class RegistrarRolComponent implements OnInit {
   };
 
   aplicacion :string = ''
+  descripcion :string = ''
   rowDataAcc: any
   rowDataSub: any
   closeResult : string  = ''
@@ -40,6 +41,8 @@ export class RegistrarRolComponent implements OnInit {
   keyword = 'name'
   dataModulo = []
   datamenu = []
+
+  public Roles = []
 
   colormenu = "btn-success"
   modulo    : string = ''
@@ -94,6 +97,18 @@ export class RegistrarRolComponent implements OnInit {
     console.warn(this.userProfileForm.value);
   }
 
+  Adjuntar(){
+    var ObjRol = {
+      'aplicacion' : this.aplicacion,
+      'nombre' : this.nombre,
+      'descripcion' : this.descripcion,
+      'modulo' : this.xmodulo,
+      'Privilegios' : []
+    }
+
+    this.Roles.push(ObjRol)
+
+  }
 
   openModlaLg(content, itemRol){
     this.modalService.open(ModalRolComponent, {centered: true, size: 'lg',  ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {

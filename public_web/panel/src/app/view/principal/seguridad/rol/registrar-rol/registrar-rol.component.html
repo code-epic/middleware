@@ -1,6 +1,6 @@
 <br>
 <!-- <form #rolPrivilegios="ngForm" (ngSubmit)="onClickSubmit(rolPrivilegios)"> -->
-<form [FormGroup]="userProfileForm" class="normal-form" (ngSubmit)="onSubmit(userProfileForm.value)">
+<form  class="normal-form" (ngSubmit)="onSubmit(userProfileForm.value)">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -9,7 +9,7 @@
                     [ngModelOptions]="{standalone: true}" [(ngModel)]="aplicacion"  value ="{{aplicacion}}"
                     style="display: flex; justify-content: center;" (change)="selModulo()">
                     <option value="0">SELECCIONE</option>
-                    <option  *ngFor="let xapp of lstApps" value="{{xapp.id}}">{{xapp.nomb}} : {{xapp.vers}}</option>
+                    <option  *ngFor="let xapp of lstApps" value="{{ xapp.id }}">{{xapp.nomb}} : {{xapp.vers}}</option>
                 </select>
             </div>
         </div>
@@ -17,7 +17,7 @@
             <div class="form-group">
                 <label>Nombre</label>
                 <input type="text" id="txtName" class="form-control" placeholder="Enter ..."  
-                [ngModelOptions]="{standalone: true}"  [(ngModel)]="funcion"  value ="{{funcion}}"
+                [ngModelOptions]="{standalone: true}"  [(ngModel)]="nombre"  value ="{{nombre}}"
                 (onBlur) = "seleccionarUrl()">
             </div>
         </div>
@@ -105,9 +105,10 @@
       </div>
             </div>
         </div>
-        <input id="nombre" type="text" name="nombre"  class="form-control" >
+       
         <div class="col-md-12" align="right">
-            <button mat-raised-button color="primary" [disabled]="!userProfileForm.valid" type="submit">Adjuntar</button>
+            <button mat-raised-button color="primary" 
+            [disabled]="!userProfileForm.valid" (click)="Adjuntar()">Adjuntar</button>
         </div>
     </div>
 </form>
@@ -130,11 +131,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr>
+            <tr *ngFor="let item of Roles">
             <th scope="row">1</th>
-            <td>Nombre</td>
-            <td>Aplicacion</td>
-            <td>Modulo</td>
+            <td>{{ item.aplicacion }}</td>
+            <td>{{ item.nombre }}</td>
+            <td>{{ item.modulo }}</td>
             <td>Menu</td>
             <td>
                 <button mat-icon-button>
