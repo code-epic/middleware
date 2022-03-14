@@ -19,8 +19,12 @@ type Mongo struct {
 //Conectar Establecer conexión
 func (m *Mongo) Conectar(Ctx context.Context, c CadenaDeConexion) (DB *mongo.Database, e error) {
 	var cnf Config
+	credencial := ""
 
-	uri := "mongodb://" + c.Host + ":" + c.Puerto
+	if c.Usuario != "" {
+		credencial = c.Usuario + ":" + c.Clave + "@"
+	}
+	uri := "mongodb://" + credencial + c.Host + ":" + c.Puerto
 	Client, err := mongo.Connect(Ctx, options.Client().ApplyURI(uri))
 	if err != nil {
 		return nil, err
