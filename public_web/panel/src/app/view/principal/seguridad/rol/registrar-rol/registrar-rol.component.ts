@@ -1,14 +1,21 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, Injectable } from '@angular/core';
 import { ApiService, IAPICore } from '../../../../../service/apicore/api.service';
+import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { ModalRolComponent } from '../modal-rol/modal-rol.component';
+import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
 
 
 @Component({
   selector: 'app-registrar-rol',
   templateUrl: './registrar-rol.component.html',
-  styleUrls: ['./registrar-rol.component.scss']
+  styleUrls: ['./registrar-rol.component.scss'],
 })
 export class RegistrarRolComponent implements OnInit {
 
+
+  userProfileForm = new FormGroup({
+    nombre: new FormControl(''),
+  });
 
   public xAPI : IAPICore = {
     funcion: '',
@@ -63,7 +70,7 @@ export class RegistrarRolComponent implements OnInit {
 
 
 
-  constructor(private apiService : ApiService,) { }
+  constructor(private apiService : ApiService,private modalService: NgbModal) {}
 
   ngOnInit(): void {
     this.lstAplicaciones()
@@ -82,6 +89,34 @@ export class RegistrarRolComponent implements OnInit {
       }
     )
   }
+
+  onSubmit(value){
+    console.warn(this.userProfileForm.value);
+  }
+
+
+  openModlaLg(content, itemRol){
+    this.modalService.open(ModalRolComponent, {centered: true, size: 'lg',  ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
+      this.closeResult = `Closed with: ${result}`;
+
+    }, (reason) => {
+      this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
+    });
+  }
+
+  private getDismissReason(reason: any): string {
+    if (reason === ModalDismissReasons.ESC) {
+      return 'by pressing ESC';
+    } else if (reason === ModalDismissReasons.BACKDROP_CLICK) {
+      return 'by clicking on a backdrop';
+    } else {
+      return `with: ${reason}`;
+    }
+  }
+
+  onClickSubmit(result) {
+    console.log(result); 
+ }
 
   selModulo() : void {
     this.xAPI.funcion = "LstModulos";
@@ -154,10 +189,6 @@ export class RegistrarRolComponent implements OnInit {
         console.log(error)
       }
     )
-  }
-
-  ObjJSONRol(){
-    alert("Hola")
   }
 
   OMenuAccion(menuId : string = ''){

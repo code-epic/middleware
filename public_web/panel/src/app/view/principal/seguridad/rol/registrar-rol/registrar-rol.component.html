@@ -1,112 +1,116 @@
 <br>
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <label>Aplicacion</label>
-            <select id="cmbAplicacion" class="form-control selected"
-                [ngModelOptions]="{standalone: true}" [(ngModel)]="aplicacion"  value ="{{aplicacion}}"
-                style="display: flex; justify-content: center;" (change)="selModulo()">
-                <option value="0">SELECCIONE</option>
-                <option  *ngFor="let xapp of lstApps" value="{{xapp.id}}">{{xapp.nomb}} : {{xapp.vers}}</option>
-            </select>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label>Nombre</label>
-            <input type="text" id="txtName" class="form-control" placeholder="Enter ..."  
-            [ngModelOptions]="{standalone: true}" [(ngModel)]="funcion"  value ="{{funcion}}"
-            (onBlur) = "seleccionarUrl()">
-        </div>
-    </div>
-        <div class="col-md-8">
+<!-- <form #rolPrivilegios="ngForm" (ngSubmit)="onClickSubmit(rolPrivilegios)"> -->
+<form [FormGroup]="userProfileForm" class="normal-form" (ngSubmit)="onSubmit(userProfileForm.value)">
+    <div class="row">
+        <div class="col-md-12">
             <div class="form-group">
-                <label>Incluir una breve descripción:</label>
-                <textarea class="form-control" rows="1" id="txtDescripcion" placeholder="Enter ..."
-                [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion"  value ="{{descripcion}}"></textarea>
-            </div>
-    </div>
-</div>
-<div class="row">
-    <div class="col-md-4">
-        <div class="form-group">
-            <label>Modulo</label>
-                <select id="cmbModulo" class="form-control selected"
-                    [ngModelOptions]="{standalone: true}"
-                    [name]="xmodulo"
-                    [(ngModel)]="xmodulo"
-                    (change)='consultarMenu($event.target.value)'>   
-                <option value="0">SELECCIONE</option>
-                <option  *ngFor="let item of dataModulo" value="{{item.id}}">{{item.name}}</option> 
+                <label>Aplicacion</label>
+                <select id="cmbAplicacion" class="form-control selected"
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="aplicacion"  value ="{{aplicacion}}"
+                    style="display: flex; justify-content: center;" (change)="selModulo()">
+                    <option value="0">SELECCIONE</option>
+                    <option  *ngFor="let xapp of lstApps" value="{{xapp.id}}">{{xapp.nomb}} : {{xapp.vers}}</option>
                 </select>
-        </div>
-    </div>
-    <div class="col-md-4">
-        <div class="form-group">
-            <label>Menu</label>
-            <select id="cmbMenu" class="form-control selected"
-                [ngModelOptions]="{standalone: true}"
-                [name]="menu"
-                [(ngModel)]="menu"
-                (change)='OMenuAccion($event.target.value)'
-                attr.data="{{datamenu}}">     
-                <option value="0">SELECCIONE</option>
-                 <option  *ngFor="let item of datamenu" value="{{item.id}}">{{item.name}}</option> 
-            </select>
-
-        </div>
-    </div>
-
-    <div class="col-md-4">
-        <div class="form-group">
-            <label>SubMenu</label>
-            <select id="cmbTipo" class="form-control selected"  
-            [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}">
-                <option value="0">SELECCIONE</option>
-            </select>
-        </div>
-    </div>
-        
-</div>
-
- 
-<div class="row">
-    <div class="col-md-12">
-        <div class="form-group">
-            <label>Seleccionar Privilegios</label>
-            <div class="col-md-12" align="right">
-                <button mat-raised-button color="primary" type="submit" (click)="ObjJSONRol()">Adjuntar</button>
             </div>
-  <!-- Scroll bar present and enabled when more contents -->        
-  <div style="width: 100%; height: 200px; overflow-y: scroll;">
-    <table class="table">
-        <thead>
-          <tr>
-            <th scope="col">#</th>
-            <th scope="col">Funcion</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Url</th>
-            <th scope="col"></th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr *ngFor="let item of rowDataAcc">
-            <th scope="row">{{ item.accid }}</th>
-            <td>{{ item.nomb }}</td>
-            <td>{{ item.func }}</td>
-            <td>{{ item.endpoint }}</td>
-            <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                <input type="checkbox" class="switch-input">
-                <span class="switch-slider" data-checked="Si" data-unchecked="No"></span>
-              </label></td>
-          </tr>
-        </tbody>
-      </table>
-  </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Nombre</label>
+                <input type="text" id="txtName" class="form-control" placeholder="Enter ..."  
+                [ngModelOptions]="{standalone: true}"  [(ngModel)]="funcion"  value ="{{funcion}}"
+                (onBlur) = "seleccionarUrl()">
+            </div>
+        </div>
+            <div class="col-md-8">
+                <div class="form-group">
+                    <label>Incluir una breve descripción:</label>
+                    <textarea class="form-control" rows="1" id="txtDescripcion" placeholder="Enter ..."
+                    [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion"  value ="{{descripcion}}"></textarea>
+                </div>
         </div>
     </div>
-</div>
-
+    <div class="row">
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Modulo</label>
+                    <select id="cmbModulo" class="form-control selected"
+                        [ngModelOptions]="{standalone: true}"
+                        [name]="xmodulo"
+                        [(ngModel)]="xmodulo"
+                        (change)='consultarMenu($event.target.value)'>   
+                    <option value="0">SELECCIONE</option>
+                    <option  *ngFor="let item of dataModulo" value="{{item.id}}">{{item.name}}</option> 
+                    </select>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>Menu</label>
+                <select id="cmbMenu" class="form-control selected"
+                    [ngModelOptions]="{standalone: true}"
+                    [name]="menu"
+                    [(ngModel)]="menu"
+                    (change)='OMenuAccion($event.target.value)'
+                    attr.data="{{datamenu}}">     
+                    <option value="0">SELECCIONE</option>
+                     <option  *ngFor="let item of datamenu" value="{{item.id}}">{{item.name}}</option> 
+                </select>
+    
+            </div>
+        </div>
+    
+        <div class="col-md-4">
+            <div class="form-group">
+                <label>SubMenu</label>
+                <select id="cmbTipo" class="form-control selected"  
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}">
+                    <option value="0">SELECCIONE</option>
+                </select>
+            </div>
+        </div>
+            
+    </div>
+    
+     
+    <div class="row">
+        <div class="col-md-12">
+            <div class="form-group">
+                <label>Seleccionar Privilegios</label>
+      <!-- Scroll bar present and enabled when more contents -->        
+      <div style="width: 100%; height: 200px; overflow-y: scroll;">
+        <table class="table">
+            <thead>
+              <tr>
+                <th scope="col">#</th>
+                <th scope="col">Funcion</th>
+                <th scope="col">Nombre</th>
+                <th scope="col">Url</th>
+                <th scope="col"></th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let item of rowDataAcc">
+                <th scope="row">{{ item.accid }}</th>
+                <td>{{ item.nomb }}</td>
+                <td>{{ item.func }}</td>
+                <td (click)="openModlaLg(content,item)">{{ item.endpoint }}</td>
+                <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
+                    <input type="checkbox" class="switch-input">
+                    <span class="switch-slider" data-checked="Si" data-unchecked="No"></span>
+                  </label>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+      </div>
+            </div>
+        </div>
+        <input id="nombre" type="text" name="nombre"  class="form-control" >
+        <div class="col-md-12" align="right">
+            <button mat-raised-button color="primary" [disabled]="!userProfileForm.valid" type="submit">Adjuntar</button>
+        </div>
+    </div>
+</form>
 
 <div class="row">
     <div class="col-md-12">
@@ -148,7 +152,6 @@
         </div>
     </div>
 </div>
-
 <div class="col-md-12" align="center">
 <button mat-raised-button color="primary">Guardar</button>
 </div>
