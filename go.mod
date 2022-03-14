@@ -5,7 +5,7 @@ go 1.17
 require (
 	github.com/BurntSushi/toml v0.4.1 // indirect
 	github.com/PuerkitoBio/goquery v1.8.0 // indirect
-	github.com/alexbrainman/odbc v0.0.0-20211220213544-9c9a2e61c5e2 // indirect
+	// github.com/alexbrainman/odbc v0.0.0-20211220213544-9c9a2e61c5e2 // indirect
 	github.com/andybalholm/cascadia v1.3.1 // indirect
 	github.com/denisenkom/go-mssqldb v0.12.0 // indirect
 	github.com/dgrijalva/jwt-go v3.2.0+incompatible // indirect

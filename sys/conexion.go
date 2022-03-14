@@ -8,7 +8,7 @@ import (
 
 	"go.mongodb.org/mongo-driver/mongo"
 
-	_ "github.com/alexbrainman/odbc"
+	//_ "github.com/alexbrainman/odbc"
 	_ "github.com/denisenkom/go-mssqldb"
 	"github.com/fatih/color"
 	_ "github.com/go-sql-driver/mysql"
