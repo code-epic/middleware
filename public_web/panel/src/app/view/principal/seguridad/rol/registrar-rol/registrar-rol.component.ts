@@ -33,6 +33,7 @@ export class RegistrarRolComponent implements OnInit {
 
   aplicacion :string = ''
   descripcion :string = ''
+  // xcheckbox :string = ''
   rowDataAcc: any
   rowDataSub: any
   closeResult : string  = ''
@@ -43,6 +44,8 @@ export class RegistrarRolComponent implements OnInit {
   datamenu = []
 
   public Roles = []
+  public PushListPrivilegio = []
+  // public xcheckbox = []
 
   colormenu = "btn-success"
   modulo    : string = ''
@@ -51,6 +54,7 @@ export class RegistrarRolComponent implements OnInit {
   menu      : string = '' //id
   menuid    : string = ''
   accionid  : string = ''
+  xcheckbox : boolean = false
   xmenu     : string = '' //nombre
   xnombre   : string = '' //nombre
   xurl      : string = ''
@@ -79,6 +83,11 @@ export class RegistrarRolComponent implements OnInit {
     this.lstAplicaciones()
   }
 
+  activar(i: number, valor: boolean){
+    this.rowDataAcc[i].active = valor
+    console.warn(this.rowDataAcc)
+  }
+
   async lstAplicaciones(){
     this.xAPI.funcion = "LstAplicaciones";
     this.xAPI.valores = null;
@@ -93,9 +102,6 @@ export class RegistrarRolComponent implements OnInit {
     )
   }
 
-  onSubmit(value){
-    console.warn(this.userProfileForm.value);
-  }
 
   Adjuntar(){
     var ObjRol = {
@@ -103,12 +109,22 @@ export class RegistrarRolComponent implements OnInit {
       'nombre' : this.nombre,
       'descripcion' : this.descripcion,
       'modulo' : this.xmodulo,
-      'Privilegios' : []
+      'menu' : this.menu,
+      'privilegios' : this.rowDataAcc,
     }
-
     this.Roles.push(ObjRol)
-
+    let list = ObjRol.privilegios;
+    let check = this.xcheckbox;
+    let i = 0;
+    list.forEach(function (element) {
+      element.active = check;
+    });
   }
+
+  deleteMsg(msg:string) {
+    this.Roles.pop()
+  }
+
 
   openModlaLg(content, itemRol){
     this.modalService.open(ModalRolComponent, {centered: true, size: 'lg',  ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -117,6 +133,10 @@ export class RegistrarRolComponent implements OnInit {
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+  }
+
+  ViewModal(itemRol){
+    console.warn(itemRol)
   }
 
   private getDismissReason(reason: any): string {
@@ -128,10 +148,6 @@ export class RegistrarRolComponent implements OnInit {
       return `with: ${reason}`;
     }
   }
-
-  onClickSubmit(result) {
-    console.log(result); 
- }
 
   selModulo() : void {
     this.xAPI.funcion = "LstModulos";

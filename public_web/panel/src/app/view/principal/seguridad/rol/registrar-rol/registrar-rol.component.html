@@ -1,6 +1,6 @@
 <br>
 <!-- <form #rolPrivilegios="ngForm" (ngSubmit)="onClickSubmit(rolPrivilegios)"> -->
-<form  class="normal-form" (ngSubmit)="onSubmit(userProfileForm.value)">
+<form  class="normal-form">
     <div class="row">
         <div class="col-md-12">
             <div class="form-group">
@@ -89,13 +89,13 @@
               </tr>
             </thead>
             <tbody>
-              <tr *ngFor="let item of rowDataAcc">
+              <tr *ngFor="let item of rowDataAcc; let i = index ">
                 <th scope="row">{{ item.accid }}</th>
                 <td>{{ item.nomb }}</td>
                 <td>{{ item.func }}</td>
-                <td (click)="openModlaLg(content,item)">{{ item.endpoint }}</td>
+                <td (click)="openModlaLg(content,item);ViewModal(item)">{{ item.endpoint }}</td>
                 <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
-                    <input type="checkbox" class="switch-input">
+                    <input type="checkbox"  [name]="'xcheckbox'+i" (click)="activar(i, true)"  class="switch-input" >
                     <span class="switch-slider" data-checked="Si" data-unchecked="No"></span>
                   </label>
                 </td>
@@ -112,7 +112,6 @@
         </div>
     </div>
 </form>
-
 <div class="row">
     <div class="col-md-12">
         <div class="form-group">
@@ -131,8 +130,8 @@
           </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let item of Roles">
-            <th scope="row">1</th>
+            <tr *ngFor="let item of Roles, let i = index">
+            <th scope="row">{{ i+1 }}</th>
             <td>{{ item.aplicacion }}</td>
             <td>{{ item.nombre }}</td>
             <td>{{ item.modulo }}</td>
@@ -142,7 +141,7 @@
                     <mat-icon class="edit-icon" aria-hidden="false" >edit</mat-icon>
                   </button>
                 <button mat-icon-button>
-                <mat-icon class="delete-icon" aria-hidden="false" >delete</mat-icon>
+                <mat-icon class="delete-icon" aria-hidden="false" (click)="deleteMsg(i)">delete</mat-icon>
             </button>
             </td>
           </tr>
