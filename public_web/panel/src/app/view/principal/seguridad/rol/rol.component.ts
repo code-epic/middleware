@@ -17,8 +17,9 @@ export class RolComponent implements OnInit {
   @ViewChild(RegistrarRolComponent) registraRol: RegistrarRolComponent
 
     public focus;
-  
-  
+
+
+
     public developer = []
     public testing = []
     public quality = []
@@ -54,6 +55,7 @@ export class RolComponent implements OnInit {
      
       this.ListarApis()
      
+      
     }
   
   

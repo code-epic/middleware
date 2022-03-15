@@ -3,6 +3,7 @@ import { ApiService, IAPICore } from '../../../../../service/apicore/api.service
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ModalRolComponent } from '../modal-rol/modal-rol.component';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
+import { Aplicacion, IRol, Menu, SubMenu, Privilegios } from '../../../../../service/seguridad/rol.service'
 
 
 @Component({
@@ -12,6 +13,36 @@ import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms'
 })
 export class RegistrarRolComponent implements OnInit {
 
+
+  public xApp = []
+  public xMen = [] //Listado General de Menu
+
+  public xRol : IRol = {
+    nombre :  '',
+    descripcion :  '',
+    Menu : []
+  };
+
+  public xAplicacion : Aplicacion = {
+    nombre: '',
+    url: '',
+    comentario: '',
+    version: '',
+    autor: ''
+  }
+
+  public xMenu : Menu = {
+    url: '',
+    js: '',
+    icono: '',
+    descripcion: '',
+    nombre: '',
+    accion: '',
+    clase: '',
+    color: ''
+  }
+
+ 
 
   userProfileForm = new FormGroup({
     nombre: new FormControl(''),
@@ -104,27 +135,66 @@ export class RegistrarRolComponent implements OnInit {
 
 
   Adjuntar(){
-    var ObjRol = {
-      'aplicacion' : this.aplicacion,
-      'nombre' : this.nombre,
-      'descripcion' : this.descripcion,
-      'modulo' : this.xmodulo,
-      'menu' : this.menu,
-      'privilegios' : this.rowDataAcc,
-    }
-    this.Roles.push(ObjRol)
-    let list = ObjRol.privilegios;
-    let check = this.xcheckbox;
-    let i = 0;
-    list.forEach(function (element) {
-      element.active = check;
-    });
+   
+    var xrol = []
+    var xmen = []
+    var xsub = []
+    var xpri = []
+
+
+
+    this.rowDataAcc.forEach(e => {
+      xpri.push(e)
+      this.xMenu.nombre = e.nomb
+      this.xMenu.js = e.js
+      this.xMenu.url = e.url
+      this.xMenu.icono = e.icon
+    })
+    
+    this.xMenu.Privilegios = xpri
+
+    // this.xRol.nombre = this.nombre
+    // this.xRol.descripcion= this.descripcion
+    this.xRol.Menu.push(this.xMenu)
+
+    // xrol.push(this.xRol)
+
+    // this.xAplicacion.nombre = this.aplicacion
+    // this.xAplicacion.Rol = xrol
+    // var ObjRol = {
+    //   'aplicacion' : this.aplicacion,
+    //   'nombre' : this.nombre,
+    //   'descripcion' : this.descripcion,
+    //   'modulo' : this.xmodulo,
+    //   'menu' : this.menu,
+    //   'privilegios' : this.rowDataAcc,
+    // }
+    //this.Roles.push(ObjRol)
+   // let list = ObjRol.privilegios;
+    // let check = this.xcheckbox;
+    // let i = 0;
+    // list.forEach(function (element) {
+    //   element.active = check;
+    // });
+
+    
   }
 
   deleteMsg(msg:string) {
     this.Roles.pop()
   }
 
+
+  Salvar(): any {
+    this.xRol.nombre = this.nombre
+    this.xRol.descripcion= this.descripcion 
+    this.xAplicacion. nombre = this.aplicacion
+
+    this.xAplicacion.Rol = this.xRol
+    console.info(this.xAplicacion)
+
+
+  }
 
   openModlaLg(content, itemRol){
     this.modalService.open(ModalRolComponent, {centered: true, size: 'lg',  ariaLabelledBy: 'modal-basic-title'}).result.then((result) => {
@@ -249,7 +319,7 @@ export class RegistrarRolComponent implements OnInit {
           if ( e.endpoint != undefined ){
             lista.push(e)
           }
-          console.log(e)
+          
         });       
         
         this.rowDataAcc = lista;  

@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -44,7 +45,7 @@ export interface IAPICore{
 })
 export class ApiService {
    //Dirección Get para servicios en la página WEB
-   URL =  '/v1/api/';
+   URL =  environment.API;
 
    hash = ':c521f27fb1b3311d686d511b668e5bd4'
 

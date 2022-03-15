@@ -101,7 +101,8 @@
                                         </div>
                                         <div class="card-footer ">
                                             <small class="text-muted">
-                                                <button type="button" class="btn btn-warning float-right" (click)='OMenuAccion()'> Procesar <i class="icon-shuffle"></i></button>
+                                                <button type="button" class="btn btn-warning float-right" 
+                                                (click)='OMenuAccion()'> Procesar <i class="icon-shuffle"></i></button>
                                             </small>
                                         </div>
                                         </div>
@@ -195,9 +196,12 @@
                                                         </select>
                                                         <div class="input-group-append">
                                                                 <button type="button" class="btn {{colormenu}}"                                                                   
-                                                                    (click)="GuardarMenu()">
+                                                                [disabled]="!bGuardar"    
+                                                                (click)="GuardarMenu()"
+                                                                    
+                                                                    >
                                                                     <i class="icon-plus"></i>
-                                                                    <!-- [disabled]="!bGuardar" -->
+                                                                  
                                                                 </button>
                                                                 
                                                         </div>

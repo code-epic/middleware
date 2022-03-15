@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
+import { info } from 'console';
 import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
 
 @Component({
@@ -180,6 +181,7 @@ export class MenuComponent implements OnInit {
     }
     this.xAPI.funcion = "OMenuAccion"
     this.xAPI.parametros = this.menuid
+    console.info(this.xAPI)
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         var i = 0
@@ -210,20 +212,23 @@ export class MenuComponent implements OnInit {
 
   GuardarMenu(){
     this.xAPI.parametros = this.xurl + "," + this.xjs + ",icon-test,"+ this.xnombre + ","
-    this.xAPI.parametros +=  this.xcss + "," + this.xcolor + "," + this.xestatus + "," + this.modulo
+    this.xAPI.parametros +=  this.xcss + "," + this.xcolor + "," + this.xestatus + "," + this.moduloid
     this.xAPI.funcion = "AgregarMenu";
     if(this.menuid != ''){
       this.xAPI.funcion = "ActualizarMenu";
       this.xAPI.parametros += "," + this.menuid
     }   
+    console.info(this.xAPI)
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
+        console.log(data) 
        this.menuid = this.xAPI.funcion == "AgregarMenu"? data.msj: this.menuid
       },
       (error) => {
         console.log(error)
       }
     )
+
   }
 
   GuardarAccion(){

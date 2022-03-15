@@ -91,7 +91,7 @@
             <tbody>
               <tr *ngFor="let item of rowDataAcc; let i = index ">
                 <th scope="row">{{ item.accid }}</th>
-                <td>{{ item.nomb }}</td>
+                <td>{{ item.accnomb }}</td>
                 <td>{{ item.func }}</td>
                 <td (click)="openModlaLg(content,item);ViewModal(item)">{{ item.endpoint }}</td>
                 <td> <label class="switch switch-label switch-pill switch-success switch-sm float-right">
@@ -153,5 +153,5 @@
     </div>
 </div>
 <div class="col-md-12" align="center">
-<button mat-raised-button color="primary">Guardar</button>
+<button mat-raised-button color="primary" (click)="Salvar()">Guardar</button>
 </div>

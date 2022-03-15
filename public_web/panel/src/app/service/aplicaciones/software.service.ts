@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 import { IAPICore } from '../apicore/api.service';
 
 
+
+
 /**
  * INSERT INTO `SEC_001_Aplicacion`( `type`, `serv`, `nomb`, `vers`, `sope`, `db`, `idio`, `obse`, `user`) 
  * VALUES ('$0','$1','$2','$3','$4','$5','$6','$7','$8');
