@@ -41,14 +41,13 @@ import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { LoginComponent } from './view/login/login/login.component';
 import { HttpClientModule } from '@angular/common/http';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrincipalModule } from './view/principal/principal.module';
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { AuthGuardGuard } from './service/seguridad/auth-guard.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridModule } from 'ag-grid-angular';
 //import { NgxEditorModule } from 'ngx-editor';
-
 
 //const oToastr = ;
 
@@ -70,6 +69,7 @@ import { AgGridModule } from 'ag-grid-angular';
     IconSetModule.forRoot(),
     HttpClientModule,
     FormsModule,
+    ReactiveFormsModule,
     NgbModule,
     PrincipalModule,
     ToastContainerModule,

@@ -12,6 +12,9 @@ import { PrincipalComponent } from './principal.component';
 import { ComunicacionesComponent } from './redes/comunicaciones/comunicaciones.component';
 import { ConexionesComponent } from './redes/conexiones/conexiones.component';
 import { MonitoreoComponent } from './redes/monitoreo/monitoreo.component';
+import { PerfilComponent } from './seguridad/perfil/perfil.component';
+import { RolComponent } from './seguridad/rol/rol.component';
+import { UsuarioComponent } from './seguridad/usuario/usuario.component';
 
 
 export const routes: Routes = [
@@ -88,6 +91,29 @@ export const routes: Routes = [
       {
         path: 'eventos',
         component: EventosComponent,
+        canActivate:[AuthGuardGuard]
+      }
+    ]
+  },
+  {
+    path: 'seguridad',
+    data: {
+      title: 'Seguridad'
+    },
+    children: [
+      {
+        path: 'rol',
+        component: RolComponent,
+        canActivate:[AuthGuardGuard],
+      },
+      {
+        path: 'perfil',
+        component: PerfilComponent,
+        canActivate:[AuthGuardGuard]
+      },
+      {
+        path: 'usuarios',
+        component: UsuarioComponent,
         canActivate:[AuthGuardGuard]
       }
     ]
