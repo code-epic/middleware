@@ -54,6 +54,10 @@ import { RolComponent } from './seguridad/rol/rol.component';
 import { PerfilComponent } from './seguridad/perfil/perfil.component';
 import { RegistrarRolComponent } from './seguridad/rol/registrar-rol/registrar-rol.component';
 import { ModalRolComponent } from './seguridad/rol/modal-rol/modal-rol.component';
+import { WorkflowComponent } from './herramientas/workflow/workflow.component';
+import { RegistrarWorkflowComponent } from './herramientas/workflow/registrar-workflow/registrar-workflow.component';
+import { EstadosComponent } from './herramientas/workflow/estados/estados.component';
+import { TransicionesComponent } from './herramientas/workflow/transiciones/transiciones.component';
 
 //import { NgxEditorModule } from 'ngx-editor';
 
@@ -119,7 +123,11 @@ const ngxUiLoaderConfig: NgxUiLoaderConfig = {
     RolComponent,
     PerfilComponent,
     RegistrarRolComponent,
-    ModalRolComponent
+    ModalRolComponent,
+    WorkflowComponent,
+    RegistrarWorkflowComponent,
+    EstadosComponent,
+    TransicionesComponent
   
   ],
   imports: [
