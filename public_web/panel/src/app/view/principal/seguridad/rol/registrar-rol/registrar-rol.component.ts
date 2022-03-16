@@ -52,8 +52,6 @@ export class RegistrarRolComponent implements OnInit {
     color: ''
   }
 
- 
-
   userProfileForm = new FormGroup({
     nombre: new FormControl(''),
   });
@@ -78,14 +76,14 @@ export class RegistrarRolComponent implements OnInit {
   rowDataAcc: any
   rowDataSub: any
   closeResult : string  = ''
-  lstApps = []
 
   keyword = 'name'
   dataModulo = []
   datamenu = []
-
+  
   public Roles = []
   public PushListPrivilegio = []
+  public  XListApp: {}
   // public xcheckbox = []
 
   colormenu = "btn-success"
@@ -111,11 +109,13 @@ export class RegistrarRolComponent implements OnInit {
   funcion   : string = ''
   endpoint  : string = ''
   directiva : string = ''
-  
+  isDisabled : boolean = false
+  isBtnDisable : boolean = true
+  isDisabledAdjunt : boolean = true
 
   divSubAcciones = 'none'
   private bGuardar : boolean = false
-
+  lstApps: any;
 
 
   constructor(private apiService : ApiService,private modalService: NgbModal) {}
@@ -145,13 +145,11 @@ export class RegistrarRolComponent implements OnInit {
 
 
   Adjuntar(){
-   
-   
+    this.isDisabled = true
+    this.isBtnDisable = false
     var xpri = []
-    
     var menu : any
     
-
     this.rowDataAcc.forEach(e => {
       xpri.push(e)
       menu = {
@@ -167,57 +165,63 @@ export class RegistrarRolComponent implements OnInit {
 
     this.xModulo.Menu.push(this.xMenu)
 
-    //console.info(this.xMenu)
-    // this.xRol.nombre = this.nombre
-    // this.xRol.descripcion= this.descripcion
-    
+    let listApp = this.lstApps[this.aplicacion.split('|')[0]];
+    let listModule = this.dataModulo[this.xmodulo.split('|')[0]];
+    let listMenu = this.datamenu[this.menu.split('|')[0]];
 
-
-    // xrol.push(this.xRol)
-
-    // this.xAplicacion.nombre = this.aplicacion
-    // this.xAplicacion.Rol = xrol
-    // var ObjRol = {
-    //   'aplicacion' : this.aplicacion,
-    //   'nombre' : this.nombre,
-    //   'descripcion' : this.descripcion,
-    //   'modulo' : this.xmodulo,
-    //   'menu' : this.menu,
-    //   'privilegios' : this.rowDataAcc,
-    // }
-    //this.Roles.push(ObjRol)
-   // let list = ObjRol.privilegios;
-    // let check = this.xcheckbox;
-    // let i = 0;
-    // list.forEach(function (element) {
-    //   element.active = check;
-    // });
-
+    var ObjRol = {
+      'aplicacion' : listApp.nomb,
+      'nombre' : this.nombre,
+      'descripcion' : this.descripcion,
+      'modulo' : listModule.name,
+      'menu' : listMenu.name,
+      // 'privilegios' : this.rowDataAcc,
+    }
+    this.Roles.push(ObjRol)
     
   }
 
   deleteMsg(msg:string) {
     this.Roles.pop()
+    this.isBtnDisable = true
+  }
+
+  LimpiarForm(msg:any) {
+    for (let i = this.Roles.length; i > 0; i--) {
+      this.Roles.pop()
+    }
+    this.aplicacion = ''
+    this.nombre = ''
+    this.descripcion = ''
+    this.xmodulo = ''
+    this.menu = ''
+    this.rowDataAcc = ['']
+    this.isDisabledAdjunt = true
+    this.isDisabled = false
+    this.isBtnDisable = true
+
   }
 
 
   Salvar(): any {
-
     this.xModulo.nombre = this.xmodulo
-    
-
     this.xRol.nombre = this.nombre
     this.xRol.descripcion= this.descripcion 
     this.xRol.Modulo.push(this.xModulo)
-    
-
     this.xAplicacion.nombre = this.aplicacion
     this.xAplicacion.Rol = this.xRol
-
-
     console.info(this.xAplicacion)
+  }
 
-
+  EditarRol(i : any){
+    // this.xModulo.nombre = this.xmodulo
+    // this.xRol.nombre = this.nombre
+    // this.xRol.descripcion= this.descripcion 
+    // this.xRol.Modulo.push(this.xModulo)
+    // this.xAplicacion.nombre = this.aplicacion
+    // this.xAplicacion.Rol = this.xRol
+    // console.info(this.xAplicacion)
+    console.warn(i)
   }
 
   openModlaLg(content, itemRol){
@@ -245,12 +249,12 @@ export class RegistrarRolComponent implements OnInit {
 
   selModulo() : void {
     this.xAPI.funcion = "LstModulos";
-    this.xAPI.parametros = this.aplicacion;
+    this.xAPI.parametros = this.aplicacion.split('|')[1];
     this.dataModulo = [];
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.forEach(e => {          
-          this.dataModulo.push({ id: e.id, name: e.nomb  })
+            this.dataModulo.push({ id: e.id, name: e.nomb  })
         });             
       },
       (error) => {
@@ -300,14 +304,14 @@ export class RegistrarRolComponent implements OnInit {
 
   consultarMenu(acc : string = ''){
     this.xAPI.funcion = "LstMenus"
-    
-    this.xAPI.parametros = acc
+    this.xAPI.parametros = acc.split('|')[1];
     this.xnombre = this.menu
     this.datamenu = []
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         data.Cuerpo.forEach(e => {          
           this.datamenu.push({id: e.id, name: e.nomb });  
+          this.isDisabledAdjunt = false
         });       
       },
       (error) => {

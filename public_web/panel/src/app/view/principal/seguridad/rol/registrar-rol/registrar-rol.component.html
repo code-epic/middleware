@@ -6,17 +6,17 @@
             <div class="form-group">
                 <label>Aplicacion</label>
                 <select id="cmbAplicacion" class="form-control selected"
-                    [ngModelOptions]="{standalone: true}" [(ngModel)]="aplicacion"  value ="{{aplicacion}}"
+                    [ngModelOptions]="{standalone: true}" [disabled]="isDisabled" [(ngModel)]="aplicacion"  value ="{{aplicacion}}"
                     style="display: flex; justify-content: center;" (change)="selModulo()">
                     <option value="0">SELECCIONE</option>
-                    <option  *ngFor="let xapp of lstApps" value="{{ xapp.id }}">{{xapp.nomb}} : {{xapp.vers}}</option>
+                    <option  *ngFor="let xapp of lstApps; let i = index" value="{{ i }}|{{ xapp.id }}">{{xapp.nomb}} : {{xapp.vers}}</option>
                 </select>
             </div>
         </div>
         <div class="col-md-4">
             <div class="form-group">
                 <label>Nombre</label>
-                <input type="text" id="txtName" class="form-control" placeholder="Enter ..."  
+                <input type="text" id="txtName" [disabled]="isDisabled" class="form-control" placeholder="Enter ..."  
                 [ngModelOptions]="{standalone: true}"  [(ngModel)]="nombre"  value ="{{nombre}}"
                 (onBlur) = "seleccionarUrl()">
             </div>
@@ -24,7 +24,7 @@
             <div class="col-md-8">
                 <div class="form-group">
                     <label>Incluir una breve descripción:</label>
-                    <textarea class="form-control" rows="1" id="txtDescripcion" placeholder="Enter ..."
+                    <textarea class="form-control" rows="1" [disabled]="isDisabled" id="txtDescripcion" placeholder="Enter ..."
                     [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion"  value ="{{descripcion}}"></textarea>
                 </div>
         </div>
@@ -39,7 +39,7 @@
                         [(ngModel)]="xmodulo"
                         (change)='consultarMenu($event.target.value)'>   
                     <option value="0">SELECCIONE</option>
-                    <option  *ngFor="let item of dataModulo" value="{{item.id}}">{{item.name}}</option> 
+                    <option  *ngFor="let item of dataModulo; let i = index" value="{{ i }}|{{ item.id }}">{{item.name}}</option> 
                     </select>
             </div>
         </div>
@@ -53,7 +53,7 @@
                     (change)='OMenuAccion($event.target.value)'
                     attr.data="{{datamenu}}">     
                     <option value="0">SELECCIONE</option>
-                     <option  *ngFor="let item of datamenu" value="{{item.id}}">{{item.name}}</option> 
+                     <option  *ngFor="let item of datamenu; let i = index" value="{{ i }}|{{ item.id }}">{{item.name}}</option> 
                 </select>
     
             </div>
@@ -107,8 +107,7 @@
         </div>
        
         <div class="col-md-12" align="right">
-            <button mat-raised-button color="primary" 
-            [disabled]="!userProfileForm.valid" (click)="Adjuntar()">Adjuntar</button>
+            <button mat-raised-button color="primary" [disabled]="isDisabledAdjunt" (click)="Adjuntar()">Adjuntar</button>
         </div>
     </div>
 </form>
@@ -122,7 +121,7 @@
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">Nombre</th>
+            <th scope="col">Rol</th>
             <th scope="col">Aplicacion</th>
             <th scope="col">Modulo</th>
             <th scope="col">Menu</th>
@@ -132,13 +131,13 @@
         <tbody>
             <tr *ngFor="let item of Roles, let i = index">
             <th scope="row">{{ i+1 }}</th>
-            <td>{{ item.aplicacion }}</td>
             <td>{{ item.nombre }}</td>
+            <td>{{ item.aplicacion }}</td>
             <td>{{ item.modulo }}</td>
-            <td>Menu</td>
+            <td>{{ item.menu }}</td>
             <td>
                 <button mat-icon-button>
-                    <mat-icon class="edit-icon" aria-hidden="false" >edit</mat-icon>
+                    <mat-icon class="edit-icon" aria-hidden="false" (click)="EditarRol(item)">edit</mat-icon>
                   </button>
                 <button mat-icon-button>
                 <mat-icon class="delete-icon" aria-hidden="false" (click)="deleteMsg(i)">delete</mat-icon>
@@ -153,5 +152,6 @@
     </div>
 </div>
 <div class="col-md-12" align="center">
-<button mat-raised-button color="primary" (click)="Salvar()">Guardar</button>
+<button mat-raised-button color="primary" [disabled]="isBtnDisable" (click)="Salvar()">Guardar</button>
+<button mat-raised-button color="info" [disabled]="isBtnDisable" (click)="LimpiarForm()">Cancelar</button>
 </div>
