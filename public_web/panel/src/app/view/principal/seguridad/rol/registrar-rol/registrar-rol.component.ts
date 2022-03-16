@@ -3,7 +3,7 @@ import { ApiService, IAPICore } from '../../../../../service/apicore/api.service
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ModalRolComponent } from '../modal-rol/modal-rol.component';
 import { FormBuilder, FormGroup, Validators, FormControl } from '@angular/forms';
-import { Aplicacion, IRol, Menu, SubMenu, Privilegios } from '../../../../../service/seguridad/rol.service'
+import { Aplicacion, IRol, Menu, SubMenu, Privilegios, IModulo } from '../../../../../service/seguridad/rol.service'
 
 
 @Component({
@@ -17,11 +17,7 @@ export class RegistrarRolComponent implements OnInit {
   public xApp = []
   public xMen = [] //Listado General de Menu
 
-  public xRol : IRol = {
-    nombre :  '',
-    descripcion :  '',
-    Menu : []
-  };
+
 
   public xAplicacion : Aplicacion = {
     nombre: '',
@@ -30,6 +26,20 @@ export class RegistrarRolComponent implements OnInit {
     version: '',
     autor: ''
   }
+
+  public xRol : IRol = {
+    nombre :  '',
+    descripcion :  '',
+    Modulo : []
+  };
+
+
+  public xModulo : IModulo = {
+    nombre: '',
+    Menu: []
+  }
+
+
 
   public xMenu : Menu = {
     url: '',
@@ -136,26 +146,32 @@ export class RegistrarRolComponent implements OnInit {
 
   Adjuntar(){
    
-    var xrol = []
-    var xmen = []
-    var xsub = []
+   
     var xpri = []
-
-
+    
+    var menu : any
+    
 
     this.rowDataAcc.forEach(e => {
       xpri.push(e)
-      this.xMenu.nombre = e.nomb
-      this.xMenu.js = e.js
-      this.xMenu.url = e.url
-      this.xMenu.icono = e.icon
+      menu = {
+        nombre : e.nomb,
+        js : e.js,
+        url : e.url,
+        icono : e.icon
+      }
     })
     
+    this.xMenu = menu
     this.xMenu.Privilegios = xpri
 
+    this.xModulo.Menu.push(this.xMenu)
+
+    //console.info(this.xMenu)
     // this.xRol.nombre = this.nombre
     // this.xRol.descripcion= this.descripcion
-    this.xRol.Menu.push(this.xMenu)
+    
+
 
     // xrol.push(this.xRol)
 
@@ -186,11 +202,19 @@ export class RegistrarRolComponent implements OnInit {
 
 
   Salvar(): any {
+
+    this.xModulo.nombre = this.xmodulo
+    
+
     this.xRol.nombre = this.nombre
     this.xRol.descripcion= this.descripcion 
-    this.xAplicacion. nombre = this.aplicacion
+    this.xRol.Modulo.push(this.xModulo)
+    
 
+    this.xAplicacion.nombre = this.aplicacion
     this.xAplicacion.Rol = this.xRol
+
+
     console.info(this.xAplicacion)
 
 

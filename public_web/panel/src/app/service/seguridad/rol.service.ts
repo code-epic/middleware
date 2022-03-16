@@ -5,7 +5,7 @@ import { Injectable } from '@angular/core';
 export interface IRol{
   nombre: string,
   descripcion: string,
-  Menu : Menu[], 
+  Modulo : IModulo[], 
 }
 
 
@@ -19,17 +19,14 @@ export interface Aplicacion{
   Rol ?: IRol
 }
 
-export interface Modulo{
-  nombre: string,
-  descripcion: string,
-  Privilegios ?: Privilegios[],
-  Menu : Menu[], 
- 
+export interface IModulo{
+  nombre : string,
+  Menu   : Menu[]
 }
 
 
 export interface SubMenu{
-  url: string,
+  url: string,22
   js: string,
   icono: string,
   descripcion: string,
