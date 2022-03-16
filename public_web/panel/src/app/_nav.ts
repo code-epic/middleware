@@ -51,6 +51,11 @@ export const navItems: INavData[] = [
         url: '/principal/herramientas/graphql',
         icon: 'icon-shuffle',
         attributes: { disabled: true }
+      },
+      {
+        name: 'WorkFlow',
+        url: '/principal/herramientas/workflow',
+        icon: 'icon-shuffle',
       }
     ]
   },

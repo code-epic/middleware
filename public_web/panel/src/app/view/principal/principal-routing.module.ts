@@ -7,6 +7,7 @@ import { MenuComponent } from './aplicaciones/menu/menu.component';
 import { SotfwareComponent } from './aplicaciones/sotfware/sotfware.component';
 import { ApiComponent } from './herramientas/api/api.component';
 import { FuncionesComponent } from './herramientas/funciones/funciones.component';
+import { WorkflowComponent } from './herramientas/workflow/workflow.component'
 import { CerrarComponent } from './opciones/cerrar/cerrar.component';
 import { PrincipalComponent } from './principal.component';
 import { ComunicacionesComponent } from './redes/comunicaciones/comunicaciones.component';
@@ -63,6 +64,11 @@ export const routes: Routes = [
       {
         path: 'funciones',
         component: FuncionesComponent,
+        canActivate:[AuthGuardGuard],
+      },
+      {
+        path: 'workflow',
+        component: WorkflowComponent,
         canActivate:[AuthGuardGuard],
       }
     ]

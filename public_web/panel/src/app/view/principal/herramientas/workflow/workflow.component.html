@@ -1,0 +1,84 @@
+
+ <div class="animated fadeIn" [ngStyle]="{'display':sectionConsultar}">
+    <section class="esb">        
+        <div class="row">
+            <div class="col-md-12">
+                <div class="card">
+                    <div class="card-body">
+                        <ngx-ui-loader [loaderId]="'loader-01'"></ngx-ui-loader>
+                        <div class="container">
+                            <div class="row">
+                                <div class="col-md-3"></div>
+                                <div class="col-md-6 text-center">
+                                    <img class="card-img-top" 
+                                        src="../../assets/img/brand/WorkFlow.png" 
+                                        style="height: 200px; width: 90%"  
+                                    alt="Card image cap">
+                                </div>
+                                <div class="col-md-3"></div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-3 text-right">
+                                    <h1> WorkFlow</h1>
+                                </div>
+                                <div class="col-md-6 text-center">
+                                  
+                                  <form class="navbar-search">
+                                    <div class="form-group" [ngClass]="{ 'focused': focus === true }">
+                                      <div class="input-group input-group-alternative">
+                                        <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-search"></i></span>
+                                          </div>
+                                        <input class="form-control" placeholder="Buscar" type="text" (focus)="focus = true"  (blur)="focus = false">
+                                          <div class="input-group-prepend">
+                                            <span class="input-group-text"><i class="fa fa-sliders"></i></span>
+                                          </div>
+                                        
+                                      </div>
+                                    </div>
+                                  </form>
+                                  
+                                </div>
+                                <div class="col-md-3">
+                      
+                                </div>
+
+                            </div>
+                            
+                            
+                            <div class="row">
+                                <div class="col-md-12">
+
+                                    <!--  -->
+                                    <app-registrar-workflow></app-registrar-workflow>
+                                    <mat-tab-group mat-stretch-tabs class="example-stretched-tabs" >
+                                        <mat-tab>
+                                            <ng-template mat-tab-label>
+                                            <mat-icon class="example-tab-icon">source</mat-icon>
+                                            &nbsp;ESTADOS
+                                            </ng-template>
+                                            <mat-accordion class="example-headers-align">
+                                                <app-estados></app-estados>
+                                            </mat-accordion>                        
+                                        </mat-tab>
+                                        <mat-tab>
+                                            <ng-template mat-tab-label>
+                                            <mat-icon class="example-tab-icon">source</mat-icon>
+                                            &nbsp;TRANSICIONES
+                                            </ng-template>
+                                            <mat-accordion class="example-headers-align">
+                                                <app-transiciones></app-transiciones>
+                                            </mat-accordion>                        
+                                        </mat-tab>
+                                    </mat-tab-group>                              
+                                </div>
+                            </div>
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+ </div>
