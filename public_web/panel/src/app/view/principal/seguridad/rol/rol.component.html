@@ -30,7 +30,7 @@
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-search"></i></span>
                                           </div>
-                                        <input class="form-control" placeholder="Buscar" type="text" (focus)="focus = true"  (blur)="focus = false">
+                                        <input class="form-control" name="filterPost" autocomplete="off" placeholder="Buscar..." type="text" (focus)="focus = true"  (blur)="focus = false">
                                           <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-sliders"></i></span>
                                           </div>
@@ -55,7 +55,7 @@
                                         <mat-tab>
                                             <ng-template mat-tab-label>
                                             <mat-icon class="example-tab-icon">source</mat-icon>
-                                            &nbsp;CREAR ROL
+                                            &nbsp;CREAR
                                             </ng-template>
                                             <mat-accordion class="example-headers-align">
                                                 <app-registrar-rol></app-registrar-rol>
@@ -64,7 +64,7 @@
                                         <mat-tab>
                                             <ng-template mat-tab-label>
                                             <mat-icon class="example-tab-icon">source</mat-icon>
-                                            &nbsp;LISTA DE ROLES
+                                            &nbsp;LISTA
                                             </ng-template>
                                             <mat-accordion class="example-headers-align">
                                                 <mat-expansion-panel hideToggle *ngFor="let api of lst">

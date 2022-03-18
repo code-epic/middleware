@@ -6,7 +6,6 @@ import { ApiService, IAPICore } from '../../../../service/apicore/api.service';
 import JSONFormatter from 'json-formatter-js';
 import { RegistrarRolComponent } from './registrar-rol/registrar-rol.component'; 
 
-
 @Component({
   selector: 'app-rol',
   templateUrl: './rol.component.html',
@@ -19,7 +18,6 @@ export class RolComponent implements OnInit {
     public focus;
 
 
-
     public developer = []
     public testing = []
     public quality = []
@@ -27,7 +25,6 @@ export class RolComponent implements OnInit {
     public tabPosicion = 0
   
     lst = []
-  
     lengthOfi = 0;
     pageSizeOfi = 10;
     pageSizeOptions: number[] = [5, 10, 25, 100];
