@@ -118,7 +118,7 @@ export const routes: Routes = [
         canActivate:[AuthGuardGuard]
       },
       {
-        path: 'usuarios',
+        path: 'usuario',
         component: UsuarioComponent,
         canActivate:[AuthGuardGuard]
       }
