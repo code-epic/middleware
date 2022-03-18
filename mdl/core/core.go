@@ -1,11 +1,15 @@
 package core
 
 import (
+	"encoding/json"
+	"fmt"
+	"reflect"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/code-epic/middleware/sys"
+	"github.com/code-epic/middleware/util"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -64,6 +68,8 @@ type ApiCore struct {
 	Descripcion   string             `json:"descripcion"`
 	Version       string             `json:"version"`
 	Categoria     string             `json:"categoria"`
+	Entradas      string             `json:"entradas"`
+	Salidas       string             `json:"salidas"`
 	Funcionalidad string             `json:"funcionalidad"`
 	Resultado     interface{}        `json:"resultado"`
 	Fecha         time.Time          `json:"fecha"`
@@ -99,7 +105,7 @@ func (C *Core) Asignar(v map[string]interface{}) (jSon []byte, err error) {
 		}
 	}
 
-	if Valores {
+	if Valores && api.Coleccion != "" {
 		jSon, err = C.InsertNOSQL(api.Coleccion, api.Valores)
 	} else {
 		jSon, err = C.OperarConsulta(v)
@@ -127,6 +133,24 @@ func actualizarEstatusAPI(fn string, estatus bool) (err error) {
 	return
 }
 
+//parsearApi evaluar parametros de una api
+func parsearApi(api ApiCore) (cadena string, err error) {
+
+	var s map[string]interface{}
+
+	if api.Valores != nil && fmt.Sprint(api.Valores) != "" && fmt.Sprint(api.Valores) != "map[]" {
+
+		err = json.Unmarshal([]byte(fmt.Sprint(api.Valores)), &s)
+		cadena = parsearValores(s, api.Query)
+		fmt.Println("Entrando en Datos ", cadena, fmt.Sprint(api.Valores), " --- ")
+
+	} else {
+
+		cadena = parsearParametros(api.Parametros, api.Query)
+	}
+	return
+}
+
 //parsearParametros evaluar parametros de la consultar y retornar una cadae con los reemplazos
 func parsearParametros(parametros string, consulta string) (cadena string) {
 	valores := strings.Split(parametros, ",")
@@ -138,4 +162,55 @@ func parsearParametros(parametros string, consulta string) (cadena string) {
 	}
 	cadena = consulta
 	return
+}
+
+//parsearObjeto obtener los campos de un objeto
+func parsearValores(objeto map[string]interface{}, consulta string) (cadena string) {
+
+	entrada, insercion, coma := "", "", ""
+
+	i := 0
+
+	for k, v := range objeto {
+		if i > 0 {
+			coma = ","
+		}
+		entrada += coma + k
+		insercion += coma + evaluarTipoDeDato(v)
+		i++
+	}
+
+	fmt.Println("Imprimiendo valor ", i)
+	cadena = `(` + entrada + `) VALUES ( ` + insercion + ` )`
+
+	return strings.Replace(consulta, "$objeto", cadena, -1)
+
+}
+
+func evaluarTipoDeDato(v interface{}) (valores string) {
+
+	evalreflect := reflect.ValueOf(v)
+
+	switch evalreflect.Kind() {
+	case reflect.String:
+		valorstr := fmt.Sprintf("%s", v)
+		valores = "'" + util.Utf8_decode(strings.Trim(valorstr, " ")) + "'"
+	case reflect.Slice:
+		valorstr := fmt.Sprintf("%s", v)
+		valores = "'" + strings.Trim(valorstr, " ") + "'"
+	case reflect.Float32:
+		f := evalreflect.Float()
+		valores = strconv.FormatFloat(f, 'f', 2, 64)
+	case reflect.Float64:
+		f := evalreflect.Float()
+		valores = strconv.FormatFloat(f, 'f', 2, 64)
+	case reflect.Int32:
+		n := evalreflect.Int()
+		valores = strconv.FormatInt(n, 10)
+	case reflect.Int64:
+		n := evalreflect.Int()
+		valores = strconv.FormatInt(n, 10)
+	}
+	return
+
 }

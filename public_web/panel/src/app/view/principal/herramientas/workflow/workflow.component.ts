@@ -15,7 +15,7 @@ export class WorkflowComponent implements OnInit {
   @ViewChild(EstadosComponent) estadosWorkFlow: EstadosComponent
   @ViewChild(TransicionesComponent) transicionesWorkFlow: TransicionesComponent
 
-
+  
   constructor() { }
 
   ngOnInit(): void {

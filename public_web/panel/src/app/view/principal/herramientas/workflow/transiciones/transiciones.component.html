@@ -10,19 +10,26 @@
                 (onBlur) = "seleccionarUrl()">
             </div>
         </div>
-            <div class="col-md-8">
-                <div class="form-group">
-                    <label>Incluir una breve descripción:</label>
-                    <textarea class="form-control" rows="1" id="txtDescripcion" placeholder="Enter ..."
-                    [ngModelOptions]="{standalone: true}" [(ngModel)]="descripcion"  value ="{{descripcion}}"></textarea>
+        <div class="col-md-8">
+            <label>Descripcion</label>
+            <div class="input-group mb-3">
+                
+                <input style="font-size:14px;" type="text" 
+                    class="form-control" [ngModelOptions]="{standalone: true}" 
+                    [(ngModel)]="descripcion"  value ="{{descripcion}}" >
+                <div class="input-group-prepend">
+                    
+                    <button type="button" mat-raised-button color="accent" 
+
+                        (click)="Adjuntar()">
+                        <i class="fa fa-arrow-down" aria-hidden="true"></i> &nbsp; Agregar
+                    </button>
                 </div>
+            </div>
         </div>
     </div>
     
-    <div class="col-md-12" align="right">
-        <button mat-raised-button color="primary" 
-         >Guardar</button>
-    </div>
+    
 </form>
 
 <div class="row">

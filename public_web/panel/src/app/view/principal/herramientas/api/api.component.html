@@ -353,7 +353,6 @@ Titulo: Panel de Control: APICORE
             <div class="col-md-12">
                 <div class="card">
                     <div class="card-body">
-                        <ngx-ui-loader [loaderId]="'loader-02'"></ngx-ui-loader>
                         <div class="btn-group float-right" style="padding:3px">
                             <button type="button" class="btn btn-pill bg-light" (click)="seccionRegistrar('none')" >
                                 Consultar Listado de API's
@@ -395,12 +394,28 @@ Titulo: Panel de Control: APICORE
                         [(ngModel)]="xparametro" value ="{{xparametro}}">
                     </div>
                 </div>
+                <div class="col-md-12" id="divValores">
+                    <div class="form-group">
+                        <label>Valores</label>
+                        <ngx-codemirror
+                        [ngModelOptions]="{standalone: true}" 
+                        [(ngModel)]="valores"
+                        (ngModelChange)="setEditorContent($event)"
+                        (blur)="seleccionEditor($event)"
+                        [options]="codeMOEsquemaJson"
+                        ></ngx-codemirror>
+                    </div>
+                </div>
                
                 <div class="col-md-12">
                     <div class="input-group mb-3">
-                        <input style="font-size:14px;" type="text" class="form-control" [ngModelOptions]="{standalone: true}" [(ngModel)]="xentorno"  value ="{{xentorno}}" readonly>
+                        <input style="font-size:14px;" type="text" 
+                            class="form-control" [ngModelOptions]="{standalone: true}" 
+                            [(ngModel)]="xentorno"  value ="{{xentorno}}" readonly>
                         <div class="input-group-prepend">
-                            <button type="button" class="btn btn-success" (click)="ejecutarApi()"><i class="fa fa-play"></i></button>
+                            <button type="button" class="btn btn-success" 
+                                (click)="ejecutarApi()"><i class="fa fa-play"></i>
+                            </button>
                         </div>
                     </div>
                 </div>

@@ -76,6 +76,8 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   concurrencia : boolean = false
   retorna : boolean = true
   xruta: string = ''
+  entradas : string = ''
+  salidas : string   = ''
 
   divCodigofuente = 'none'
   divConsultang = 'none'
@@ -91,8 +93,8 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   
   codigo : string = ''
   funcion : string = ''
-  query : string   = '';
-  columna : string   = '';
+  query : string   = ''
+  columna : string   = ''
 
   loading : boolean = false
 
@@ -124,13 +126,28 @@ export class RegistrarComponent implements OnInit, OnDestroy {
     cache: 0,
     estatus: false,
     categoria : '',
-    funcionalidad : ''
+    funcionalidad : '',
+    entradas : '',
+    salidas : ''
   };
 
 
   xcategoria : string = 'S'
   xfuncionalidad : string = 'S'
   
+  
+  codeJson: any = {
+    theme: 'idea',
+    mode: 'application/ld+json',
+    lineNumbers: true,
+    lineWrapping: true,
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    lint: true
+  };
+
 
   constructor(
     private comunicacionesService : ComunicacionesService,
@@ -152,6 +169,30 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   }
 
 
+
+  setEditorContent(event) {
+   //console.log(event)
+    
+  }
+
+  clickRefresh(event) {
+    this.codeJson = {
+      theme: 'idea',
+      mode: 'application/ld+json',
+      lineNumbers: true,
+      lineWrapping: true,
+      foldGutter: true,
+      gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+      autoCloseBrackets: true,
+      matchBrackets: true,
+      lint: true
+    }
+     
+   }
+  focusRefresh(event) {
+    console.log(event)
+     
+   }
   
   isValidTypeBoolean: boolean = true;
 
@@ -216,12 +257,14 @@ export class RegistrarComponent implements OnInit, OnDestroy {
 
   async CargarDrivers(){
     this.xAPI.funcion = "LESBDrivers";
-    this.xAPI.valores = null;
+    
     await this.comunicacionesService.ListarConexiones().subscribe(
       (data) => {            
+        
         this.drivers = data
         this.apiService.Ejecutar(this.xAPI).subscribe(
           (data) => {
+           
               data.forEach(e => {
                 this.drivers.push(e)                
               });
@@ -387,6 +430,8 @@ export class RegistrarComponent implements OnInit, OnDestroy {
     this.xAPI.version = this.version
     this.xAPI.categoria = this.xcategoria
     this.xAPI.funcionalidad = this.xfuncionalidad
+    this.xAPI.entradas = this.entradas
+    this.xAPI.salidas = this.salidas
     return this.xAPI
 
   }

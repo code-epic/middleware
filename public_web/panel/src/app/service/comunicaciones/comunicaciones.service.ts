@@ -2,6 +2,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable } from 'rxjs';
+import { environment } from '../../../environments/environment';
 
 
 
@@ -23,7 +24,7 @@ export interface IComunicaciones{
 })
 export class ComunicacionesService {
    //Dirección Get para servicios en la página WEB
-   URL =  '/v1/api/';
+   URL =  environment.API
 
    httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json',
@@ -35,7 +36,7 @@ export class ComunicacionesService {
   }
 
   Guardar(xCon : IComunicaciones, sApi : string) : Observable<any>{
-    //console.log(xCon);
+    
     var url = this.URL + sApi;
     return this.http.post<any>(url, xCon, this.httpOptions);
   }

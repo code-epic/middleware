@@ -107,7 +107,6 @@ export class ConexionesComponent implements OnInit {
     
     await this.comunicacionesService.Listar().subscribe(
       (data) => {
-        
         this.hosts = data
       },
       (error) => {
@@ -120,22 +119,18 @@ export class ConexionesComponent implements OnInit {
    
     await this.comunicacionesService.ListarDrivers().subscribe(
       (data) => {
-        console.log(data)
         this.drivers = data
       },
       (error) => {
-        console.log(error)
+        console.error(error)
       }
     )
   }
 
   async ListarConexiones(){
     this.xAPI.funcion = "LESBDrivers";
-    this.xAPI.valores = null;
-    console.log(this.xAPI)
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        console.info(data)
         this.rowData = data;
       },
       (error) => {

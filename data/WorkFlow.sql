@@ -2,6 +2,8 @@
 DROP TABLE IF EXISTS `WKF_001_Definicion`;
 CREATE TABLE IF NOT EXISTS `WKF_001_Definicion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `app` varchar(64) NOT NULL,
+  `modu` varchar(64) NOT NULL,
   `nomb` varchar(64) NOT NULL,
   `obse` varchar(256) NOT NULL,
   `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
@@ -9,9 +11,11 @@ CREATE TABLE IF NOT EXISTS `WKF_001_Definicion` (
   KEY `id` (`id`)
 );
 INSERT INTO `WKF_001_Definicion` 
-(`id`, `nomb`, `obse`, `fech`) VALUES 
-(NULL, 'Gestión de Funciones', 'Orden de funciones middleware', CURRENT_TIMESTAMP),
-(NULL, 'Gestión de Documentos', 'Control de Gestión para Documentos', CURRENT_TIMESTAMP);
+(`id`, `app`, `modu`, `nomb`, `obse`, `fech`) VALUES 
+(NULL, 'CORE', 'SISTEMA', 'Gestión de Funciones', 'Orden de funciones middleware', Now());
+
+,
+(NULL, 'Gestión de Documentos', 'Control de Gestión para Documentos', 'Now()');
 
 
 DROP TABLE IF EXISTS `WKF_002_Serie`;
@@ -81,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `WKF_005_Red` (
 DROP TABLE IF EXISTS `WKF_006_Documento`;
 CREATE TABLE IF NOT EXISTS `WKF_006_Documento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
+  `serie` varchar(64) NOT NULL,
   `nomb` varchar(64) NOT NULL,
   `obse` varchar(256) NOT NULL,
   `tipo` tinyint(1)  NOT NULL, -- Tipo documento
@@ -90,8 +95,21 @@ CREATE TABLE IF NOT EXISTS `WKF_006_Documento` (
   KEY `id` (`id`)
 );
 
-DROP TABLE IF EXISTS `WKF_007_Documento_Ubicacion`;
-CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Ubicacion` (
+DROP TABLE IF EXISTS `WKF_007_Documento_Detalle`;
+CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Detalle` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `serie` varchar(64) NOT NULL,
+  `nomb` varchar(64) NOT NULL,
+  `obse` varchar(256) NOT NULL,
+  `tipo` tinyint(1)  NOT NULL, -- Tipo documento
+  `esta` tinyint(1)  NOT NULL, -- Estatus
+  `usua` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+);
+
+DROP TABLE IF EXISTS `WKF_008_Documento_Ubicacion`;
+CREATE TABLE IF NOT EXISTS `WKF_008_Documento_Ubicacion` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idd` int(11)  NOT NULL, -- Id Documento
   `ide` int(11)  NOT NULL, -- Conjunto de transiciones
@@ -106,8 +124,8 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Ubicacion` (
 
 
 
-DROP TABLE IF EXISTS `WKF_008_Alerta`;
-CREATE TABLE IF NOT EXISTS `WKF_008_Alerta` (
+DROP TABLE IF EXISTS `WKF_009_Alerta`;
+CREATE TABLE IF NOT EXISTS `WKF_009_Alerta` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idd` int(11)  NOT NULL, -- Id Documento
   `nomb` varchar(64) NOT NULL,
@@ -120,8 +138,8 @@ CREATE TABLE IF NOT EXISTS `WKF_008_Alerta` (
   KEY `id` (`id`)
 );
 
-DROP TABLE IF EXISTS `WKF_009_Traza`;
-CREATE TABLE IF NOT EXISTS `WKF_009_Traza` (
+DROP TABLE IF EXISTS `WKF_010_Traza`;
+CREATE TABLE IF NOT EXISTS `WKF_010_Traza` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `idd` int(11)  NOT NULL, -- Id Documento
   `ide` int(11)  NOT NULL, -- Conjunto de transiciones

@@ -47,6 +47,20 @@ export class ApiComponent implements OnInit {
   xAPI : IAPICore;
   xentorno : string = ''
   pageEvent : any
+  valores : string = ''
+
+  codeMOEsquemaJson: any = {
+    theme: 'idea',
+    mode: 'application/ld+json',
+    lineNumbers: true,
+    lineWrapping: true,
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    lint: true
+  };
+
 
   constructor(
     private apiService : ApiService, 
@@ -62,6 +76,14 @@ export class ApiComponent implements OnInit {
    
   }
 
+  seleccionEditor(e){
+    
+  }
+
+  setEditorContent(event) {
+    this.xparametro = ''
+    
+  }
 
   seccionRegistrar( valor ){
     if (valor != '') {
@@ -140,7 +162,8 @@ export class ApiComponent implements OnInit {
 
   activarFormulario(content, item) {
     
-    console.log(item)    
+    console.log(item)
+
     this.modalService.open(content, {
       centered: true, 
       size: 'lg', 
@@ -167,8 +190,10 @@ export class ApiComponent implements OnInit {
   }
 
   async ejecutarApi(){
+
     this.xAPI = this.data;
-    this.xAPI.parametros = this.xparametro;
+    this.xAPI.parametros = this.xparametro
+    this.xAPI.valores = this.valores
     console.log(this.xAPI);
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {        

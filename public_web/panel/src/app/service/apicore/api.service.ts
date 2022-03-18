@@ -36,9 +36,15 @@ export interface IAPICore{
   cache         ?:  number
   estatus       ?:  boolean
   categoria     ?:  string
+  entradas      ?:  string
+  salidas       ?:  string
   funcionalidad ?:  string
 }
 
+export interface ObjectoGenerico {
+  nomb : string,
+  obse : string
+}
 
 @Injectable({
   providedIn: 'root'
@@ -72,9 +78,9 @@ export class ApiService {
   //Ejecutar Api generales
   Ejecutar(xAPI : IAPICore) : Observable<any>{
     var url = this.URL + "crud" + this.hash;
-    if( xAPI.valores  != undefined ){
-        xAPI.valores = JSON.parse(xAPI.parametros);
-    } 
+    // if( xAPI.valores  != undefined ){
+    //     xAPI.valores = JSON.parse(xAPI.parametros);
+    // } 
     return this.http.post<any>(url, xAPI, this.httpOptions);
   }
 

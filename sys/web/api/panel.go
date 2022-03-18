@@ -29,8 +29,6 @@ type WPanel struct {
 func (wp *WPanel) ListarModulos(w http.ResponseWriter, r *http.Request) {
 	Cabecera(w, r)
 
-	fmt.Println("Entrando en los datos")
-
 	var directorio util.Directorio
 	err := directorio.Listar("./public_web/www/ipostel/inc", true)
 
@@ -113,6 +111,8 @@ func (wp *WPanel) CrearColeccion(w http.ResponseWriter, r *http.Request) {
 	Cabecera(w, r)
 	var cr core.Core
 	e := json.NewDecoder(r.Body).Decode(&wp)
+
+	fmt.Println(wp)
 	util.Error(e)
 	j, _ := cr.InsertNOSQL(wp.Coleccion, wp.Obj)
 	w.WriteHeader(http.StatusOK)

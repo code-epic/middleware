@@ -44,14 +44,30 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 		fmt.Println("Error en precodigo" + precodigo)
 	}
 
-	consulta := parsearParametros(C.ApiCore.Parametros, C.ApiCore.Query)
+	consulta, valErr := parsearApi(C.ApiCore)
+
+	tpQuery := evaluarQuery(consulta)
+	md5Cadena := util.GenerarMD5(consulta)
+
+	if valErr != nil {
+		M.Msj = "Error fnx ( " + C.ApiCore.Funcion + " ) en los valores de entrada del formato JSON "
+		M.Contenido = valErr.Error()
+		sys.QueryLog.Println(md5Cadena, consulta, M.Msj)
+
+		jSon, err = json.Marshal(M)
+		return
+	}
+
+	/** if a.Valores != nil {
+		jSon, err = json.Marshal(M)
+		return
+	} **/
+
 	if a.Coleccion != "" {
 		jSon, err = C.CrearNOSQL(C.ApiCore.Coleccion, consulta, xmongo)
 		return
 	}
 
-	tpQuery := evaluarQuery(consulta)
-	md5Cadena := util.GenerarMD5(consulta)
 	M.Msj = "Proceso finalizado"
 	jSon, existe := C.validarCache(md5Cadena)
 	if !existe {
@@ -111,6 +127,10 @@ func leerValores(v map[string]interface{}) (db *sql.DB, a ApiCore, mgo *mongo.Da
 	a.Retorna = ApiCoreAux.Retorna
 	a.Estatus = estatus
 	a.Funcion = ApiCoreAux.Funcion
+	a.Valores = ApiCoreAux.Valores
+	if ApiCoreAux.Coleccion != "" {
+		a.Coleccion = ApiCoreAux.Coleccion
+	}
 
 	//fmt.Println("Driver seleccionado: ", a.Parametros, a.Coleccion)
 	return
@@ -131,6 +151,10 @@ func retornaValores(v map[string]interface{}) (a ApiCore) {
 			a.Metodo = vs.(string)
 		case "migrar":
 			a.Migrar = vs.(bool)
+		case "valores":
+			if vs != nil {
+				a.Valores = vs.(interface{})
+			}
 		case "destino":
 			a.Destino = vs.(string)
 		case "retorna":

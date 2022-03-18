@@ -202,15 +202,24 @@ export class ComunicacionesComponent implements OnInit, OnDestroy {
 
     jsonG = this.Obtener();
     this.loading = true;
+    
     await this.comunicacionesService.Guardar(jsonG, sApi).subscribe(
       (data)=>{
+        
         this.Limpiar()
+        this.toastrService.success(
+          'Tu (Comunicacion) ha sido registrada codigo: ' + data.InsertedID,
+          `Code-Epic Ok`
+        );
         //this.CargarConexiones()
         this.loading = false;
       },
       (errot)=>{
         this.Limpiar()
-        console.error(errot)
+        this.toastrService.error(
+          errot,
+          `Code-Epic Error`
+        );
         this.loading = false;
       }
     )

@@ -47,7 +47,7 @@ import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
 import { AuthGuardGuard } from './service/seguridad/auth-guard.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridModule } from 'ag-grid-angular';
-//import { NgxEditorModule } from 'ngx-editor';
+import { CodemirrorModule } from '@ctrl/ngx-codemirror';
 
 //const oToastr = ;
 
@@ -73,6 +73,7 @@ import { AgGridModule } from 'ag-grid-angular';
     NgbModule,
     PrincipalModule,
     ToastContainerModule,
+    CodemirrorModule,
     //NgxEditorModule,
     ToastrModule.forRoot({
       closeButton: false,

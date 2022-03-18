@@ -33,6 +33,12 @@ func Cargar() {
 //CargarModulosPanel Panel de Contencion
 func CargarModulosPanel() {
 	var wp api.WPanel
+	var Ambiente [3]string
+
+	Ambiente[0] = vAPI
+	Ambiente[1] = vDev
+	Ambiente[2] = vQua
+
 	fmt.Println("")
 	fmt.Println("")
 	fmt.Println("")
@@ -47,23 +53,25 @@ func CargarModulosPanel() {
 	prefixW := http.StripPrefix("/consola", http.FileServer(http.Dir("public_web/panel/dist")))
 	Enrutador.PathPrefix("/consola").Handler(prefixW)
 
-	Enrutador.HandleFunc(vAPI+"lmodulos", wUsuario.ValidarToken(wp.ListarModulos)).Methods("GET")
-	Enrutador.HandleFunc(vAPI+"lmodulox", wp.ListarModulos).Methods("GET")                                   //Listar Modulos del sistema en la carpeta www/inc
-	Enrutador.HandleFunc(vAPI+"larchivos/{id}", wUsuario.ValidarToken(wp.ListarArchivos)).Methods("GET")     //Listar archivos dentro del modulo de los inc
-	Enrutador.HandleFunc(vAPI+"phtml", wUsuario.ValidarToken(wp.ProcesarHTML)).Methods("POST")               //Procesar archivos html a scripts
-	Enrutador.HandleFunc(vAPI+"gapihtml", wUsuario.ValidarToken(wp.GenerarAPIHTML)).Methods("POST")          //Procesar archivos html a scripts
-	Enrutador.HandleFunc(vAPI+"ccoleccion", wUsuario.ValidarToken(wp.CrearColeccion)).Methods("POST")        //Crear Conexion
-	Enrutador.HandleFunc(vAPI+"lcoleccion/{id}", wUsuario.ValidarToken(wp.ListarColecciones)).Methods("GET") //Listar conexiones
-	Enrutador.HandleFunc(vAPI+"sh", wUsuario.ValidarToken(wp.Sh)).Methods("POST")                            //Ejecutar Script
+	for i := 0; i < 3; i++ {
+		vAmb := Ambiente[i]
+		Enrutador.HandleFunc(vAmb+"lmodulos", wUsuario.ValidarToken(wp.ListarModulos)).Methods("GET")
+		Enrutador.HandleFunc(vAmb+"lmodulox", wp.ListarModulos).Methods("GET")                                   //Listar Modulos del sistema en la carpeta www/inc
+		Enrutador.HandleFunc(vAmb+"larchivos/{id}", wUsuario.ValidarToken(wp.ListarArchivos)).Methods("GET")     //Listar archivos dentro del modulo de los inc
+		Enrutador.HandleFunc(vAmb+"phtml", wUsuario.ValidarToken(wp.ProcesarHTML)).Methods("POST")               //Procesar archivos html a scripts
+		Enrutador.HandleFunc(vAmb+"gapihtml", wUsuario.ValidarToken(wp.GenerarAPIHTML)).Methods("POST")          //Procesar archivos html a scripts
+		Enrutador.HandleFunc(vAmb+"ccoleccion", wUsuario.ValidarToken(wp.CrearColeccion)).Methods("POST")        //Crear Conexion
+		Enrutador.HandleFunc(vAmb+"lcoleccion/{id}", wUsuario.ValidarToken(wp.ListarColecciones)).Methods("GET") //Listar conexiones
+		Enrutador.HandleFunc(vAmb+"sh", wUsuario.ValidarToken(wp.Sh)).Methods("POST")                            //Ejecutar Script
 
-	Enrutador.HandleFunc(vAPI+"drivers", wUsuario.ValidarToken(wp.Drivers)).Methods("GET")        //Listar Drivers desde sys/drivers.json
-	Enrutador.HandleFunc(vAPI+"conexiones", wUsuario.ValidarToken(wp.WConexiones)).Methods("GET") //Listar Drivers desde sys/driver$s.json
+		Enrutador.HandleFunc(vAmb+"drivers", wUsuario.ValidarToken(wp.Drivers)).Methods("GET")        //Listar Drivers desde sys/drivers.json
+		Enrutador.HandleFunc(vAmb+"conexiones", wUsuario.ValidarToken(wp.WConexiones)).Methods("GET") //Listar Drivers desde sys/driver$s.json
 
-	Enrutador.HandleFunc(vAPI+"evaluarconexion", wUsuario.ValidarToken(wp.EvaluarConexion)).Methods("POST")       //Ejecutar Evaluacion de conexion
-	Enrutador.HandleFunc(vAPI+"establecerconexion", wUsuario.ValidarToken(wp.EstablecerConexion)).Methods("POST") //Establecer conexiones
-	Enrutador.HandleFunc(vAPI+"evaluarpuente", wUsuario.ValidarToken(wp.EvaluarPuenteURL)).Methods("POST")        //Ejecutar Evaluacion puente url
-	Enrutador.HandleFunc(vAPI+"subirarchivos", wUsuario.ValidarToken(wp.SubirArchivos)).Methods("POST")           //Subir Archivos al sistema
-
+		Enrutador.HandleFunc(vAmb+"evaluarconexion", wUsuario.ValidarToken(wp.EvaluarConexion)).Methods("POST")       //Ejecutar Evaluacion de conexion
+		Enrutador.HandleFunc(vAmb+"establecerconexion", wUsuario.ValidarToken(wp.EstablecerConexion)).Methods("POST") //Establecer conexiones
+		Enrutador.HandleFunc(vAmb+"evaluarpuente", wUsuario.ValidarToken(wp.EvaluarPuenteURL)).Methods("POST")        //Ejecutar Evaluacion puente url
+		Enrutador.HandleFunc(vAmb+"subirarchivos", wUsuario.ValidarToken(wp.SubirArchivos)).Methods("POST")           //Subir Archivos al sistema
+	}
 }
 
 //WMAdminLTE OpenSource tema de panel de control Tecnología Bootstrap3
