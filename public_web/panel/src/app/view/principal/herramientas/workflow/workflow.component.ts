@@ -11,8 +11,7 @@ import { TransicionesComponent } from './transiciones/transiciones.component';
 })
 export class WorkflowComponent implements OnInit {
 
-  @Output() newItemEvent = new EventEmitter<any>();
-  idWData = "Padre le envia dinero al Hijo"
+
 
   @ViewChild(RegistrarWorkflowComponent) registrarWorkFlow: RegistrarWorkflowComponent
   @ViewChild(EstadosComponent) estadosWorkFlow: EstadosComponent
@@ -23,6 +22,7 @@ export class WorkflowComponent implements OnInit {
   
 
   ngOnInit(): void {
+   
   }
 
 

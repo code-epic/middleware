@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { ApiService, IAPICore, ObjectoGenerico } from '../../../../../service/apicore/api.service';
 import Swal from 'sweetalert2';
+import { WorkflowService } from '../../../../../service/workflow/workflow.service';
 
 
 @Component({
@@ -35,14 +36,16 @@ export class EstadosComponent implements OnInit {
 
   rowEstado : []
 
-  constructor( private apiService : ApiService) { }
+  constructor( private apiService : ApiService,
+    private wkf : WorkflowService ) { }
 
   ngOnInit(): void {
-    this.lstEstados()
+    this.wkf.msjText$.subscribe(e => {
+      this.lstEstados(e)
+    })
   }
 
-  lstEstados() : any {
-    var idw = '8'
+  lstEstados(idw : string) : any {
     this.xAPI.funcion = 'Wk_SEstado'
     this.xAPI.parametros = idw
     this.apiService.Ejecutar(this.xAPI).subscribe(
