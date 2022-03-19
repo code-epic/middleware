@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ApiService, IAPICore } from '../../../../../service/apicore/api.service';
-import { Wdefinicion, WListaEstado } from '../../../../../service/workflow/workflow.service';
+import { Wdefinicion, WListaEstado, WorkflowService } from '../../../../../service/workflow/workflow.service';
 
 
 @Component({
@@ -27,12 +27,13 @@ export class RegistrarWorkflowComponent implements OnInit {
 
   lstApps = []
   dataModulo = []
-  aplicacion : string = ''
+  aplicacion : string = '0'
 
   public Definicion = []
-  xmodulo: any;
-  nombre: any;
-  descripcion: any;
+  xmodulo :  string = '0'
+
+  nombre  :  string = ''
+  descripcion  :  string = ''
   isBtnSalvar : boolean = true
   isDisabledInput : boolean = false
   isButtonVisibleSalvar : boolean = false
@@ -46,10 +47,11 @@ export class RegistrarWorkflowComponent implements OnInit {
     fech: Date.now()
   }
 
-  constructor(private apiService : ApiService) { }
+  constructor(private apiService : ApiService,
+     private wkf : WorkflowService) { }
 
   ngOnInit(): void {
-    this.lstAplicaciones()
+    this.lstAplicaciones()    
   }
 
   async lstAplicaciones(){
@@ -85,13 +87,16 @@ export class RegistrarWorkflowComponent implements OnInit {
   consultarRed(){
     this.xAPI.funcion = 'Wk_SDefinicion'
     this.xAPI.parametros = this.aplicacion +","+ this.xmodulo
+    this.wkf.msjText$.emit( this.xmodulo)
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         this.isBtnSalvar = false
+        if (data.Cuerpo == undefined) return
         data.Cuerpo.forEach(e => {    
           // console.warn(e)      
           if (e != ' ') {
-            console.warn(e.id)
+            
+            this.wkf.msjText$.emit( e.id )
             this.isBtnSalvar = false
             this.isDisabledInput = true
             this.isButtonVisibleSalvar = true
