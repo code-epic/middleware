@@ -98,6 +98,8 @@ export class RegistrarComponent implements OnInit, OnDestroy {
 
   loading : boolean = false
 
+
+
   public xAPI : IAPICore = {
     funcion: '',
     parametros: '',
@@ -130,6 +132,17 @@ export class RegistrarComponent implements OnInit, OnDestroy {
     entradas : '',
     salidas : ''
   };
+
+  public xEntrada : {} = {
+    campo : '',
+    alias : '',
+    tipo : ''
+}
+  campo : string   = ''
+  alias  : string   = ''
+  tipodato : string   = ''
+
+  public IEntrada : any
 
 
   xcategoria : string = 'S'
@@ -173,6 +186,16 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   setEditorContent(event) {
    //console.log(event)
     
+  }
+
+  //agregarEntrada a los elementos de la interfaz de una API
+  agregarEntrada(){
+    this.xEntrada = {
+        campo : this.campo,
+        alias : this.alias,
+        tipo : this.tipodato
+    }
+    this.IEntrada.push(this.xEntrada)
   }
 
   clickRefresh(event) {

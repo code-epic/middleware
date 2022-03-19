@@ -207,22 +207,66 @@
                                 <div class="col-md-5">
                                     <div class="form-group">
                                         <label>Colección en caso de ser NOSQL</label>
-                                        <input type="text" id="txtColeccion" class="form-control" [disabled]="xrelacional"
+                                        <input type="text" class="form-control" [disabled]="xrelacional"
                                         [ngModelOptions]="{standalone: true}" [(ngModel)]="coleccion"  value ="{{coleccion}}">
                                     </div>
                                 </div>
+                            </div>
+                            
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Nombre del campo</label>
+                                        <input type="text" class="form-control"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="campo"  value ="{{campo}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Alias</label>
+                                        <input type="text" class="form-control"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="alias"  value ="{{alias}}">
+                                    </div>
+                                </div>
+
+                                <div class="col-md-4">
+                                    <label>Tipo de dato</label>
+                                    <div class="input-group mb-4">
+                                        
+                                        <select class="form-control selected"  
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tipodato"  value ="{{tipodato}}">
+                                            <option value="0" selected>SELECCIONE</option>
+                                            <option value="boo">LOGICO</option>
+                                            <option value="string">CADENA</option>
+                                            <option value="date">FECHA</option>
+                                            <option value="int">ENTERO</option>
+                                            <option value="dbl">DOBLE</option>
+                                            <option value="sql">SQL</option>
+                                        </select>
+                                        <div class="input-group-prepend">
+                                            
+                                            <button type="button" mat-raised-button color="primary" 
+                        
+                                                (click)="agregarEntrada()">
+                                                <i class="fa fa-plus" aria-hidden="true"></i> &nbsp;
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                               
+                            
                             </div>
                             <div class="row">
                                 <div class="col-md-12">
                                     <label>Esquema de entrada:</label>
                                     <div class="form-group text-justify">
-                                            <ngx-codemirror
+                                        <ngx-codemirror
                                             [ngModelOptions]="{standalone: true}" 
-                                            [(ngModel)]="esquemaEntrada"
+                                            [(ngModel)]="entradas"
                                             (ngModelChange)="setEditorContent($event)"
                                             (click)="clickRefresh($event)"
-                                            [options]="codeJson"
-                                            ></ngx-codemirror>
+                                            [options]="codeJson">
+                                        </ngx-codemirror>
                                     </div>
                                 </div>
                             </div>
