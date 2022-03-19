@@ -42,6 +42,7 @@ export interface IAPICore{
 }
 
 export interface ObjectoGenerico {
+  idw : number,
   nomb : string,
   obse : string
 }

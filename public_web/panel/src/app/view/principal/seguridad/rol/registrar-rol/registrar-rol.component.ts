@@ -1,4 +1,4 @@
-import { Component, OnInit, Injectable } from '@angular/core';
+import { Component, OnInit, Injectable, Output, EventEmitter } from '@angular/core';
 import { ApiService, IAPICore } from '../../../../../service/apicore/api.service';
 import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 import { ModalRolComponent } from '../modal-rol/modal-rol.component';
@@ -120,6 +120,8 @@ export class RegistrarRolComponent implements OnInit {
 
   constructor(private apiService : ApiService,private modalService: NgbModal) {}
 
+  @Output() evenData = new EventEmitter<any>();
+
   ngOnInit(): void {
     this.lstAplicaciones()
   }
@@ -234,7 +236,8 @@ export class RegistrarRolComponent implements OnInit {
   }
 
   ViewModal(itemRol){
-    console.warn(itemRol)
+    // console.warn(itemRol)
+    this.evenData.emit(itemRol)
   }
 
   private getDismissReason(reason: any): string {

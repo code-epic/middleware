@@ -1,10 +1,12 @@
 <br>
 <!-- <form #rolPrivilegios="ngForm" (ngSubmit)="onClickSubmit(rolPrivilegios)"> -->
+
 <form  class="normal-form">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label>Nombre</label>
+                {{ Xidw }}
                 <input type="text" class="form-control" placeholder="Enter ..."  
                 [ngModelOptions]="{standalone: true}"  [(ngModel)]="xObj.nomb"  value ="{{xObj.nomb}}"
                 (onBlur) = "seleccionarUrl()">
@@ -47,16 +49,16 @@
         </thead>
         <tbody>
             <tr>
-            <!-- <tr *ngFor="let item of Roles, let i = index"> -->
-            <th scope="row">1</th>
-            <td>Nombre</td>
-            <td>Descripción</td>
+            <tr *ngFor="let item of rowEstado, let i = index">
+            <th scope="row">{{ i }}</th>
+            <td>{{ item.nomb }}</td>
+            <td>{{ item.obse }}</td>
             <td>
                 <button mat-icon-button>
                     <mat-icon class="edit-icon" aria-hidden="false" >edit</mat-icon>
                   </button>
                 <button mat-icon-button>
-                <mat-icon class="delete-icon" aria-hidden="false">delete</mat-icon>
+                <mat-icon class="delete-icon" aria-hidden="false" (click)="deleteEstado(item.id)">delete</mat-icon>
             </button>
             </td>
           </tr>
