@@ -11,4 +11,9 @@ type WorkFlow struct {
 	Id     string    `json:"id"`
 	Nombre string    `json:"nombre"`
 	Fecha  time.Time `json:"fecha"`
+	Red    Red       `json:"Red"`
 }
+
+func (Wk *WorkFlow) Definicion() {}
+
+func (Wk *WorkFlow) Evaluar() {}

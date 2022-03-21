@@ -133,16 +133,15 @@ export class RegistrarComponent implements OnInit, OnDestroy {
     salidas : ''
   };
 
-  public xEntrada : {} = {
-    campo : '',
-    alias : '',
-    tipo : ''
-}
+
   campo : string   = ''
   alias  : string   = ''
   tipodato : string   = ''
+  
+ 
 
-  public IEntrada : any
+
+  public IEntrada  = []
 
 
   xcategoria : string = 'S'
@@ -190,13 +189,16 @@ export class RegistrarComponent implements OnInit, OnDestroy {
 
   //agregarEntrada a los elementos de la interfaz de una API
   agregarEntrada(){
-    this.xEntrada = {
-        campo : this.campo,
-        alias : this.alias,
-        tipo : this.tipodato
+    var e = {
+      campo : this.campo,
+      alias : this.alias,
+      tipo : this.tipodato
     }
-    this.IEntrada.push(this.xEntrada)
-  }
+    this.IEntrada.push( e )
+    
+    this.entradas = JSON.stringify( this.IEntrada, null, '\t' )
+
+  } 
 
   clickRefresh(event) {
     this.codeJson = {

@@ -182,12 +182,14 @@
                                 <div class="col-md-4">
                                     <div class="form-group">
                                         <label>Metodo</label>
-                                        <select id="cmbMetodo" class="form-control selected"  [ngModelOptions]="{standalone: true}" [(ngModel)]="metodo"  value ="{{metodo}}">
+                                        <select id="cmbMetodo" class="form-control selected"  
+                                            [ngModelOptions]="{standalone: true}" 
+                                            [(ngModel)]="metodo"  value ="{{metodo}}">
                                             <option value="0" selected>SELECCIONE</option>
-                                            <option value="SELECT">SELECT</option>
-                                            <option value="INSERT">INSERT</option>
-                                            <option value="UPDATE">UPDATE</option>
-                                            <option value="DELETE">DELETE</option>
+                                            <option value="INSERTAR">INSERTAR</option>
+                                            <option value="CONSULTAR">CONSULTAR</option>
+                                            <option value="ACTUALIZAR">ACTUALIZAR</option>
+                                            <option value="ELIMINAR">ELIMINAR</option>
                                         </select>
                                     </div>
                                 </div>

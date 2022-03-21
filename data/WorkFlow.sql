@@ -52,7 +52,8 @@ CREATE TABLE IF NOT EXISTS `WKF_005_Red` (
   `idw` int(11)  NOT NULL, -- Id Workflow
   `eo` int(11)  NOT NULL, -- Estado Orgine
   `tr` int(11)  NOT NULL, -- Conjunto de transiciones
-  `ed` int(11)  NOT NULL, -- Estado Destino
+  `edv` int(11)  NOT NULL, -- Estado Destino verdadero
+  `edf` int(11)  NOT NULL, -- Estado Destino falso
   `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `usua` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),

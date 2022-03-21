@@ -12,3 +12,12 @@ type Red struct {
 	Fecha         time.Time
 	Usuario       string
 }
+
+//Iniciar una red de Documentos
+func (rd *Red) Iniciar() {}
+
+//Obtener los valores de una MEF
+func (rd *Red) Obtener() {}
+
+//Evaluar el tipo de MEF
+func (rd *Red) Evaluar() {}
