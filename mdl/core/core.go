@@ -37,6 +37,12 @@ type Definicion struct {
 	Tipo   string `json:"tipo"`
 }
 
+type Entradas struct {
+	Campo string `json:"campo"`
+	Alias string `json:"alias"`
+	Tipo  string `json:"tipo"`
+}
+
 //ApiCore Estructura de conexion
 type ApiCore struct {
 	ID            primitive.ObjectID `json:"id" bson:"_id"`
@@ -68,8 +74,8 @@ type ApiCore struct {
 	Descripcion   string             `json:"descripcion"`
 	Version       string             `json:"version"`
 	Categoria     string             `json:"categoria"`
-	Entradas      string             `json:"entradas"`
-	Salidas       string             `json:"salidas"`
+	Entradas      interface{}        `json:"entradas"`
+	Salidas       interface{}        `json:"salidas"`
 	Funcionalidad string             `json:"funcionalidad"`
 	Resultado     interface{}        `json:"resultado"`
 	Fecha         time.Time          `json:"fecha"`
@@ -136,18 +142,25 @@ func actualizarEstatusAPI(fn string, estatus bool) (err error) {
 //parsearApi evaluar parametros de una api
 func parsearApi(api ApiCore) (cadena string, err error) {
 
-	var s map[string]interface{}
-
+	//fmt.Println(api.Valores)
 	if api.Valores != nil && fmt.Sprint(api.Valores) != "" && fmt.Sprint(api.Valores) != "map[]" {
 
+		var s map[string]interface{} //estructura
+		var e []Entradas             //entrada de datos
+
 		err = json.Unmarshal([]byte(fmt.Sprint(api.Valores)), &s)
-		cadena = parsearValores(s, api.Query)
-		fmt.Println("Entrando en Datos ", cadena, fmt.Sprint(api.Valores), " --- ")
-
+		if err != nil {
+			fmt.Println("Error ", err.Error(), s)
+		}
+		err = json.Unmarshal([]byte(fmt.Sprint(api.Entradas)), &e)
+		if err != nil {
+			fmt.Println("Error ", err.Error())
+		}
+		cadena = parsearValores(s, api.Query, e)
 	} else {
-
 		cadena = parsearParametros(api.Parametros, api.Query)
 	}
+	fmt.Println(cadena)
 	return
 }
 
@@ -165,7 +178,7 @@ func parsearParametros(parametros string, consulta string) (cadena string) {
 }
 
 //parsearObjeto obtener los campos de un objeto
-func parsearValores(objeto map[string]interface{}, consulta string) (cadena string) {
+func parsearValores(objeto map[string]interface{}, consulta string, entradas []Entradas) (cadena string) {
 
 	entrada, insercion, coma := "", "", ""
 
@@ -175,29 +188,57 @@ func parsearValores(objeto map[string]interface{}, consulta string) (cadena stri
 		if i > 0 {
 			coma = ","
 		}
-		entrada += coma + k
-		insercion += coma + evaluarTipoDeDato(v)
+
+		xelemento, xvalor := buscarParametro(entradas, k, evaluarTipoDeDatos(v))
+
+		entrada += coma + xelemento
+		insercion += coma + xvalor
 		i++
 	}
 
-	fmt.Println("Imprimiendo valor ", i)
 	cadena = `(` + entrada + `) VALUES ( ` + insercion + ` )`
 
 	return strings.Replace(consulta, "$objeto", cadena, -1)
 
 }
 
-func evaluarTipoDeDato(v interface{}) (valores string) {
+func buscarParametro(t []Entradas, elemento string, valor string) (campo string, contenido string) {
+	for _, val := range t {
+		if val.Alias == elemento && val.Campo != "" {
+			campo = val.Campo
+			contenido = evaluarEntradas(val.Tipo, valor)
+		}
+	}
+	return
+}
+
+func evaluarEntradas(tipo string, valor string) (cadena string) {
+	switch tipo {
+	case "string":
+		cadena = "'" + valor + "'"
+		break
+	case "date":
+		cadena = "'" + valor + "'"
+		break
+	default:
+
+		cadena = valor
+		break
+	}
+	return
+}
+
+func evaluarTipoDeDatos(v interface{}) (valores string) {
 
 	evalreflect := reflect.ValueOf(v)
 
 	switch evalreflect.Kind() {
 	case reflect.String:
 		valorstr := fmt.Sprintf("%s", v)
-		valores = "'" + util.Utf8_decode(strings.Trim(valorstr, " ")) + "'"
+		valores = util.Utf8_decode(strings.Trim(valorstr, " "))
 	case reflect.Slice:
 		valorstr := fmt.Sprintf("%s", v)
-		valores = "'" + strings.Trim(valorstr, " ") + "'"
+		valores = strings.Trim(valorstr, " ")
 	case reflect.Float32:
 		f := evalreflect.Float()
 		valores = strconv.FormatFloat(f, 'f', 2, 64)

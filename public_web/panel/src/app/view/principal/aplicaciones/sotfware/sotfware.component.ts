@@ -144,8 +144,8 @@ export class SotfwareComponent implements OnInit {
 
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        console.log(data)
-        data.forEach(e => {          
+        //console.log(data)
+        data.Cuerpo.forEach(e => {          
           this.dataApp.push({id: e.id, name: e.nomb + " | " + e.vers });  
         });             
       },
@@ -185,7 +185,7 @@ export class SotfwareComponent implements OnInit {
   async consultarAplicacion(){
     this.xAPI.funcion = "ConsultarAplicacion"
     this.xAPI.parametros = this.iApp.id
-    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         var xapp : IAplicacion
 
@@ -207,7 +207,7 @@ export class SotfwareComponent implements OnInit {
     } else{ 
       this.xAPI.funcion = "AgregarAplicacion"    
     }
-    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         console.log(data)
         var msj = "Actualizado"
@@ -234,7 +234,7 @@ export class SotfwareComponent implements OnInit {
     this.xAPI.parametros = this.iApp.id
     this.rowData = []
 
-    await this.softwareService.Ejecutar(this.xAPI).subscribe(
+    await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {        
         data.forEach(v => {
           this.rowData.push({

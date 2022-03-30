@@ -57,12 +57,12 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 		jSon, err = json.Marshal(M)
 		return
 	}
-
-	/** if a.Valores != nil {
-		jSon, err = json.Marshal(M)
-		return
-	} **/
-
+	/**
+		if a.Valores != nil {
+			jSon, err = json.Marshal(M)
+			return
+		}
+	**/
 	if a.Coleccion != "" {
 		jSon, err = C.CrearNOSQL(C.ApiCore.Coleccion, consulta, xmongo)
 		return

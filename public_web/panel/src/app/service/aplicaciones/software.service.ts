@@ -42,20 +42,13 @@ export interface IAApi {
 })
 
 export class SoftwareService {
-  URL =  '/v1/api/';
-  httpOptions = {
-    headers: new HttpHeaders({ 'Content-Type': 'application/json',
-    'Authorization': 'Bearer ' + sessionStorage.getItem('token') })
-  };
 
-  constructor(private http : HttpClient) {
+
+  constructor() {
    
   }
 
-  Ejecutar(xapi : IAPICore) : Observable<any>{
-    return this.http.post<any>(this.URL + 'crud', xapi, this.httpOptions );
-  }
-
+ 
 
 
 }

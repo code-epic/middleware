@@ -197,7 +197,9 @@ export class RegistrarComponent implements OnInit, OnDestroy {
     this.IEntrada.push( e )
     
     this.entradas = JSON.stringify( this.IEntrada, null, '\t' )
-
+    this.tipodato = '0'
+    this.campo = ''
+    this.alias = ''
   } 
 
   clickRefresh(event) {

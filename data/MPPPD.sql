@@ -15,23 +15,39 @@ CREATE TABLE MD_000_CGenral (
 DROP TABLE IF EXISTS `MD_001_Documento`;
 CREATE TABLE IF NOT EXISTS `MD_001_Documento` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `numc` varchar(32)  NOT NULL, -- Numero de Control
-  `freg` timestamp NOT NULL, -- Fecha de Registro
-  `fori` timestamp NOT NULL, -- Fecha de Origen
-  `nori` varchar(32) NOT NULL, --  Numero de Origen
-  `saso` varchar(256) NOT NULL, -- Salida Asociada
-  `tdoc` varchar(256) NOT NULL, -- Tipo de Documento
-  `remi` varchar(256) NOT NULL, -- Remitente 
-  `udep` varchar(256) NOT NULL, -- Unidad o Dependencia 
-  `cont` TEXT NOT NULL, -- Contenido 
-  `inst` TEXT NOT NULL, -- Instrucciones 
-  `carc` varchar(32) NOT NULL, -- Codigo de Archivo 
-  `nexp` varchar(32) NOT NULL, -- Numero de Expediente 
+  `wfd` int(11),
+  `numc` varchar(32)  NOT NULL COMMENT 'Numero de Control',
+  `fcre` timestamp NOT NULL COMMENT 'Fecha de Registro',
+  `fori` timestamp NOT NULL COMMENT 'Fecha de Origen',
+  `nori` varchar(32) NOT NULL COMMENT ' Numero de Origen',
+  `saso` varchar(256) NOT NULL COMMENT 'Salida Asociada',
+  `tdoc` varchar(256) NOT NULL COMMENT 'Tipo de Documento',
+  `remi` varchar(256) NOT NULL COMMENT 'Remitente',
+  `udep` varchar(256) NOT NULL COMMENT 'Unidad o Dependencia',
+  `cont` TEXT NOT NULL COMMENT 'Contenido',
+  `inst` TEXT NOT NULL COMMENT 'Instrucciones',
+  `carc` varchar(32) NOT NULL COMMENT 'Codigo de Archivo',
+  `nexp` varchar(32) NOT NULL COMMENT 'Numero de Expediente',
   `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `usua` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
+
+-- Configuracion de Documentos
+DROP TABLE IF EXISTS `MD_003_Configuracion`;
+CREATE TABLE IF NOT EXISTS `MD_003_Configuracion` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomb` varchar(256) NOT NULL COMMENT 'Nombre',
+  `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
+  `tipo` varchar(32) NOT NULL COMMENT 'Tipo de Documentos',
+  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `usua` varchar(256) NOT NULL,
+  INDEX (`tipo`),
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+);
+
 
 
 INSERT INTO MD_000_CGenral ( clas, ranking, tipo, ubic, cont) 
@@ -71,3 +87,15 @@ SELECT
 MATCH (ubic,cont) AGAINST ('SEDEFANB CACERES' IN BOOLEAN MODE), cont FROM 
 MD_000_CGenral 
 WHERE MATCH (ubic,cont) AGAINST ('SEDEFANB CACERES' IN BOOLEAN MODE)
+
+
+SELECT 
+  DET.id, DET.numc, DET.fcre, DET.fori, 
+  DET.nori, DET.saso, DET.tdoc, DET.remi, 
+  DET.udep, DET.cont, DET.inst, DET.carc, 
+  DET.nexp, DET.fech, DET.usua,
+  EST.id AS idestado, EST.nomb AS estado, EST.obse AS desestado
+FROM WKF_006_Documento AS DOC
+  LEFT JOIN WKF_007_Documento_detalle AS DET ON DOC.id=DET.wfd
+  LEFT JOIN WKF_003_Estado AS EST ON DOC.estado=EST.id
+WHERE DOC.estado=1
