@@ -13,7 +13,7 @@ import (
 )
 
 //SubirArchivos Permite procesar archivos al sistema
-func (a *API) SubirArchivos(w http.ResponseWriter, r *http.Request) {
+func (wp *WPanel) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 	Cabecera(w, r)
 	var traza util.Traza
 	var M util.Mensajes
@@ -26,13 +26,21 @@ func (a *API) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 	er := r.ParseMultipartForm(32 << 20)
 	if er != nil {
 		fmt.Println(er)
+		M.Tipo = 0
+		M.Msj = "Proceso fallo"
+
+		j, _ := json.Marshal(M)
+		w.WriteHeader(http.StatusOK)
+		w.Write(j)
 		return
 	}
 	m := r.MultipartForm
+
 	files := m.File["input-folder-2"]
 	codigo := r.FormValue("txtFileID")
-	directorio := "./tmp/file/source/"
+	directorio := "./tmp/file/out/" + codigo
 	errr := os.Mkdir(directorio, 0777)
+
 	if errr != nil {
 		fmt.Println("El directorio ya existe!")
 	}
@@ -44,7 +52,7 @@ func (a *API) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(errf)
 			return
 		}
-		out, er := os.Create(directorio + files[i].Filename)
+		out, er := os.Create(directorio + "/" + files[i].Filename)
 		defer out.Close()
 		if er != nil {
 			fmt.Println(er.Error())

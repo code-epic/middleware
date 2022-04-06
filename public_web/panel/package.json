@@ -20,7 +20,7 @@
   "scripts": {
     "ng": "ng",
     "postinstall": "ngcc --properties es2015 browser module main --first-only",
-    "start": "NODE_OPTIONS=\"--max-http-header-size=100000\" ng serve --host 0.0.0.0 --proxy-config ./src/proxy.conf.json",
+    "start": "NODE_OPTIONS=\"--max-http-header-size=100000\" ng serve --host 0.0.0.0 --port 8607 --proxy-config ./src/proxy.conf.json",
     "build": "ng build --prod --aot --build-optimizer --common-chunk --vendor-chunk --optimization --progress",
     "test": "ng test",
     "lint": "ng lint",

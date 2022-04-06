@@ -20,6 +20,9 @@
 /util/logs/query.log
 /util/logs/cache.log
 
+#file/out
+/tmp/file/out
+
 #/public_web/www/*
 /public_web/www/tmp
 /public_web/www/build

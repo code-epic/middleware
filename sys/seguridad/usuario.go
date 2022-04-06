@@ -125,6 +125,7 @@ type SubMenu struct {
 	Js          string       `json:"js,omitempty"`
 	Icono       string       `json:"icono,omitempty"`
 	Nombre      string       `json:"nombre,omitempty"`
+	Descripcion string       `json:"descripcion,omitempty"`
 	Accion      string       `json:"accion,omitempty"`
 	Clase       string       `json:"clase,omitempty"`
 	Color       string       `json:"color,omitempty"`

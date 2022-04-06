@@ -53,6 +53,8 @@ func CargarModulosPanel() {
 	prefixW := http.StripPrefix("/consola", http.FileServer(http.Dir("public_web/panel/dist")))
 	Enrutador.PathPrefix("/consola").Handler(prefixW)
 
+	fmt.Println("Ruta de enlace Activo [ OK ] : public_web/panel/dist --> /consola ")
+
 	for i := 0; i < 3; i++ {
 		vAmb := Ambiente[i]
 		Enrutador.HandleFunc(vAmb+"lmodulos", wUsuario.ValidarToken(wp.ListarModulos)).Methods("GET")
@@ -72,6 +74,7 @@ func CargarModulosPanel() {
 		Enrutador.HandleFunc(vAmb+"evaluarpuente", wUsuario.ValidarToken(wp.EvaluarPuenteURL)).Methods("POST")        //Ejecutar Evaluacion puente url
 		Enrutador.HandleFunc(vAmb+"subirarchivos", wUsuario.ValidarToken(wp.SubirArchivos)).Methods("POST")           //Subir Archivos al sistema
 	}
+	Enrutador.HandleFunc(vDev+"subirarchivo", wp.SubirArchivos).Methods("POST") //Subir Archivos al sistema
 }
 
 //WMAdminLTE OpenSource tema de panel de control Tecnología Bootstrap3

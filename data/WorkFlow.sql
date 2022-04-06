@@ -6,7 +6,7 @@ CREATE TABLE IF NOT EXISTS `WKF_001_Definicion` (
   `idmo` int(11) NOT NULL COMMENT 'Id Modulo',
   `nomb` varchar(64) NOT NULL COMMENT 'Nombre del WKF',
   `obse` varchar(256) NOT NULL COMMENT ' Observaciones',
-  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT 'Fecha de creacion',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
@@ -35,6 +35,7 @@ CREATE TABLE IF NOT EXISTS `WKF_003_Estado` (
   `nomb` varchar(64) NOT NULL COMMENT 'Nombre del Estado',
   `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
   `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
@@ -56,6 +57,7 @@ CREATE TABLE IF NOT EXISTS `WKF_004_Transiciones` (
   `idw` int(11)  NOT NULL COMMENT 'Id Workflow',
   `func` varchar(64) NOT NULL COMMENT 'Id Formula',
   `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
@@ -83,6 +85,7 @@ CREATE TABLE IF NOT EXISTS `WKF_006_Documento` (
   `estado` tinyint(1)  NOT NULL COMMENT 'Estado documento',
   `estatus` tinyint(1)  NOT NULL COMMENT 'Estatus',
   `usua` varchar(256) NOT NULL COMMENT 'Usuario',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
@@ -105,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Detalle` (
   `nexp` varchar(32) NOT NULL COMMENT 'Numero de Expediente',
   `anom` varchar(256) NOT NULL COMMENT 'Nombre de Archivo',
   `usua` varchar(256) NOT NULL,
-  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
@@ -113,18 +116,29 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Detalle` (
 DROP TABLE IF EXISTS `WKF_008_Documento_Ubicacion`;
 CREATE TABLE IF NOT EXISTS `WKF_008_Documento_Ubicacion` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
-  `idd` varchar(64)  NOT NULL COMMENT 'Id Documento',
-  `ide` int(11)  NOT NULL COMMENT 'Conjunto de transiciones',
+  `idd` int(11)  NOT NULL COMMENT 'Id Documento',
+  `orig` int(11)  NOT NULL COMMENT 'Origen del Documento',
+  `dest` int(11)  NOT NULL COMMENT 'Estado del documento de destino',
   `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
-  `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
-  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  `llav` varchar(256)  NOT NULL COMMENT 'Llave',
   `usua` varchar(256) NOT NULL COMMENT 'Usuario',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
 
-DROP TABLE IF EXISTS `WKF_009_Estatus`;
-CREATE TABLE IF NOT EXISTS `WKF_009_Estatus` (
+DROP TABLE IF EXISTS `WKF_009_Documento_Variante`;
+CREATE TABLE IF NOT EXISTS `WKF_009_Documento_Variante` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+  `llav` varchar(256)  NOT NULL COMMENT 'Llave',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+);
+
+DROP TABLE IF EXISTS `WKF_010_Estatus`;
+CREATE TABLE IF NOT EXISTS `WKF_010_Estatus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nomb` varchar(64) NOT NULL,
   `obse` varchar(256) NOT NULL,
@@ -133,54 +147,100 @@ CREATE TABLE IF NOT EXISTS `WKF_009_Estatus` (
 );
 
 
-DROP TABLE IF EXISTS `WKF_010_Alerta`;
-CREATE TABLE IF NOT EXISTS `WKF_010_Alerta` (
+DROP TABLE IF EXISTS `WKF_011_Alerta`;
+CREATE TABLE IF NOT EXISTS `WKF_011_Alerta` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
   `idd` int(11)  NOT NULL COMMENT 'Id Documento',
   `ide` int(11)  NOT NULL COMMENT 'Identificador del estado',
   `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
   `acti` tinyint(1)  NOT NULL COMMENT 'Activo',
-  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha del plazo',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
   `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
+  `update` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Actualizacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
 
-DROP TABLE IF EXISTS `WKF_011_Traza`;
-CREATE TABLE IF NOT EXISTS `WKF_011_Traza` (
+DROP TABLE IF EXISTS `WKF_012_Traza`;
+CREATE TABLE IF NOT EXISTS `WKF_012_Traza` (
   `id` int(11) NOT NULL AUTO_INCREMENT  COMMENT 'Identificador',
   `idd` varchar(64)  NOT NULL COMMENT 'Id Documento',
   `ide` int(11)  NOT NULL COMMENT 'Identificador del estado',
   `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
   `obse` varchar(256) NOT NULL  COMMENT 'Observaciones',
   `usua` varchar(256) NOT NULL  COMMENT 'Usuario Responsable',
-  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP  COMMENT 'Fecha del plazo',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
 
 
-DROP TRIGGER IF  EXISTS `trazaDocumentos`;
+DROP TABLE IF EXISTS `WKF_013_Documentos_Adjuntos`;
+CREATE TABLE IF NOT EXISTS `WKF_013_Documentos_Adjuntos` (
+  `id` int(11) NOT NULL AUTO_INCREMENT  COMMENT 'Identificador',
+  `idd` varchar(64)  NOT NULL COMMENT 'Id Documento',
+  `nomb` varchar(256) NOT NULL  COMMENT 'Nombre del Archivo',
+  `usua` varchar(256) NOT NULL  COMMENT 'Usuario Responsable',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+);
+
+
+
+
+
+DROP TRIGGER IF  EXISTS `iniciarDocumentos`;
 DELIMITER $$
-CREATE TRIGGER trazaDocumentos
+CREATE TRIGGER iniciarDocumentos
 AFTER INSERT ON WKF_006_Documento
   FOR EACH ROW BEGIN
-    INSERT INTO `WKF_011_Traza`(`idd`, `ide`, `obse`, `esta`, `usua`, `fech`) 
-    VALUES (NEW.id, NEW.estado, NEW.obse, NEW.estatus, NEW.usua, Now());
-    INSERT INTO `WKF_008_Documento_Ubicacion`(`idd`, `ide`, `esta`, `obse`, `fech`, `usua`) 
-    VALUES (NEW.id, NEW.estado, NEW.estatus, NEW.obse, Now(), NEW.usua);
+    INSERT INTO `WKF_012_Traza`(`idd`, `ide`, `obse`, `esta`, `usua`, `fech`) 
+    VALUES (NEW.id, NEW.estado, NEW.obse, NEW.estatus, NEW.usua, NEW.fech);
+    
+    INSERT INTO `WKF_008_Documento_Ubicacion`(`idd`, `orig`, `dest`, `esta`, `llav`, `usua`)
+     VALUES (NEW.id, NEW.estado, NEW.estado, 1, '',  NEW.usua);
 END$$
 DELIMITER ;
 
-DROP TRIGGER IF  EXISTS `actualizarDocumentos`;
+
+DROP TRIGGER IF  EXISTS `actualizarDocumentoDetalles`;
 DELIMITER $$
-CREATE TRIGGER actualizarDocumentos
-BEFORE UPDATE ON WKF_006_Documento
+CREATE TRIGGER actualizarDocumentoDetalles
+AFTER UPDATE ON WKF_007_Documento_Detalle
   FOR EACH ROW BEGIN
-    INSERT INTO `WKF_011_Traza`(`idd`, `ide`, `obse`, `esta`, `usua`, `fech`) 
-     VALUES (OLD.id, OLD.estado, OLD.obse, OLD.estatus,OLD.usua,Now());
-    INSERT INTO `WKF_008_Documento_Ubicacion`(`idd`, `ide`, `esta`, `obse`, `fech`, `usua`)
-    VALUES (OLD.id, OLD.estado, OLD.estatus, OLD.obse, Now(), OLD.usua);
+      IF OLD.anom != '' THEN
+        INSERT INTO `WKF_013_Documentos_Adjuntos`(`idd`, `nomb`, `usua`) 
+        VALUES (OLD.wfd, OLD.anom, OLD.usua);
+      END IF ;
 END$$
 DELIMITER ;
+
+DROP TRIGGER IF  EXISTS `actualizarUbicacion`;
+DELIMITER $$
+CREATE TRIGGER actualizarUbicacion
+AFTER UPDATE ON WKF_008_Documento_Ubicacion 
+FOR EACH ROW 
+  BEGIN
+    IF NEW.llav != '' THEN
+      UPDATE `WKF_006_Documento` SET estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
+    ELSE
+      UPDATE `WKF_006_Documento` SET usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
+    END IF ;
+  END$$
+DELIMITER ;
+
+-- UPDATE WKF_008_Documento_Ubicacion SET dest=$0, esta=$1, llav=$2, fech=$3, usua=$4 WHERE idd=$5
+
+/*
+SELECT 
+  ubic.dest AS destino,
+  estado.nomb AS nombre,
+  estado.obse AS descripcion
+FROM 
+  WKF_008_Documento_Ubicacion AS ubic
+  JOIN WKF_003_Estado AS estado ON ubic.dest=estado.id
+  WHERE ubic.dest=1 AND ubic.estatus=1 AND ubic.llav != ''
+  GROUP BY ubic.dest
+*/
