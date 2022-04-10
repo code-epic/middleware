@@ -29,7 +29,7 @@ VALUES (NULL, 'API', '8', CURRENT_TIMESTAMP, 'Generacion de Fnx Middleware');
 
 
 DROP TABLE IF EXISTS `WKF_003_Estado`;
-CREATE TABLE IF NOT EXISTS `WKF_003_Estado` (Mama*2611
+CREATE TABLE IF NOT EXISTS `WKF_003_Estado` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
   `idw` int(11)  NOT NULL COMMENT 'Id Workflow',
   `nomb` varchar(64) NOT NULL COMMENT 'Nombre del Estado',
@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Detalle` (
 
 
 
-DROP TABLE IF EXISTS `WKF_007_ZHDocumento_Detalle`;
-CREATE TABLE IF NOT EXISTS `WKF_007_ZHDocumento_Detalle` (
+DROP TABLE IF EXISTS `WKF_007_HistoricoDocumento`;
+CREATE TABLE IF NOT EXISTS `WKF_007_HistoricoDocumento` (
   `id` int(11) NOT NULL,
   `wfd` int(11),
   `numc` varchar(32)  NOT NULL COMMENT 'Numero de Control',
@@ -140,15 +140,12 @@ CREATE TABLE IF NOT EXISTS `WKF_007_ZHDocumento_Detalle` (
   `nexp` varchar(32) NOT NULL COMMENT 'Numero de Expediente',
   `anom` varchar(256) NOT NULL COMMENT 'Nombre de Archivo',
   `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `tipo` int(11) NOT NULL COMMENT 'Tipo de Documento Papelera o historico',
   `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`),
   INDEX `numc` (`numc`)
 );
-
-
-
-
 
 DROP TABLE IF EXISTS `WKF_008_Documento_Ubicacion`;
 CREATE TABLE IF NOT EXISTS `WKF_008_Documento_Ubicacion` (
@@ -238,6 +235,9 @@ CREATE TABLE IF NOT EXISTS `WKF_014_Campos_Dinamicos` (
   `clase` varchar(256) NOT NULL COMMENT 'Clasificacion',
   `form` varchar(256) NOT NULL COMMENT 'Formato del campo',
   `fnx` varchar(256) COMMENT 'Funcion de la API',
+  `esta` varchar(256) COMMENT 'Estatus del campo',
+  `usua` varchar(256) NOT NULL  COMMENT 'Usuario Responsable',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`),
   INDEX `fnx` (`fnx`)
@@ -245,10 +245,40 @@ CREATE TABLE IF NOT EXISTS `WKF_014_Campos_Dinamicos` (
 
 
 
+DROP TRIGGER IF  EXISTS `actualizarDocumentoDetalles`;
+DELIMITER $$
+CREATE TRIGGER actualizarDocumentoDetalles
+AFTER UPDATE ON WKF_007_Documento_Detalle
+  FOR EACH ROW BEGIN
+    INSERT INTO `WKF_007_HistoricoDocumento`
+      (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
+      inst, carc, nexp, anom, usua, fech, tipo) 
+    VALUES 
+      (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
+      OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech, 1);
+
+    IF OLD.anom != '' THEN
+      INSERT INTO `WKF_013_Documentos_Adjuntos`(`idd`, `nomb`, `usua`) 
+      VALUES (OLD.wfd, OLD.anom, OLD.usua);
+    END IF;
+END$$
+DELIMITER ;
 
 
 
-
+DROP TRIGGER IF  EXISTS `eliminarDocumentoDetalles`;
+DELIMITER $$
+CREATE TRIGGER eliminarDocumentoDetalles
+AFTER DELETE ON WKF_007_Documento_Detalle
+  FOR EACH ROW BEGIN
+      INSERT INTO `WKF_007_HistoricoDocumento`
+        (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
+        inst, carc, nexp, anom, usua, fech, tipo) 
+      VALUES 
+        (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
+        OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech,9);
+END$$
+DELIMITER ;
 
 
 DROP TRIGGER IF  EXISTS `iniciarDocumentos`;
@@ -256,26 +286,22 @@ DELIMITER $$
 CREATE TRIGGER iniciarDocumentos
 AFTER INSERT ON WKF_006_Documento
   FOR EACH ROW BEGIN
-    INSERT INTO `WKF_012_Traza`(`idd`, `ide`, `obse`, `esta`, `usua`, `fech`) 
-    VALUES (NEW.id, NEW.estado, NEW.obse, NEW.estatus, NEW.usua, NEW.fech);
-    
     INSERT INTO `WKF_008_Documento_Ubicacion`(`idd`, `orig`, `dest`, `esta`, `llav`, `usua`)
      VALUES (NEW.id, NEW.estado, NEW.estado, 1, '',  NEW.usua);
 END$$
 DELIMITER ;
 
 
-DROP TRIGGER IF  EXISTS `actualizarDocumentoDetalles`;
+DROP TRIGGER IF  EXISTS `actualizaDocumento`;
 DELIMITER $$
-CREATE TRIGGER actualizarDocumentoDetalles
-AFTER UPDATE ON WKF_007_Documento_Detalle
+CREATE TRIGGER actualizaDocumento
+AFTER UPDATE ON WKF_006_Documento
   FOR EACH ROW BEGIN
-      IF OLD.anom != '' THEN
-        INSERT INTO `WKF_013_Documentos_Adjuntos`(`idd`, `nomb`, `usua`) 
-        VALUES (OLD.wfd, OLD.anom, OLD.usua);
-      END IF ;
+    INSERT INTO `WKF_012_Traza`(`idd`, `ide`, `obse`, `esta`, `usua`, `fech`) 
+    VALUES (OLD.id, OLD.estado, OLD.obse, OLD.estatus, OLD.usua, OLD.fech);
 END$$
 DELIMITER ;
+
 
 DROP TRIGGER IF  EXISTS `actualizarUbicacion`;
 DELIMITER $$
@@ -285,7 +311,7 @@ FOR EACH ROW
   BEGIN
     IF NEW.llav != '' THEN
       UPDATE `WKF_006_Documento` SET estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
-    ELSEIF NEW.orig = 10 THEN
+    ELSEIF NEW.orig = (SELECT id FROM `WKF_003_Estado` WHERE nomb = 'Papelera') THEN
       DELETE FROM WKF_007_Documento_Detalle WHERE wfd = OLD.idd;
     ELSE
       UPDATE `WKF_006_Documento` SET usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
@@ -293,33 +319,3 @@ FOR EACH ROW
   END$$
 DELIMITER ;
 
-
-
-
-DROP TRIGGER IF  EXISTS `eliminarDocumentoDetalles`;
-DELIMITER $$
-CREATE TRIGGER eliminarDocumentoDetalles
-AFTER DELETE ON WKF_007_Documento_Detalle
-  FOR EACH ROW BEGIN
-      INSERT INTO `WKF_007_ZHDocumento_Detalle`
-        (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
-        inst, carc, nexp, anom, usua, fech) 
-      VALUES 
-        (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
-        OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech);
-END$$
-DELIMITER ;
-
--- UPDATE WKF_008_Documento_Ubicacion SET dest=$0, esta=$1, llav=$2, fech=$3, usua=$4 WHERE idd=$5
-
-/*
-SELECT 
-  ubic.dest AS destino,
-  estado.nomb AS nombre,
-  estado.obse AS descripcion
-FROM 
-  WKF_008_Documento_Ubicacion AS ubic
-  JOIN WKF_003_Estado AS estado ON ubic.dest=estado.id
-  WHERE ubic.dest=1 AND ubic.estatus=1 AND ubic.llav != ''
-  GROUP BY ubic.dest
-*/
