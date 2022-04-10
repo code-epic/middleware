@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { ApiService, IAPICore, ObjectoGenerico } from '../../../../../service/apicore/api.service';
 import Swal from 'sweetalert2';
 import { WorkflowService } from '../../../../../service/workflow/workflow.service';
@@ -10,8 +10,6 @@ import { WorkflowService } from '../../../../../service/workflow/workflow.servic
   styleUrls: ['./estados.component.scss']
 })
 export class EstadosComponent implements OnInit {
-
-  @Input()  Xidw: any;
 
   public xAPI : IAPICore = {
     funcion: '',
@@ -34,7 +32,10 @@ export class EstadosComponent implements OnInit {
     idw: 0
   }
 
+  xidW : number = 0
+
   rowEstado : []
+
 
   constructor( private apiService : ApiService,
     private wkf : WorkflowService ) { }
@@ -42,6 +43,7 @@ export class EstadosComponent implements OnInit {
   ngOnInit(): void {
     this.wkf.msjText$.subscribe(e => {
       this.lstEstados(e)
+      this.xidW = parseInt(e)
     })
   }
 
@@ -74,7 +76,6 @@ export class EstadosComponent implements OnInit {
         this.apiService.Ejecutar(this.xAPI).subscribe(
           (data) => {
             console.log(data)
-            window.location.href = '/principal/herramientas/workflow';
           },
           (err) => {
             console.error(err)
@@ -86,7 +87,7 @@ export class EstadosComponent implements OnInit {
 
   Guardar(): any {
     this.xAPI.funcion = 'Wk_IEstados'
-    this.xObj.idw = this.Xidw
+    this.xObj.idw = this.xidW
     this.xAPI.valores = JSON.stringify(this.xObj)
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {

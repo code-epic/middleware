@@ -92,10 +92,8 @@ export class RegistrarWorkflowComponent implements OnInit {
       (data) => {
         this.isBtnSalvar = false
         if (data.Cuerpo == undefined) return
-        data.Cuerpo.forEach(e => {    
-          // console.warn(e)      
+        data.Cuerpo.forEach(e => {         
           if (e != ' ') {
-            
             this.wkf.msjText$.emit( e.id )
             this.isBtnSalvar = false
             this.isDisabledInput = true
