@@ -73,7 +73,7 @@ const (
 	ACTIVAR_LIMITE_DE_CONSULTA    bool   = true
 	DESACTIVAR_LIMITE_DE_CONSULTA bool   = false
 	PUERTO                        string = "80"
-	PUERTO_SSL                    string = "2286"
+	PUERTO_SSL                    string = "443"
 	PUERTO_CHAT                   string = "3000"
 	CODIFCACION_DE_ARCHIVOS       string = "UTF-8"
 	MAXIMO_LIMITE_DE_USUARIO      int    = 100

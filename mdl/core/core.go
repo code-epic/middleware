@@ -160,7 +160,7 @@ func parsearApi(api ApiCore) (cadena string, err error) {
 	} else {
 		cadena = parsearParametros(api.Parametros, api.Query)
 	}
-	//fmt.Println(cadena)
+	//	fmt.Println(cadena)
 	return
 }
 
