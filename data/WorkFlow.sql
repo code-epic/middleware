@@ -122,8 +122,8 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Detalle` (
 
 
 
-DROP TABLE IF EXISTS `WKF_007_HistoricoDocumento`;
-CREATE TABLE IF NOT EXISTS `WKF_007_HistoricoDocumento` (
+DROP TABLE IF EXISTS `WKF_007_Historico_Documento`;
+CREATE TABLE IF NOT EXISTS `WKF_007_Historico_Documento` (
   `id` int(11) NOT NULL,
   `wfd` int(11),
   `numc` varchar(32)  NOT NULL COMMENT 'Numero de Control',
@@ -250,7 +250,7 @@ DELIMITER $$
 CREATE TRIGGER actualizarDocumentoDetalles
 AFTER UPDATE ON WKF_007_Documento_Detalle
   FOR EACH ROW BEGIN
-    INSERT INTO `WKF_007_HistoricoDocumento`
+    INSERT INTO `WKF_007_Historico_Documento`
       (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
       inst, carc, nexp, anom, usua, fech, tipo) 
     VALUES 
@@ -261,22 +261,6 @@ AFTER UPDATE ON WKF_007_Documento_Detalle
       INSERT INTO `WKF_013_Documentos_Adjuntos`(`idd`, `nomb`, `usua`) 
       VALUES (OLD.wfd, OLD.anom, OLD.usua);
     END IF;
-END$$
-DELIMITER ;
-
-
-
-DROP TRIGGER IF  EXISTS `eliminarDocumentoDetalles`;
-DELIMITER $$
-CREATE TRIGGER eliminarDocumentoDetalles
-AFTER DELETE ON WKF_007_Documento_Detalle
-  FOR EACH ROW BEGIN
-      INSERT INTO `WKF_007_HistoricoDocumento`
-        (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
-        inst, carc, nexp, anom, usua, fech, tipo) 
-      VALUES 
-        (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
-        OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech,9);
 END$$
 DELIMITER ;
 
@@ -303,19 +287,37 @@ END$$
 DELIMITER ;
 
 
+
 DROP TRIGGER IF  EXISTS `actualizarUbicacion`;
 DELIMITER $$
 CREATE TRIGGER actualizarUbicacion
-AFTER UPDATE ON WKF_008_Documento_Ubicacion 
+BEFORE UPDATE ON WKF_008_Documento_Ubicacion 
 FOR EACH ROW 
   BEGIN
+    IF NEW.dest = 10 THEN
+      DELETE FROM WKF_007_Documento_Detalle WHERE wfd = OLD.idd;
+      UPDATE `WKF_006_Documento` SET estado=NEW.dest, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
+    END IF ;
     IF NEW.llav != '' THEN
       UPDATE `WKF_006_Documento` SET estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
-    ELSEIF NEW.orig = (SELECT id FROM `WKF_003_Estado` WHERE nomb = 'Papelera') THEN
-      DELETE FROM WKF_007_Documento_Detalle WHERE wfd = OLD.idd;
     ELSE
       UPDATE `WKF_006_Documento` SET usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
     END IF ;
   END$$
+DELIMITER ;
+
+
+DROP TRIGGER IF  EXISTS `eliminarDocumentoDetalles`;
+DELIMITER $$
+CREATE TRIGGER eliminarDocumentoDetalles
+AFTER DELETE ON WKF_007_Documento_Detalle
+  FOR EACH ROW BEGIN
+      INSERT INTO `WKF_007_Historico_Documento`
+        (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
+        inst, carc, nexp, anom, usua, fech, tipo) 
+      VALUES 
+        (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
+        OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech,9);
+END$$
 DELIMITER ;
 
