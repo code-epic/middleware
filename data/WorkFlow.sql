@@ -114,6 +114,7 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Detalle` (
   `nexp` varchar(32) NOT NULL COMMENT 'Numero de Expediente',
   `anom` varchar(256) NOT NULL COMMENT 'Nombre de Archivo',
   `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `priv` int(11) COMMENT 'Privacidad',
   `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`),
@@ -140,6 +141,7 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Historico_Documento` (
   `nexp` varchar(32) NOT NULL COMMENT 'Numero de Expediente',
   `anom` varchar(256) NOT NULL COMMENT 'Nombre de Archivo',
   `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `priv` int(11) COMMENT 'Privacidad',
   `tipo` int(11) NOT NULL COMMENT 'Tipo de Documento Papelera o historico',
   `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),
@@ -252,10 +254,10 @@ AFTER UPDATE ON WKF_007_Documento_Detalle
   FOR EACH ROW BEGIN
     INSERT INTO `WKF_007_Historico_Documento`
       (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
-      inst, carc, nexp, anom, usua, fech, tipo) 
+      inst, carc, nexp, anom, usua, fech, tipo, priv) 
     VALUES 
       (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
-      OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech, 1);
+      OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech, 1, OLD.priv);
 
     IF OLD.anom != '' THEN
       INSERT INTO `WKF_013_Documentos_Adjuntos`(`idd`, `nomb`, `usua`) 
@@ -314,10 +316,10 @@ AFTER DELETE ON WKF_007_Documento_Detalle
   FOR EACH ROW BEGIN
       INSERT INTO `WKF_007_Historico_Documento`
         (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
-        inst, carc, nexp, anom, usua, fech, tipo) 
+        inst, carc, nexp, anom, usua, fech, tipo, priv) 
       VALUES 
         (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
-        OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech,9);
+        OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech,9, OLD.priv);
 END$$
 DELIMITER ;
 

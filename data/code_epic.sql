@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: localhost
--- Tiempo de generación: 11-04-2022 a las 15:47:52
+-- Tiempo de generación: 11-04-2022 a las 19:08:46
 -- Versión del servidor: 8.0.22
 -- Versión de PHP: 8.0.6
 
@@ -2671,8 +2671,8 @@ CREATE TABLE `WKF_001_Definicion` (
 --
 
 INSERT INTO `WKF_001_Definicion` (`id`, `idap`, `idmo`, `nomb`, `obse`, `fech`) VALUES
-(1, 0, 0, 'CORE', 'MIDDLEWARE', '2022-04-11 15:47:12'),
-(2, 3, 1, 'GDOC', 'MPPD', '2022-04-11 15:47:12');
+(1, 0, 0, 'CORE', 'MIDDLEWARE', '2022-04-11 19:08:13'),
+(2, 3, 1, 'GDOC', 'MPPD', '2022-04-11 19:08:13');
 
 -- --------------------------------------------------------
 
@@ -2693,7 +2693,7 @@ CREATE TABLE `WKF_002_Serie` (
 --
 
 INSERT INTO `WKF_002_Serie` (`id`, `cod`, `long`, `fech`, `obse`) VALUES
-(1, 'API', 8, '2022-04-11 15:47:13', 'Generacion de Fnx Middleware');
+(1, 'API', 8, '2022-04-11 19:08:13', 'Generacion de Fnx Middleware');
 
 -- --------------------------------------------------------
 
@@ -2715,16 +2715,16 @@ CREATE TABLE `WKF_003_Estado` (
 --
 
 INSERT INTO `WKF_003_Estado` (`id`, `idw`, `nomb`, `obse`, `esta`, `fech`) VALUES
-(1, 2, 'Registrar', 'Registrar Documento', 0, '2022-04-11 15:47:13'),
-(2, 2, 'Control de Gestion', 'Departamento Control de Gestion', 1, '2022-04-11 15:47:13'),
-(3, 2, 'Resoluciones', 'Despartamento de Resoluciones', 1, '2022-04-11 15:47:13'),
-(4, 2, 'Secretaria', 'Departamento de Secretaria', 1, '2022-04-11 15:47:13'),
-(5, 2, 'Ayudantía', 'Departamento del Ayudantía', 1, '2022-04-11 15:47:13'),
-(6, 2, 'Timonel', 'Departamento de Timonel', 1, '2022-04-11 15:47:13'),
-(7, 2, 'Acami', 'Departamento de Acami', 1, '2022-04-11 15:47:13'),
-(8, 2, 'Personal', 'Departamento de Personal', 1, '2022-04-11 15:47:13'),
-(9, 2, 'Salida', 'Salida de Documentos', 1, '2022-04-11 15:47:13'),
-(10, 2, 'Papelera', 'Papelera', 0, '2022-04-11 15:47:13');
+(1, 2, 'Registrar', 'Registrar Documento', 0, '2022-04-11 19:08:13'),
+(2, 2, 'Control de Gestion', 'Departamento Control de Gestion', 1, '2022-04-11 19:08:13'),
+(3, 2, 'Resoluciones', 'Despartamento de Resoluciones', 1, '2022-04-11 19:08:13'),
+(4, 2, 'Secretaria', 'Departamento de Secretaria', 1, '2022-04-11 19:08:13'),
+(5, 2, 'Ayudantía', 'Departamento del Ayudantía', 1, '2022-04-11 19:08:13'),
+(6, 2, 'Timonel', 'Departamento de Timonel', 1, '2022-04-11 19:08:13'),
+(7, 2, 'Acami', 'Departamento de Acami', 1, '2022-04-11 19:08:13'),
+(8, 2, 'Personal', 'Departamento de Personal', 1, '2022-04-11 19:08:13'),
+(9, 2, 'Salida', 'Salida de Documentos', 1, '2022-04-11 19:08:13'),
+(10, 2, 'Papelera', 'Papelera', 0, '2022-04-11 19:08:13');
 
 -- --------------------------------------------------------
 
@@ -2815,6 +2815,7 @@ CREATE TABLE `WKF_007_Documento_Detalle` (
   `nexp` varchar(32) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Numero de Expediente',
   `anom` varchar(256) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre de Archivo',
   `usua` varchar(256) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Usuario Responsable',
+  `priv` int DEFAULT NULL COMMENT 'Privacidad',
   `fech` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de creacion'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
@@ -2825,10 +2826,10 @@ DELIMITER $$
 CREATE TRIGGER `actualizarDocumentoDetalles` AFTER UPDATE ON `WKF_007_Documento_Detalle` FOR EACH ROW BEGIN
     INSERT INTO `WKF_007_Historico_Documento`
       (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
-      inst, carc, nexp, anom, usua, fech, tipo) 
+      inst, carc, nexp, anom, usua, fech, tipo, priv) 
     VALUES 
       (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
-      OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech, 1);
+      OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech, 1, OLD.priv);
 
     IF OLD.anom != '' THEN
       INSERT INTO `WKF_013_Documentos_Adjuntos`(`idd`, `nomb`, `usua`) 
@@ -2841,10 +2842,10 @@ DELIMITER $$
 CREATE TRIGGER `eliminarDocumentoDetalles` AFTER DELETE ON `WKF_007_Documento_Detalle` FOR EACH ROW BEGIN
       INSERT INTO `WKF_007_Historico_Documento`
         (id, wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
-        inst, carc, nexp, anom, usua, fech, tipo) 
+        inst, carc, nexp, anom, usua, fech, tipo, priv) 
       VALUES 
         (OLD.id, OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
-        OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech,9);
+        OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech,9, OLD.priv);
 END
 $$
 DELIMITER ;
@@ -2872,6 +2873,7 @@ CREATE TABLE `WKF_007_Historico_Documento` (
   `nexp` varchar(32) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Numero de Expediente',
   `anom` varchar(256) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Nombre de Archivo',
   `usua` varchar(256) COLLATE utf8_spanish_ci NOT NULL COMMENT 'Usuario Responsable',
+  `priv` int DEFAULT NULL COMMENT 'Privacidad',
   `tipo` int NOT NULL COMMENT 'Tipo de Documento Papelera o historico',
   `fech` timestamp NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP COMMENT 'Fecha de creacion'
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
