@@ -42,7 +42,7 @@ func GenerarJWT(u Usuario, tiempo time.Duration) string {
 		Usuario: u,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(tiempo).Unix(),
-			Issuer:    "Conexion Bus Empresarial",
+			Issuer:    "Code-Epic Technologies System",
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, peticion)
@@ -58,6 +58,21 @@ func WGenerarJWT(u WUsuario) string {
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(time.Second * 360).Unix(),
 			Issuer:    "Conexion Bus Empresarial",
+		},
+	}
+	token := jwt.NewWithClaims(jwt.SigningMethodRS256, peticion)
+	rs, e := token.SignedString(LlavePrivada)
+	util.Fatal(e)
+	return rs
+}
+
+//GenerarJWT Json Web Token
+func GenerarJWTDinamico(u interface{}, tiempo time.Duration) string {
+	peticion := Reclamaciones{
+		Usuario: u,
+		StandardClaims: jwt.StandardClaims{
+			ExpiresAt: time.Now().Add(tiempo).Unix(),
+			Issuer:    "Code-Epic Middleware User System",
 		},
 	}
 	token := jwt.NewWithClaims(jwt.SigningMethodRS256, peticion)

@@ -169,7 +169,10 @@ DROP TABLE IF EXISTS `WKF_009_Documento_Variante`;
 CREATE TABLE IF NOT EXISTS `WKF_009_Documento_Variante` (
   `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
   `idd` int(11)  NOT NULL COMMENT 'Id Documento',
+  `acci` int(11)  NOT NULL COMMENT 'Accion del  Documento',
   `obse` TEXT NOT NULL COMMENT 'Contenido',
+  `estado` tinyint(1)  NOT NULL COMMENT 'Estado',
+  `estatus` tinyint(1)  NOT NULL COMMENT 'Estatus',
   `usua` varchar(256) NOT NULL COMMENT 'Usuario',
   `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   PRIMARY KEY (`id`),

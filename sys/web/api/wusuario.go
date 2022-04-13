@@ -7,6 +7,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/code-epic/middleware/mdl/core"
 	"github.com/code-epic/middleware/util"
 	jwt "github.com/dgrijalva/jwt-go"
 	"github.com/dgrijalva/jwt-go/request"
@@ -250,4 +251,32 @@ func (u *WUsuario) CambiarClaveW(w http.ResponseWriter, r *http.Request) {
 	j, _ := json.Marshal(M)
 	w.WriteHeader(http.StatusOK)
 	w.Write(j)
+}
+
+//Access conexion para solicitud de token desde otros sistemas
+func (u *WUsuario) Access(w http.ResponseWriter, r *http.Request) {
+	var usuario interface{}
+	var v map[string]interface{}
+	//	var traza util.Traza
+	var c core.Core
+	Cabecera(w, r)
+	e := json.NewDecoder(r.Body).Decode(&v)
+
+	util.Error(e)
+	j, _ := c.Asignar(v)
+
+	e = json.Unmarshal(j, &usuario)
+	util.Error(e)
+	min := time.Minute * 480
+	token := seguridad.GenerarJWTDinamico(usuario, min)
+	result := seguridad.RespuestaToken{Token: token}
+
+	j, e = json.Marshal(result)
+	w.WriteHeader(http.StatusOK)
+	w.Write(j)
+	//	} else {
+	//	w.Header().Set("Content-Type", "application/text")
+	//w.WriteHeader(http.StatusForbidden)
+	//	fmt.Fprintln(w, "Usuario y clave no validas")
+	//	}
 }
