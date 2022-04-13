@@ -280,3 +280,62 @@ func (u *WUsuario) Access(w http.ResponseWriter, r *http.Request) {
 	//	fmt.Fprintln(w, "Usuario y clave no validas")
 	//	}
 }
+
+//ValidarTokenDinamico Validacion de usuario
+func (u *WUsuario) ValidarTokenDinamico(fn http.HandlerFunc) http.HandlerFunc {
+	var mensaje util.Mensajes
+
+	return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
+
+		Cabecera(w, r)
+		token, e := request.ParseFromRequestWithClaims(r, request.OAuth2Extractor, &seguridad.ReclamacionesDinamicas{}, func(token *jwt.Token) (interface{}, error) {
+			reclamacion := token.Claims.(*seguridad.Reclamaciones)
+			UsuarioConectado = reclamacion.Usuario
+			return seguridad.LlavePublica, nil
+		})
+
+		if e != nil {
+			switch e.(type) {
+			case *jwt.ValidationError:
+				vErr := e.(*jwt.ValidationError)
+				switch vErr.Errors {
+				case jwt.ValidationErrorExpired:
+					w.WriteHeader(http.StatusUnauthorized)
+					mensaje.Tipo = 2
+					mensaje.Msj = "El token ha expirado"
+					j, _ := json.Marshal(mensaje)
+					w.Write(j)
+					return
+				case jwt.ValidationErrorSignatureInvalid:
+					w.WriteHeader(http.StatusForbidden)
+					mensaje.Tipo = 3
+					mensaje.Msj = "La firma del token no coincide"
+					j, _ := json.Marshal(mensaje)
+					w.Write(j)
+					return
+				default:
+					w.WriteHeader(http.StatusForbidden)
+					mensaje.Tipo = 4
+					mensaje.Msj = "Acceso denegado"
+					j, _ := json.Marshal(mensaje)
+					w.Write(j)
+					return
+				}
+			default:
+				w.WriteHeader(http.StatusForbidden)
+				mensaje.Tipo = 5
+				mensaje.Msj = "El token no es valido"
+				j, _ := json.Marshal(mensaje)
+				w.Write(j)
+				return
+			}
+		}
+
+		if token.Valid {
+			fn(w, r)
+		} else {
+			CabeceraRechazada(w, http.StatusForbidden, "Err. token no es valido")
+			return
+		}
+	})
+}

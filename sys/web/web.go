@@ -109,6 +109,8 @@ func CargarModulosWeb() {
 	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("OPTIONS")
 	Enrutador.HandleFunc(vAPI+"listar", wUsuario.ValidarToken(ap.Listar)).Methods("GET")
 
+	Enrutador.HandleFunc(vAPI+"accion:{id}", wUsuario.ValidarTokenDinamico(ap.Crud)).Methods("POST")
+	Enrutador.HandleFunc(vAPI+"accion:{id}", wUsuario.ValidarTokenDinamico(ap.Crud)).Methods("OPTIONS")
 	//Calidad
 	Enrutador.HandleFunc(vQua+"crud:{id}", ap.Crud).Methods("GET")
 	Enrutador.HandleFunc(vQua+"crud:{id}", ap.Crud).Methods("POST")
@@ -125,6 +127,8 @@ func CargarModulosWeb() {
 	Enrutador.HandleFunc(vDev+"crud:{id}", ap.Crud).Methods("OPTIONS")
 	Enrutador.HandleFunc(vDev+"listar", ap.Listar).Methods("GET")
 
+	Enrutador.HandleFunc(vDev+"accion:{id}", ap.Crud).Methods("POST")
+	Enrutador.HandleFunc(vDev+"accion:{id}", ap.Crud).Methods("OPTIONS")
 }
 
 //Principal Página inicial del sistema o bienvenida

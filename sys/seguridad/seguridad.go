@@ -68,7 +68,7 @@ func WGenerarJWT(u WUsuario) string {
 
 //GenerarJWT Json Web Token
 func GenerarJWTDinamico(u interface{}, tiempo time.Duration) string {
-	peticion := Reclamaciones{
+	peticion := ReclamacionesDinamicas{
 		Usuario: u,
 		StandardClaims: jwt.StandardClaims{
 			ExpiresAt: time.Now().Add(tiempo).Unix(),
