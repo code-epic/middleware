@@ -289,8 +289,8 @@ func (u *WUsuario) ValidarTokenDinamico(fn http.HandlerFunc) http.HandlerFunc {
 
 		Cabecera(w, r)
 		token, e := request.ParseFromRequestWithClaims(r, request.OAuth2Extractor, &seguridad.ReclamacionesDinamicas{}, func(token *jwt.Token) (interface{}, error) {
-			reclamacion := token.Claims.(*seguridad.Reclamaciones)
-			UsuarioConectado = reclamacion.Usuario
+			reclamacion := token.Claims.(*seguridad.ReclamacionesDinamicas)
+			UsuarioConectadoDinamico = reclamacion.Usuario
 			return seguridad.LlavePublica, nil
 		})
 

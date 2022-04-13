@@ -12,6 +12,7 @@ import (
 
 //UsuarioConectado Seguridad Informatica
 var UsuarioConectado seguridad.Usuario
+var UsuarioConectadoDinamico interface{}
 
 //API estructuras generales
 type API struct{}
