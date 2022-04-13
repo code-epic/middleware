@@ -74,7 +74,6 @@ func CargarModulosPanel() {
 		Enrutador.HandleFunc(vAmb+"evaluarpuente", wUsuario.ValidarToken(wp.EvaluarPuenteURL)).Methods("POST")        //Ejecutar Evaluacion puente url
 		Enrutador.HandleFunc(vAmb+"subirarchivos", wUsuario.ValidarToken(wp.SubirArchivos)).Methods("POST")           //Subir Archivos al sistema
 	}
-	Enrutador.HandleFunc(vDev+"subirarchivo", wp.SubirArchivos).Methods("POST") //Subir Archivos al sistema
 }
 
 //WMAdminLTE OpenSource tema de panel de control Tecnología Bootstrap3

@@ -4,14 +4,8 @@ import { LocationStrategy, HashLocationStrategy, JsonPipe } from '@angular/commo
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { PerfectScrollbarModule } from 'ngx-perfect-scrollbar';
-import { PERFECT_SCROLLBAR_CONFIG } from 'ngx-perfect-scrollbar';
-import { PerfectScrollbarConfigInterface } from 'ngx-perfect-scrollbar';
 
 import { IconModule, IconSetModule, IconSetService } from '@coreui/icons-angular';
-
-const DEFAULT_PERFECT_SCROLLBAR_CONFIG: PerfectScrollbarConfigInterface = {
-  suppressScrollX: true
-};
 
 import { AppComponent } from './app.component';
 
@@ -40,7 +34,7 @@ import { BsDropdownModule } from 'ngx-bootstrap/dropdown';
 import { TabsModule } from 'ngx-bootstrap/tabs';
 import { ChartsModule } from 'ng2-charts';
 import { LoginComponent } from './view/login/login/login.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { PrincipalModule } from './view/principal/principal.module';
 import { ToastrModule, ToastContainerModule } from 'ngx-toastr';
@@ -48,6 +42,7 @@ import { AuthGuardGuard } from './service/seguridad/auth-guard.guard';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { AgGridModule } from 'ag-grid-angular';
 import { CodemirrorModule } from '@ctrl/ngx-codemirror';
+import { AuthInterceptorService } from './service/seguridad/auth-interceptor.service';
 
 //const oToastr = ;
 
@@ -92,6 +87,11 @@ import { CodemirrorModule } from '@ctrl/ngx-codemirror';
     {
       provide: [ LocationStrategy, AuthGuardGuard,  JsonPipe],
       useClass: HashLocationStrategy
+    },
+    {
+      provide: HTTP_INTERCEPTORS,
+      useClass: AuthInterceptorService,
+      multi: true
     },
     IconSetService,
   ],

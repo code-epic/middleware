@@ -67,7 +67,7 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 		jSon, err = C.CrearNOSQL(C.ApiCore.Coleccion, consulta, xmongo)
 		return
 	}
-
+	//fmt.Println(consulta)
 	M.Msj = "Proceso finalizado"
 	jSon, existe := C.validarCache(md5Cadena)
 	if !existe {
