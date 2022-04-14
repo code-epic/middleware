@@ -255,7 +255,6 @@ func (u *WUsuario) CambiarClaveW(w http.ResponseWriter, r *http.Request) {
 
 //Access conexion para solicitud de token desde otros sistemas
 func (u *WUsuario) Access(w http.ResponseWriter, r *http.Request) {
-	var usuario interface{}
 	var v map[string]interface{}
 	//	var traza util.Traza
 	var c core.Core
@@ -263,15 +262,13 @@ func (u *WUsuario) Access(w http.ResponseWriter, r *http.Request) {
 	e := json.NewDecoder(r.Body).Decode(&v)
 
 	util.Error(e)
-	j, _ := c.Asignar(v)
+	c.Asignar(v)
 
-	e = json.Unmarshal(j, &usuario)
-	util.Error(e)
 	min := time.Minute * 480
-	token := seguridad.GenerarJWTDinamico(usuario, min)
+	token := seguridad.GenerarJWTDinamico(c.Resultado.Cuerpo, min)
 	result := seguridad.RespuestaToken{Token: token}
 
-	j, e = json.Marshal(result)
+	j, _ := json.Marshal(result)
 	w.WriteHeader(http.StatusOK)
 	w.Write(j)
 	//	} else {

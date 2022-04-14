@@ -75,6 +75,9 @@ const (
 	PUERTO                        string = "80"
 	PUERTO_SSL                    string = "443"
 	PUERTO_CHAT                   string = "3000"
+	PUERTO_APP                    string = "2286"
+	PUERTO_RPM                    string = "2611"
+	PUERTO_DEV                    string = "2307"
 	CODIFCACION_DE_ARCHIVOS       string = "UTF-8"
 	MAXIMO_LIMITE_DE_USUARIO      int    = 100
 	MAXIMO_LIMITE_DE_CONSULTAS    int    = 10

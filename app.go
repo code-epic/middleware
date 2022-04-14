@@ -50,19 +50,46 @@ func main() {
 	}
 	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO)
 	go srv.ListenAndServe()
+
 	web.CargarWs()
 	wser := &http.Server{
 		Handler:      context.ClearHandler(web.WsEnrutador),
 		Addr:         ":" + sys.PUERTO_CHAT,
-		WriteTimeout: 3 * time.Minute,
-		ReadTimeout:  3 * time.Minute,
+		WriteTimeout: 5 * time.Minute,
+		ReadTimeout:  5 * time.Minute,
 	}
 	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO_CHAT)
 	go wser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
 
 	var wsC web.WebSocketCodeEpic
-
 	go wsC.Analizar()
+
+	devser := &http.Server{
+		Handler:      context.ClearHandler(web.Enrutador),
+		Addr:         ":" + sys.PUERTO_DEV,
+		WriteTimeout: 5 * time.Minute,
+		ReadTimeout:  5 * time.Minute,
+	}
+	BoldCyan.Println("Servidor de desarrollo escuchando en el puerto: ", sys.PUERTO_DEV)
+	go devser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
+
+	appser := &http.Server{
+		Handler:      context.ClearHandler(web.Enrutador),
+		Addr:         ":" + sys.PUERTO_APP,
+		WriteTimeout: 5 * time.Minute,
+		ReadTimeout:  5 * time.Minute,
+	}
+	BoldCyan.Println("Servidor de apliaciones escuchando en el puerto: ", sys.PUERTO_APP)
+	go appser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
+
+	rpmser := &http.Server{
+		Handler:      context.ClearHandler(web.Enrutador),
+		Addr:         ":" + sys.PUERTO_RPM,
+		WriteTimeout: 5 * time.Minute,
+		ReadTimeout:  5 * time.Minute,
+	}
+	BoldCyan.Println("Servidor de RPM escuchando en el puerto: ", sys.PUERTO_RPM)
+	go rpmser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
 
 	//
 	//https://dominio.com/* Protocolo de capa de seguridad
