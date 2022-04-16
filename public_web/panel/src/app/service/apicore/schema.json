@@ -1,0 +1,107 @@
+[
+    {
+      "dml" : "$values",
+      "entradas" :[
+        {
+            "campo": "orig",
+            "alias": "origen",
+            "tipo": "int"
+        },
+        {
+            "campo": "usua",
+            "alias": "usuario",
+            "tipo": "string"
+        }
+    ]
+    }
+];
+
+/* */
+[
+    {
+      "dml" : "$set",
+      "entradas" :[
+            {
+                "campo": "orig",
+                "alias": "origen",
+                "tipo": "int"
+            },
+            {
+                "campo": "usua",
+                "alias": "usuario",
+                "tipo": "string"
+            }
+        ]
+    },{
+        "dml" : "$where",
+        "condicion" : "",
+        "entradas" :[
+              {
+                  "campo": "idd",
+                  "alias": "documento",
+                  "tipo": "int"
+              }
+          ]
+      }
+]
+
+
+API.parametros = 'Carlos,Crash,1';
+API.Ejecutar(e).save()
+// UPDATE WKF_007_Documento_Detalle SET anom='$0', usua='$1' WHERE numc='$2'
+[
+    {
+        "dml" : "$set",
+        "entradas" :[
+            {
+                "campo": "anom",
+                "defecto" : "anom",
+                "alias": "nombre",
+                "tipo": "string"
+            },
+            {
+                "campo": "usua",
+                "alias": "usuario",
+                "tipo": "string"
+            }
+        ]
+    },
+    {
+        "dml" : "$where",
+        "condicion" : "",
+        "entradas" :[
+            {
+                "campo": "numc",
+                "alias": "numero",
+                "tipo": "int"
+            }	
+        ]
+    }
+]
+
+//Conversion
+//UPDATE WKF_007_Documento_Detalle $exec
+export interface Estatus {
+    nombre : string,
+    usuario : string,
+    documento : int
+}
+var estatus = new Estatus()
+e.nombre = 'Carlos'
+e.usuario = 'Crash'
+e.documento = 1
+
+API.Ejecutar(e).save()
+
+
+//Golang
+type struct Estatus {
+    Nombre string `json:"nombre"`
+    Usuario string `json:"usuario"`
+    Documento string `json:"documento"`
+}
+
+
+
+
+// UPDATE WKF_007_Documento_Detalle SET anom='$0', usua='$1' WHERE numc='$2'
