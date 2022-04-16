@@ -1,0 +1,38 @@
+[
+    {
+      "dml" : "$values",
+      "entradas" :[
+        {
+            "campo": "idd",
+            "alias": "documento",
+            "tipo": "int"
+        },
+            {
+            "campo": "estado",
+            "alias": "estado",
+            "tipo": "int"
+        },
+            {
+            "campo": "estatus",
+            "alias": "estatus",
+            "tipo": "int"
+        },
+            {
+            "campo": "acci",
+            "alias": "accion",
+            "tipo": "int"
+        },
+        {
+            "campo": "obse",
+            "alias": "observacion",
+            "tipo": "string"
+        },
+        {
+            "campo": "usua",
+            "alias": "usuario",
+            "tipo": "string"
+        }
+    ]
+    
+    }
+]

@@ -37,10 +37,14 @@ type Definicion struct {
 	Tipo   string `json:"tipo"`
 }
 
-type Entradas struct {
+type Entrada struct {
 	Campo string `json:"campo"`
 	Alias string `json:"alias"`
 	Tipo  string `json:"tipo"`
+}
+type Entradas struct {
+	Dml   string    `json:"dml"` //Lenguaje de manipulacion de datos
+	Lista []Entrada `json:"entradas"`
 }
 
 //ApiCore Estructura de conexion
@@ -140,25 +144,25 @@ func actualizarEstatusAPI(fn string, estatus bool) (err error) {
 }
 
 //parsearApi evaluar parametros de una api
-func parsearApi(api ApiCore) (cadena string, err error) {
+func (C *Core) ParsearApi() (cadena string, err error) {
 
 	//fmt.Println(api.Valores)
-	if api.Valores != nil && fmt.Sprint(api.Valores) != "" && fmt.Sprint(api.Valores) != "map[]" {
+	if C.Valores != nil && fmt.Sprint(C.Valores) != "" && fmt.Sprint(C.Valores) != "map[]" {
 
 		var s map[string]interface{} //estructura
 		var e []Entradas             //entrada de datos
 
-		err = json.Unmarshal([]byte(fmt.Sprint(api.Valores)), &s)
+		err = json.Unmarshal([]byte(fmt.Sprint(C.Valores)), &s)
 		if err != nil {
-			fmt.Println("Error ", err.Error(), s)
+			sys.SystemLog.Println("Error formato JSON (Valores) ", C.Funcion, err.Error(), s)
 		}
-		err = json.Unmarshal([]byte(fmt.Sprint(api.Entradas)), &e)
+		err = json.Unmarshal([]byte(fmt.Sprint(C.Entradas)), &e)
 		if err != nil {
-			fmt.Println("Error ", err.Error())
+			sys.SystemLog.Println("Error formato JSON (Entradas) ", C.Funcion, err.Error(), s)
 		}
-		cadena = parsearValores(s, api.Query, e)
+		cadena = parsearValores(s, C.Query, e)
 	} else {
-		cadena = parsearParametros(api.Parametros, api.Query)
+		cadena = parsearParametros(C.Parametros, C.Query)
 	}
 	//	fmt.Println(cadena)
 	return
@@ -181,32 +185,30 @@ func parsearParametros(parametros string, consulta string) (cadena string) {
 func parsearValores(objeto map[string]interface{}, consulta string, entradas []Entradas) (cadena string) {
 
 	entrada, insercion, coma := "", "", ""
-
 	i := 0
-
 	for k, v := range objeto {
 		if i > 0 {
 			coma = ","
 		}
-
-		xelemento, xvalor := buscarParametro(entradas, k, evaluarTipoDeDatos(v))
-
+		xelemento, xvalor := buscarParametro(entradas, k, evaluarTipoDeDatos(v), "$insert")
 		entrada += coma + xelemento
 		insercion += coma + xvalor
 		i++
 	}
-
 	cadena = `(` + entrada + `) VALUES ( ` + insercion + ` )`
-
-	return strings.Replace(consulta, "$objeto", cadena, -1)
+	return strings.Replace(consulta, "$values", cadena, -1)
 
 }
 
-func buscarParametro(t []Entradas, elemento string, valor string) (campo string, contenido string) {
-	for _, val := range t {
-		if val.Alias == elemento && val.Campo != "" {
-			campo = val.Campo
-			contenido = evaluarEntradas(val.Tipo, valor)
+func buscarParametro(t []Entradas, elemento string, valor string, mdl string) (campo string, contenido string) {
+	for _, v := range t {
+		if v.Dml == mdl {
+			for _, val := range v.Lista {
+				if val.Alias == elemento && val.Campo != "" {
+					campo = val.Campo
+					contenido = evaluarEntradas(val.Tipo, valor)
+				}
+			}
 		}
 	}
 	return

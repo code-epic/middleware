@@ -44,7 +44,7 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 		fmt.Println("Error en precodigo" + precodigo)
 	}
 
-	consulta, valErr := parsearApi(C.ApiCore)
+	consulta, valErr := C.ParsearApi()
 
 	tpQuery := evaluarQuery(consulta)
 	md5Cadena := util.GenerarMD5(consulta)
