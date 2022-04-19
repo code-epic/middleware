@@ -2,13 +2,11 @@ package core
 
 import (
 	"fmt"
-	"reflect"
 	"strconv"
 	"strings"
 	"time"
 
 	"github.com/code-epic/middleware/sys"
-	"github.com/code-epic/middleware/util"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
@@ -37,13 +35,15 @@ type Definicion struct {
 }
 
 type Entrada struct {
-	Campo string `json:"campo"`
-	Alias string `json:"alias"`
-	Tipo  string `json:"tipo"`
+	Campo   string `json:"campo"`
+	Defecto string `json:"defecto"`
+	Alias   string `json:"alias"`
+	Tipo    string `json:"tipo"`
 }
 type Entradas struct {
-	Dml   string    `json:"dml"` //Lenguaje de manipulacion de datos
-	Lista []Entrada `json:"entradas"`
+	Dml       string    `json:"dml"` //Lenguaje de manipulacion de datos
+	Condicion string    `json:"condicion"`
+	Lista     []Entrada `json:"entradas"`
 }
 
 //ApiCore Estructura de conexion
@@ -147,10 +147,7 @@ func (C *Core) ParsearApi() (cadena string, err error) {
 	var sqlGen SQLGen
 	//fmt.Println(api.Valores)
 	if C.Valores != nil && fmt.Sprint(C.Valores) != "" && fmt.Sprint(C.Valores) != "map[]" {
-
 		cadena, err = sqlGen.Ejecutar(C)
-
-		//cadena = parsearValores(s, C.Query, e)
 	} else {
 		cadena = parsearParametros(C.Parametros, C.Query)
 	}
@@ -169,81 +166,4 @@ func parsearParametros(parametros string, consulta string) (cadena string) {
 	}
 	cadena = consulta
 	return
-}
-
-//parsearObjeto obtener los campos de un objeto
-func parsearValores(objeto map[string]interface{}, consulta string, entradas []Entradas) (cadena string) {
-
-	entrada, insercion, coma := "", "", ""
-	i := 0
-	for k, v := range objeto {
-		if i > 0 {
-			coma = ","
-		}
-		xelemento, xvalor := buscarParametro(entradas, k, evaluarTipoDeDatos(v), "$insert")
-		entrada += coma + xelemento
-		insercion += coma + xvalor
-		i++
-	}
-	cadena = `(` + entrada + `) VALUES ( ` + insercion + ` )`
-	return strings.Replace(consulta, "$values", cadena, -1)
-
-}
-
-func buscarParametro(t []Entradas, elemento string, valor string, mdl string) (campo string, contenido string) {
-	for _, v := range t {
-		if v.Dml == mdl {
-			for _, val := range v.Lista {
-				if val.Alias == elemento && val.Campo != "" {
-					campo = val.Campo
-					contenido = evaluarEntradas(val.Tipo, valor)
-				}
-			}
-		}
-	}
-	return
-}
-
-func evaluarEntradas(tipo string, valor string) (cadena string) {
-	switch tipo {
-	case "string":
-		cadena = "'" + valor + "'"
-		break
-	case "date":
-		cadena = "'" + valor + "'"
-		break
-	default:
-
-		cadena = valor
-		break
-	}
-	return
-}
-
-func evaluarTipoDeDatos(v interface{}) (valores string) {
-
-	evalreflect := reflect.ValueOf(v)
-
-	switch evalreflect.Kind() {
-	case reflect.String:
-		valorstr := fmt.Sprintf("%s", v)
-		valores = util.Utf8_decode(strings.Trim(valorstr, " "))
-	case reflect.Slice:
-		valorstr := fmt.Sprintf("%s", v)
-		valores = strings.Trim(valorstr, " ")
-	case reflect.Float32:
-		f := evalreflect.Float()
-		valores = strconv.FormatFloat(f, 'f', 2, 64)
-	case reflect.Float64:
-		f := evalreflect.Float()
-		valores = strconv.FormatFloat(f, 'f', 2, 64)
-	case reflect.Int32:
-		n := evalreflect.Int()
-		valores = strconv.FormatInt(n, 10)
-	case reflect.Int64:
-		n := evalreflect.Int()
-		valores = strconv.FormatInt(n, 10)
-	}
-	return
-
 }

@@ -1,12 +1,11 @@
 package core
 
 type Dml struct {
-	Nombre string
-	Accion string
-	Campos interface{}
-
-	Entrada     []Entrada //Lista de Entrada de Datos por detalles
+	Nombre      string
+	Accion      string
+	Campos      interface{}
 	LstEntradas []Entradas
+	Entrada     []Entrada //Lista de Entrada de Datos por detalles
 	Salidas     interface{}
 
 	Valores interface{}

@@ -81,7 +81,7 @@
                                     <label>Tipo</label>
                                     <select id="cmbTipo" class="form-control selected"  
                                     [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}"
-                                    (change)="onTipo($event)">>
+                                    (change)="onTipo($event)">
                                         <option value="0">SELECCIONE</option>
                                         <option value="CODIGO">GENERAR CODIGO</option>
                                         <option value="LOGICA">LOGICA DE NEGOCIO</option>
@@ -131,8 +131,7 @@
                                 <div class="form-group">
                                     <label>Categoria</label>
                                     <select id="cmbCategoria" class="form-control selected"  
-                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="xcategoria"  value ="{{xcategoria}}"
-                                    >
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="xcategoria"  value ="{{xcategoria}}">
                                         <option value="S">SELECCIONE</option>
                                         <option value="CORE">CORE</option>
                                         <option value="APLICACIONES">APLICACIONES</option>
@@ -184,7 +183,7 @@
                                         <label>Metodo</label>
                                         <select id="cmbMetodo" class="form-control selected"  
                                             [ngModelOptions]="{standalone: true}" 
-                                            [(ngModel)]="metodo"  value ="{{metodo}}">
+                                            [(ngModel)]="metodo"  value ="{{metodo}}"  (change)="onMetodo($event)">
                                             <option value="0" selected>SELECCIONE</option>
                                             <option value="INSERTAR">INSERTAR</option>
                                             <option value="CONSULTAR">CONSULTAR</option>
@@ -211,6 +210,54 @@
                                         <label>Colección en caso de ser NOSQL</label>
                                         <input type="text" class="form-control" [disabled]="xrelacional"
                                         [ngModelOptions]="{standalone: true}" [(ngModel)]="coleccion"  value ="{{coleccion}}">
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="row">
+                                <div class="col-md-4">
+                                    <div class="form-group">
+                                        <label>Nombre de la tabla</label>
+                                        <input type="text" class="form-control"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="tabla"  value ="{{tabla}}">
+                                    </div>
+                                </div>
+                               
+
+                                <div class="col-md-3">
+                                    <label>Tipo de dato</label>
+                                    <div class="input-group mb-4">
+                                        <select class="form-control selected"  
+                                        (change)="onDml($event)"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="dml"  value ="{{dml}}">
+                                            <option  value="" selected>--------</option>
+                                            <option *ngFor="let l of lstDml " value ="{{l.id}}" >{{l.nombre}}</option>
+                                            
+
+                                        </select>
+                                       
+                                    </div>
+                                </div>
+                               
+                                <div class="col-md-3">
+                                    <div class="form-group">
+                                        <label>Valor por defecto</label>
+                                        <input type="text" class="form-control"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="defecto"  value ="{{defecto}}">
+                                    </div>
+                                </div>
+                                <div class="col-md-2">
+                                    <div class="form-group">
+                                        <label>Codición</label>
+                                        <select class="form-control selected"  
+                                        [ngModelOptions]="{standalone: true}" 
+                                        [disabled]="xcondicion"
+                                        [(ngModel)]="condicion"  value ="{{condicion}}">
+                                            <option  value="" selected>--------</option>
+                                            <option  value="AND" >AND</option>
+                                            <option  value="OR" >OR</option>
+                                            <option  value="IN" >IN</option>
+                                        </select>
                                     </div>
                                 </div>
                             </div>
@@ -275,9 +322,19 @@
                             <div class="row">
                                 <div class="col-md-12">
                                     <div class="form-group">
-                                        <label>Consulta / SQL / NOSQL </label>
+                                        <!-- <label>Consulta / SQL / NOSQL </label>
                                         <textarea class="form-control" rows="5" id="txtConsulta" placeholder="Enter ..." 
-                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="consulta"  value ="{{consulta}}"></textarea>
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="consulta"  value ="{{consulta}}"></textarea> -->
+                                        <label>Consulta / SQL / NOSQL </label>
+                                        <div class="form-group text-justify">
+                                            <ngx-codemirror
+                                                [ngModelOptions]="{standalone: true}" 
+                                                [(ngModel)]="consulta"
+                                                (ngModelChange)="setEditorContent($event)"
+                                                (click)="clickRefresh($event)"
+                                                [options]="codeSQL">
+                                            </ngx-codemirror>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

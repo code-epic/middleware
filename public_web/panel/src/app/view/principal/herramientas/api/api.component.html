@@ -48,7 +48,10 @@ Titulo: Panel de Control: APICORE
                                         <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-search"></i></span>
                                           </div>
-                                        <input class="form-control" placeholder="Buscar" type="text" (focus)="focus = true"  (blur)="focus = false">
+                                        <input class="form-control" placeholder="Buscar" type="text"
+                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="buscar"  value ="{{buscar}}"
+                                        (keypress)="seleccionLista($event)"
+                                         (focus)="focus = true"  (blur)="focus = false">
                                           <div class="input-group-prepend">
                                             <span class="input-group-text"><i class="fa fa-sliders"></i></span>
                                           </div>
@@ -67,7 +70,7 @@ Titulo: Panel de Control: APICORE
                             
                             <div class="row">
                                 <div class="col-md-12">
-
+                                    <ngx-ui-loader [loaderId]="'loader-apis'"></ngx-ui-loader>
                                     <!--  -->
                                     <mat-tab-group mat-stretch-tabs class="example-stretched-tabs" (selectedIndexChange)="CargarListadoAPI($event)">
                                         <mat-tab>
@@ -326,18 +329,6 @@ Titulo: Panel de Control: APICORE
     
                         </div>
 
-                        
-
-
-
-
-
-
-
-                       
-                        
-                         
-
                     </div>
                 </div>
             </div>
@@ -380,55 +371,88 @@ Titulo: Panel de Control: APICORE
 
 
 <ng-template #frmSQL let-modal>
-    <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Ejecución de API</h4>
-    </div>
     <div class="modal-body">
-        <form #form="ngForm">
-           <div class="row">
-                <div class="col-md-12" id="divParametro">
-                    <div class="form-group">
-                        <label>Parametros</label>
-                        <input style="font-size:11px;" type="text" class="form-control"  
-                        [ngModelOptions]="{standalone: true}" 
-                        [(ngModel)]="xparametro" value ="{{xparametro}}">
-                    </div>
+
+        <mat-tab-group mat-stretch-tabs class="example-stretched-tabs"  >
+            <mat-tab>
+                <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">source</mat-icon>
+                &nbsp;Laboratorio de pruebas
+                </ng-template>
+                <div class="container">
+                    <br>
+                    <form #form="ngForm">
+                        <div class="row">
+                            <div class="col-md-12" id="divParametro">
+                                <div class="form-group">
+                                    <label>Parametros</label>
+                                    <input style="font-size:11px;" type="text" class="form-control"  
+                                    [ngModelOptions]="{standalone: true}" 
+                                    [(ngModel)]="xparametro" value ="{{xparametro}}">
+                                </div>
+                            </div>
+                            <div class="col-md-12" id="divValores">
+                                <div class="form-group">
+                                    <label>Valores</label>
+                                    <ngx-codemirror
+                                    [ngModelOptions]="{standalone: true}" 
+                                    [(ngModel)]="valores"
+                                    (ngModelChange)="setEditorContent($event)"
+                                    (blur)="seleccionEditor($event)"
+                                    [options]="codeMOEsquemaJson"
+                                    ></ngx-codemirror>
+                                </div>
+                            </div>
+                            
+                            <div class="col-md-12">
+                                <div class="input-group mb-3">
+                                    <input style="font-size:14px;" type="text" 
+                                        class="form-control" [ngModelOptions]="{standalone: true}" 
+                                        [(ngModel)]="xentorno"  value ="{{xentorno}}" readonly>
+                                    <div class="input-group-prepend">
+                                        <button type="button" class="btn btn-success" 
+                                            (click)="ejecutarApi()"><i class="fa fa-play"></i>
+                                        </button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-12">
+                                <div class="form-group">
+                                    <label>Resultado</label>
+                                    <div style="width:100%; height:150px; overflow: scroll;">
+                                        <div id="xrs" style="font-size:11px; width: 100%; height: 150px;"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
                 </div>
-                <div class="col-md-12" id="divValores">
-                    <div class="form-group">
-                        <label>Valores</label>
-                        <ngx-codemirror
-                        [ngModelOptions]="{standalone: true}" 
-                        [(ngModel)]="valores"
-                        (ngModelChange)="setEditorContent($event)"
-                        (blur)="seleccionEditor($event)"
-                        [options]="codeMOEsquemaJson"
-                        ></ngx-codemirror>
-                    </div>
-                </div>
-               
-                <div class="col-md-12">
-                    <div class="input-group mb-3">
-                        <input style="font-size:14px;" type="text" 
-                            class="form-control" [ngModelOptions]="{standalone: true}" 
-                            [(ngModel)]="xentorno"  value ="{{xentorno}}" readonly>
-                        <div class="input-group-prepend">
-                            <button type="button" class="btn btn-success" 
-                                (click)="ejecutarApi()"><i class="fa fa-play"></i>
-                            </button>
+            </mat-tab>
+            <mat-tab>
+                <ng-template mat-tab-label>
+                <mat-icon class="example-tab-icon">code</mat-icon>
+                &nbsp;Fragmento de Código
+                </ng-template>
+                <div class="container">
+                    <br>
+                    <div class="col-md-12">
+                        <label>Ejemplo de ejecución:</label>
+                        <div class="form-group text-justify">
+                            <textarea class="form-control" rows="18" 
+                            [ngModelOptions]="{standalone: true}" [(ngModel)]="codeTypeJs"  value ="{{codeTypeJs}}"></textarea> 
+                            <!-- <ngx-codemirror
+                                [ngModelOptions]="{standalone: true}" 
+                                [(ngModel)]="codeTypeJs"
+                                (ngModelChange)="setEditorContent($event)"
+                                (blur)="seleccionEditor($event)"
+                                [options]="codeJson">
+                            </ngx-codemirror> -->
                         </div>
                     </div>
                 </div>
-                <div class="col-md-12">
-                    <div class="form-group">
-                        <label>Resultado</label>
-                        <div style="width:100%; height:150px; overflow: scroll;">
-                            <div id="xrs" style="font-size:11px; width: 100%; height: 150px;"></div>
-                        </div>
-                    </div>
-                </div>
-           </div>
-        </form>
+            </mat-tab>  
+        </mat-tab-group>
+        
     </div>
     <div class="modal-footer">
         <button type="button" class="btn btn-secondary float-right" (click)="modal.dismiss('Cross click')">Cancelar</button>

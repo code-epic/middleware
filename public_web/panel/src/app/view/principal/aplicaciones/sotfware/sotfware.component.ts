@@ -156,6 +156,7 @@ export class SotfwareComponent implements OnInit {
   }
 
   selectEventModulo(e){
+    console.log(e)
     this.iApp.id = e.id;
     this.nombreapp = e.name;
     this.consultarAplicacion()    
@@ -183,13 +184,12 @@ export class SotfwareComponent implements OnInit {
   }
 
   async consultarAplicacion(){
-    this.xAPI.funcion = "ConsultarAplicacion"
+    this.xAPI.funcion = "SEC_CAplicacion" //Consultar Aplicacion del sistema 
     this.xAPI.parametros = this.iApp.id
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
         var xapp : IAplicacion
-
-        xapp = data[0]
+        xapp = data.Cuerpo[0]
         this.iApp = xapp;
 
       },
@@ -236,7 +236,7 @@ export class SotfwareComponent implements OnInit {
 
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {        
-        data.forEach(v => {
+        data.Cuerpo.forEach(v => {
           this.rowData.push({
             nombre: v.nomb,
             funcion: v.func,

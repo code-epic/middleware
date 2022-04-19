@@ -11,67 +11,114 @@ import (
 )
 
 const (
-	_VALOR   string = "$values"
-	_ASIGNAR string = "$set"
-	_DONDE   string = "$where"
+	VALOR    string = "$values"
+	ASIGNAR  string = "$set"
+	DONDE    string = "$where"
+	EJECUTAR string = "$exec"
 )
 
 type SQLGen struct {
-	Dml *Dml
+	Dml     Dml
+	valores map[string]interface{} //estructura
+
 }
 
 func (S *SQLGen) Ejecutar(C *Core) (cadena string, err error) {
-	var valores map[string]interface{} //estructura
-	var e []Entradas                   //entrada de datos
-	err = json.Unmarshal([]byte(fmt.Sprint(C.Valores)), &valores)
+	err = json.Unmarshal([]byte(fmt.Sprint(C.Valores)), &S.valores)
 	util.Error(err)
-	err = json.Unmarshal([]byte(fmt.Sprint(C.Entradas)), &e)
+	err = json.Unmarshal([]byte(fmt.Sprint(C.Entradas)), &S.Dml.LstEntradas)
 	util.Error(err)
 
 	switch C.Metodo {
 	case "INSERTAR":
-		S.Dml.Nombre = _VALOR
-		S.Dml.Definir()
-		S.Insertar(S.Dml.Entrada, valores, C.Query)
-		break
+		cadena = S.Insertar(C.Query)
 	case "ACTUALIZAR":
-		S.Actualizar(valores, C.Query, e)
-		break
+		cadena = S.Actualizar(C.Query)
+	case "ElIMINAR":
+		cadena = S.Eliminar(C.Query)
 	}
 	return
 }
 
-func (S *SQLGen) Insertar(esquema []Entrada, valores map[string]interface{}, consulta string) (cadena string) {
+func (S *SQLGen) Insertar(consulta string) (cadena string) {
 
 	entrada, insercion, coma := "", "", ""
 
-	for k, v := range esquema {
+	S.Dml.Nombre = VALOR
+	S.Dml.Definir()
+	fmt.Println(S.Dml.Entrada)
+	for k, v := range S.Dml.Entrada {
 		if k > 0 {
 			coma = ","
 		}
-		contenido := S.EvaluarDato(S.Dml.ObtenerElementos(v.Alias, valores))
+		contenido := S.ValidarEntrada(v.Tipo, S.EvaluarDato(S.Dml.ObtenerElementos(v.Alias, S.valores)))
 		entrada += coma + v.Campo
 		insercion += coma + contenido
 	}
 	cadena = `(` + entrada + `) VALUES ( ` + insercion + ` )`
-	return strings.Replace(consulta, _VALOR, cadena, -1)
+	return strings.Replace(consulta, EJECUTAR, cadena, -1)
 
 }
 
-func (S *SQLGen) Actualizar(objeto map[string]interface{}, consulta string, entradas []Entradas) (cadena string) {
+func (S *SQLGen) Actualizar(consulta string) (cadena string) {
 
-	where, set, xcoma := "", "", ""
-	i := 0
+	where, set, coma := "", "", ""
+	S.Dml.Nombre = ASIGNAR
+	S.Dml.Definir()
 	//SET metodo de valores
-	for k, v := range objeto {
-		if i > 0 {
-			xcoma = ","
+	for k, v := range S.Dml.Entrada {
+		if k > 0 {
+			coma = ","
 		}
-		fmt.Println(where, k, xcoma, v)
-		i++
+		contenido := S.ValidarEntrada(v.Tipo, S.EvaluarDato(S.Dml.ObtenerElementos(v.Alias, S.valores)))
+		set += coma + v.Campo + "=" + contenido
 	}
-	cadena = `SET ` + set + ` WHERE ` + where
-	return
+
+	//WHERE metodo de valore
+	condicion := ""
+	S.Dml.Nombre = DONDE
+	S.Dml.Definir()
+	count := len(S.Dml.Entrada)
+	fmt.Println("Cantidad de elementos del where ", count)
+	for k, v := range S.Dml.Entrada {
+		if k > 0 {
+			condicion = " AND "
+		}
+		contenido := S.ValidarEntrada(v.Tipo, S.EvaluarDato(S.Dml.ObtenerElementos(v.Alias, S.valores)))
+		where += condicion + v.Campo + "=" + contenido
+	}
+	where = ""
+	if count > 0 {
+		where = ` WHERE ` + where
+	}
+	cadena = ` SET ` + set + where
+	return strings.Replace(consulta, EJECUTAR, cadena, -1)
+
+}
+
+func (S *SQLGen) Eliminar(consulta string) (cadena string) {
+
+	where := ""
+
+	//WHERE metodo de valore
+	condicion := ""
+	S.Dml.Nombre = DONDE
+	S.Dml.Definir()
+	count := len(S.Dml.Entrada)
+	fmt.Println("Cantidad de elementos del where ", count)
+	for k, v := range S.Dml.Entrada {
+		if k > 0 {
+			condicion = " AND "
+		}
+		contenido := S.ValidarEntrada(v.Tipo, S.EvaluarDato(S.Dml.ObtenerElementos(v.Alias, S.valores)))
+		where += condicion + v.Campo + "=" + contenido
+	}
+	where = ""
+	if count > 0 {
+		where = ` WHERE ` + where
+	}
+	cadena = where
+	return strings.Replace(consulta, EJECUTAR, cadena, -1)
 }
 
 func (S *SQLGen) EvaluarDato(v interface{}) (valores string) {
@@ -100,4 +147,23 @@ func (S *SQLGen) EvaluarDato(v interface{}) (valores string) {
 	}
 	return
 
+}
+
+func (S *SQLGen) ValidarEntrada(tipo string, valor string) (cadena string) {
+	switch tipo {
+	case "string":
+		cadena = "'" + valor + "'"
+	case "date":
+		cadena = "'" + valor + "'"
+	case "int":
+		if valor == "" {
+			cadena = "0"
+		} else {
+			cadena = valor
+		}
+	default:
+
+		cadena = valor
+	}
+	return
 }

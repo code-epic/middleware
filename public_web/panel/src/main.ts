@@ -8,12 +8,15 @@ import 'codemirror/lib/codemirror';
 import 'codemirror/mode/javascript/javascript';
 import 'codemirror/mode/markdown/markdown';
 import 'codemirror/mode/go/go';
+import 'codemirror/mode/sql/sql';
 import 'codemirror/mode/idn/idn';
 import 'codemirror/addon/fold/foldgutter';
 import 'codemirror/addon/fold/brace-fold';
 import 'codemirror/addon/edit/closebrackets';
 import 'codemirror/addon/edit/matchbrackets';
 import 'codemirror/addon/lint/lint';
+import 'codemirror/addon/hint/show-hint';
+import 'codemirror/addon/hint/sql-hint';
 
 
 

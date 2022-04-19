@@ -57,12 +57,12 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 		jSon, err = json.Marshal(M)
 		return
 	}
-
-	if a.Valores != nil {
-		jSon, err = json.Marshal(M)
-		return
-	}
-
+	/**
+		if a.Valores != nil {
+			jSon, err = json.Marshal(M)
+			return
+		}
+	**/
 	if a.Coleccion != "" {
 		jSon, err = C.CrearNOSQL(C.ApiCore.Coleccion, consulta, xmongo)
 		return
@@ -122,7 +122,7 @@ func leerValores(v map[string]interface{}) (db *sql.DB, a ApiCore, mgo *mongo.Da
 	}
 	a.Parametros = ApiCoreAux.Parametros
 	a.Migrar = ApiCoreAux.Migrar
-	a.Metodo = ApiCoreAux.Metodo
+	//a.Metodo = ApiCoreAux.Metodo
 	a.Destino = ApiCoreAux.Destino
 	a.Retorna = ApiCoreAux.Retorna
 	a.Estatus = estatus

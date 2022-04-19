@@ -202,7 +202,7 @@ CREATE TABLE IF NOT EXISTS `WKF_011_Alerta` (
   `update` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Actualizacion',
   PRIMARY KEY (`id`),
   KEY `id` (`id`),
-  INDEX `idd` (`idd`)
+  UNIQUE(`idd`, `ide`, `esta`)
 );
 
 DROP TABLE IF EXISTS `WKF_012_Traza`;
@@ -249,6 +249,72 @@ CREATE TABLE IF NOT EXISTS `WKF_014_Campos_Dinamicos` (
   KEY `id` (`id`),
   INDEX `fnx` (`fnx`)
 );
+
+
+
+
+DROP TABLE IF EXISTS `WKF_015_SubDocumento`;
+CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `idd` int(11) COMMENT 'Documento Id WorkFlow',
+  `ide` int(11)  NOT NULL COMMENT 'Estado del documento de destino',
+  `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
+  `resu` TEXT  COMMENT 'Resumen',
+  `deta` TEXT  COMMENT 'Detalle',
+  `anom` varchar(256) COMMENT 'Nombre de Archivo',
+  `priv` int(11) COMMENT 'Privacidad',
+  `fcre` timestamp NOT NULL COMMENT 'Fecha de Registro',
+  `cuen` varchar(256) COMMENT 'Cuenta Asociada',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `acti` int(11)  NOT NULL COMMENT 'ACtividad del Documento',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`),
+  INDEX `idd` (`idd`)
+);
+
+DROP TABLE IF EXISTS `WKF_015_SubDocumento_Historico`;
+CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento_Historico` (
+  `id` int(11),
+  `idd` int(11) COMMENT 'Documento Id WorkFlow',
+  `ide` int(11)  NOT NULL COMMENT 'Estado del documento de destino',
+  `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
+  `resu` TEXT  COMMENT 'Resumen',
+  `deta` TEXT  COMMENT 'Detalle',
+  `anom` varchar(256) COMMENT 'Nombre de Archivo',
+  `priv` int(11) COMMENT 'Privacidad',
+  `fcre` timestamp NOT NULL COMMENT 'Fecha de Registro',
+  `cuen` varchar(256) COMMENT 'Cuenta Asociada',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `acti` int(11)  NOT NULL COMMENT 'ACtividad del Documento',
+  KEY `id` (`id`),
+  INDEX `idd` (`idd`)
+);
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+DROP TRIGGER IF  EXISTS `actualizarSubDocumento`;
+DELIMITER $$
+CREATE TRIGGER actualizarSubDocumento
+AFTER UPDATE ON WKF_015_SubDocumento
+FOR EACH ROW BEGIN
+  INSERT INTO `WKF_015_SubDocumento_Historico`
+    (`idd`, `ide`, `esta`, `resu`, `deta`, `anom`, `priv`, `fcre`, `cuen`, `usua`, `acti`) 
+  VALUES 
+    ( OLD.idd, OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
+END$$
+DELIMITER ;
 
 
 

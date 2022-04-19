@@ -53,6 +53,8 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   tipo : string = '0'
   relacional : boolean = false
   xrelacional  : boolean  = false
+  xcondicion  : boolean  = true
+
   coleccion : string = ''
   metodo : string = '0'
   totalizar : string = '0'
@@ -89,7 +91,17 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   modulos: any
   
   archivo : string = '0'
+
   archivos: []
+
+  lstDml: any = []
+
+  Dml: any = [
+    {"id" : "$values", "nombre":"VALUES", "tipo":"INSERTAR"},
+    {"id" : "$set", "nombre":"SET", "tipo":"ACTUALIZAR"},
+    {"id" : "$where", "nombre":"WHERE", "tipo":"ACTUALIZAR"},
+    {"id" : "$where", "nombre":"WHERE", "tipo":"ELIMINAR"},
+  ]
   
   codigo : string = ''
   funcion : string = ''
@@ -137,11 +149,20 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   campo : string   = ''
   alias  : string   = ''
   tipodato : string   = ''
+  tabla : string   = ''
+  dml  : string   = ''
+  defecto : string   = ''
+  condicion  : string   = ''
   
- 
+  public DML : any = ["$values", "$set", "$where" ]
+  //Listado general de entradas
+  public IEntradas  = {
+    "$values" : [],
+    "$set" : [],
+    "$where" : []
+  } 
 
-
-  public IEntrada  = []
+  public IEntrada  = [] //Detalles de la entrada
 
 
   xcategoria : string = 'S'
@@ -151,6 +172,18 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   codeJson: any = {
     theme: 'idea',
     mode: 'application/ld+json',
+    lineNumbers: true,
+    lineWrapping: true,
+    foldGutter: true,
+    gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+    autoCloseBrackets: true,
+    matchBrackets: true,
+    lint: true
+  };
+
+  codeSQL: any = {
+    theme: 'idea',
+    mode: 'text/x-sql',
     lineNumbers: true,
     lineWrapping: true,
     foldGutter: true,
@@ -182,25 +215,66 @@ export class RegistrarComponent implements OnInit, OnDestroy {
 
 
 
+
   setEditorContent(event) {
    //console.log(event)
     
   }
 
   //agregarEntrada a los elementos de la interfaz de una API
-  agregarEntrada(){
+  async agregarEntrada(){
+
+   
+
     var e = {
       campo : this.campo,
+      defecto : this.defecto,
       alias : this.alias,
       tipo : this.tipodato
     }
-    this.IEntrada.push( e )
+    this.IEntradas[this.dml].push (e)
     
+    var blAct = await this.selEntradas().then(e => {return e})
+    console.log( this.metodo , blAct)
+    if (this.metodo == "ACTUALIZAR" && blAct != true) {
+      console.log("Es recomendable agragar un parametro para actualizar WHERE")
+    }
     this.entradas = JSON.stringify( this.IEntrada, null, '\t' )
+
+    this.selMetodo()
+    this.clickRefresh(0)
     this.tipodato = '0'
     this.campo = ''
     this.alias = ''
+    
+    this.defecto = ''
+   
   } 
+
+  async selEntradas() : Promise<boolean> {
+    var blAct = false //Actualizar
+    var cond = ''
+    this.IEntrada = []
+
+    await this.DML.forEach(e => {
+      if (this.IEntradas[e].length > 0) {
+        if (e == "$where") {
+          cond = this.condicion
+          blAct = true
+        }
+        this.IEntrada.push ({
+            "dml": e,
+            "codincion" : cond,
+            "entradas": this.IEntradas[e],
+        })
+      }
+    })
+   
+    return blAct
+
+   
+  }
+
 
   clickRefresh(event) {
     this.codeJson = {
@@ -214,12 +288,41 @@ export class RegistrarComponent implements OnInit, OnDestroy {
       matchBrackets: true,
       lint: true
     }
+    
+    this.codeSQL = {
+      theme: 'idea',
+      mode: 'text/x-sql',
+      lineNumbers: true,
+      lineWrapping: true,
+      foldGutter: true,
+      gutters: ['CodeMirror-linenumbers', 'CodeMirror-foldgutter', 'CodeMirror-lint-markers'],
+      autoCloseBrackets: true,
+      matchBrackets: true,
+      lint: true
+    }
      
-   }
+  }
+
+  selMetodo(){
+    switch (this.metodo) {
+      case "INSERTAR":
+        this.consulta = `INSERT INTO ${this.tabla} $exec`
+        break;
+      case "ACTUALIZAR":
+        this.consulta = `UPDATE ${this.tabla} $exec`
+        break;
+      case "DELETE":
+        this.consulta = `DELETE FROM ${this.tabla} $exec`
+        break;
+      default:
+        this.consulta = `SELECT * FROM `
+        break;
+    }
+  }
+
   focusRefresh(event) {
     console.log(event)
-     
-   }
+  }
   
   isValidTypeBoolean: boolean = true;
 
@@ -365,6 +468,7 @@ export class RegistrarComponent implements OnInit, OnDestroy {
         break;
       case 'CONSULTA':
         this.divConsultang = ''
+        this.clickRefresh(0)
         break;
       case 'INTERFAZ':
         
@@ -422,6 +526,8 @@ export class RegistrarComponent implements OnInit, OnDestroy {
     this.retorna = true
     this.xcategoria = ''
     this.xfuncionalidad = ''
+    this.entradas = ''
+    this.tabla = ''
   }
 
   Obtener() : IAPICore{
@@ -544,5 +650,23 @@ export class RegistrarComponent implements OnInit, OnDestroy {
     return entorno
   }
 
+  onMetodo(ev){
+    this.lstDml = []
+
+    this.Dml.forEach(e => {
+      if (e.tipo == this.metodo){
+        this.lstDml.push(e)
+      }
+    });
+  }
+
+  onDml(ev){
+    this.xcondicion = true
+    console.log(this.dml)
+    if (this.dml == "$where"){
+      this.xcondicion = false
+    }
+    
+  }
 
 }

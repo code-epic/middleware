@@ -54,14 +54,14 @@ API.Ejecutar(e).save()
         "dml" : "$set",
         "entradas" :[
             {
-                "campo": "anom",
-                "defecto" : "anom",
+                "campo": "nombre",
+                "defecto" : "anom+'M'",
                 "alias": "nombre",
                 "tipo": "string"
             },
             {
-                "campo": "usua",
-                "alias": "usuario",
+                "campo": "version",
+                "alias": "version",
                 "tipo": "string"
             }
         ]
@@ -71,10 +71,10 @@ API.Ejecutar(e).save()
         "condicion" : "",
         "entradas" :[
             {
-                "campo": "numc",
-                "alias": "numero",
+                "campo": "oid",
+                "alias": "identificador",
                 "tipo": "int"
-            }	
+            }
         ]
     }
 ]
@@ -102,6 +102,43 @@ type struct Estatus {
 }
 
 
-
-
 // UPDATE WKF_007_Documento_Detalle SET anom='$0', usua='$1' WHERE numc='$2'
+
+
+[
+    {
+      "dml" : "$values",
+      "entradas" :[
+            {
+                "campo": "fech",
+                "alias": "fecha",
+                "tipo": "date"
+            },{
+                "campo": "idd",
+                "alias": "documento",
+                "tipo": "string"
+            },{
+                "campo": "obse",
+                "alias": "observacion",
+                "tipo": "string"
+            },{
+                "campo": "ide",
+                "alias": "estado",
+                "tipo": "int"
+            },{
+                "campo": "esta",
+                "alias": "estatus",
+                "tipo": "int"
+            },{
+                "campo": "acti",
+                "alias": "activo",
+                "tipo": "int"
+            },{
+                "campo": "usua",
+                "alias": "usuario",
+                "tipo": "string"
+            }
+        ]
+    
+    }
+]
