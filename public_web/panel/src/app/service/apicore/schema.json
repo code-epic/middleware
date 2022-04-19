@@ -142,3 +142,82 @@ type struct Estatus {
     
     }
 ]
+
+
+
+
+
+[
+	{
+		"mdl": "$values",
+		"codincion": "",
+		"entradas": [
+			{
+				"campo": "idd",
+				"defecto": "",
+				"alias": "documento",
+				"tipo": "int"
+			},
+			{
+				"campo": "ide",
+				"defecto": "",
+				"alias": "estado",
+				"tipo": "int"
+			},
+			{
+				"campo": "esta",
+				"defecto": "",
+				"alias": "estatus",
+				"tipo": "int"
+			},
+			{
+				"campo": "acti",
+				"defecto": "",
+				"alias": "activo",
+				"tipo": "int"
+			},
+			{
+				"campo": "resu",
+				"defecto": "",
+				"alias": "resumen",
+				"tipo": "string"
+			},
+			{
+				"campo": "deta",
+				"defecto": "",
+				"alias": "detalle",
+				"tipo": "string"
+			},
+			{
+				"campo": "anom",
+				"defecto": "",
+				"alias": "archivo",
+				"tipo": "string"
+			},
+			{
+				"campo": "priv",
+				"defecto": "",
+				"alias": "privado",
+				"tipo": "int"
+			},
+			{
+				"campo": "fcre",
+				"defecto": "",
+				"alias": "fecha",
+				"tipo": "date"
+			},
+			{
+				"campo": "cuen",
+				"defecto": "",
+				"alias": "cuenta",
+				"tipo": "string"
+			},
+			{
+				"campo": "usua",
+				"defecto": "",
+				"alias": "usuario",
+				"tipo": "string"
+			}
+		]
+	}
+]

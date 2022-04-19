@@ -5,23 +5,17 @@
         <div class="col-md-4">
             <div class="form-group">
                 <label>Funciones</label>
-                <input type="text" id="txtName" class="form-control" placeholder="Enter ..."  
-                [ngModelOptions]="{standalone: true}"  [(ngModel)]="nombre"  value ="{{nombre}}"
-                (onBlur) = "seleccionarUrl()">
+                <input type="text" id="txtName" class="form-control" placeholder="Enter ..." >
             </div>
         </div>
         <div class="col-md-8">
             <label>Descripcion</label>
             <div class="input-group mb-3">
                 
-                <input style="font-size:14px;" type="text" 
-                    class="form-control" [ngModelOptions]="{standalone: true}" 
-                    [(ngModel)]="descripcion"  value ="{{descripcion}}" >
+                <input style="font-size:14px;" type="text" class="form-control" >
                 <div class="input-group-prepend">
                     
-                    <button type="button" mat-raised-button color="accent" 
-
-                        (click)="Adjuntar()">
+                    <button type="button" mat-raised-button color="accent" >
                         <i class="fa fa-arrow-down" aria-hidden="true"></i> &nbsp; Agregar
                     </button>
                 </div>

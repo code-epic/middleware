@@ -264,7 +264,7 @@ export class RegistrarComponent implements OnInit, OnDestroy {
         }
         this.IEntrada.push ({
             "dml": e,
-            "codincion" : cond,
+            "condicion" : cond,
             "entradas": this.IEntradas[e],
         })
       }

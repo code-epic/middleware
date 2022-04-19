@@ -32,6 +32,7 @@ export class RegistrarWorkflowComponent implements OnInit {
   public Definicion = []
   xmodulo :  string = '0'
 
+  
   nombre  :  string = ''
   descripcion  :  string = ''
   isBtnSalvar : boolean = true

@@ -87,9 +87,10 @@ func (S *SQLGen) Actualizar(consulta string) (cadena string) {
 		contenido := S.ValidarEntrada(v.Tipo, S.EvaluarDato(S.Dml.ObtenerElementos(v.Alias, S.valores)))
 		where += condicion + v.Campo + "=" + contenido
 	}
-	where = ""
 	if count > 0 {
 		where = ` WHERE ` + where
+	} else {
+		where = ""
 	}
 	cadena = ` SET ` + set + where
 	return strings.Replace(consulta, EJECUTAR, cadena, -1)

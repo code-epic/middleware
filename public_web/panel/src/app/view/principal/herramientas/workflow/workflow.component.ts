@@ -12,11 +12,15 @@ import { TransicionesComponent } from './transiciones/transiciones.component';
 export class WorkflowComponent implements OnInit {
 
 
+  
+
+  
 
   @ViewChild(RegistrarWorkflowComponent) registrarWorkFlow: RegistrarWorkflowComponent
   @ViewChild(EstadosComponent) estadosWorkFlow: EstadosComponent
   @ViewChild(TransicionesComponent) transicionesWorkFlow: TransicionesComponent
-
+  
+  public sectionConsultar : string = ''
   
   constructor() { }
   

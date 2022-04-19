@@ -17,8 +17,7 @@
             <div class="form-group">
                 <label>Nombre</label>
                 <input type="text" id="txtName" [disabled]="isDisabled" class="form-control" placeholder="Enter ..."  
-                [ngModelOptions]="{standalone: true}"  [(ngModel)]="nombre"  value ="{{nombre}}"
-                (onBlur) = "seleccionarUrl()">
+                [ngModelOptions]="{standalone: true}"  [(ngModel)]="nombre"  value ="{{nombre}}">
             </div>
         </div>
             <div class="col-md-8">
@@ -63,7 +62,7 @@
             <div class="form-group">
                 <label>SubMenu</label>
                 <select id="cmbTipo" class="form-control selected"  
-                [ngModelOptions]="{standalone: true}" [(ngModel)]="tipo"  value ="{{tipo}}">
+                [ngModelOptions]="{standalone: true}" [(ngModel)]="submenu"  value ="{{submenu}}">
                     <option value="0">SELECCIONE</option>
                 </select>
             </div>
@@ -153,5 +152,5 @@
 </div>
 <div class="col-md-12" align="center">
 <button mat-raised-button color="primary" [disabled]="isBtnDisable" (click)="Salvar()">Guardar</button>
-<button mat-raised-button color="info" [disabled]="isBtnDisable" (click)="LimpiarForm()">Cancelar</button>
+<button mat-raised-button color="info" [disabled]="isBtnDisable" (click)="LimpiarForm('')">Cancelar</button>
 </div>

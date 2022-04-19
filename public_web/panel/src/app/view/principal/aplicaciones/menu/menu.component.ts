@@ -74,7 +74,7 @@ export class MenuComponent implements OnInit {
   
 
   divSubAcciones = 'none'
-  private bGuardar : boolean = false
+  public bGuardar : boolean = false
 
   constructor(private modalService: NgbModal, private apiService : ApiService) { }
 

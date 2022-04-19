@@ -304,17 +304,6 @@ CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento_Historico` (
 
 
 
-DROP TRIGGER IF  EXISTS `actualizarSubDocumento`;
-DELIMITER $$
-CREATE TRIGGER actualizarSubDocumento
-AFTER UPDATE ON WKF_015_SubDocumento
-FOR EACH ROW BEGIN
-  INSERT INTO `WKF_015_SubDocumento_Historico`
-    (`idd`, `ide`, `esta`, `resu`, `deta`, `anom`, `priv`, `fcre`, `cuen`, `usua`, `acti`) 
-  VALUES 
-    ( OLD.idd, OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
-END$$
-DELIMITER ;
 
 
 
@@ -378,9 +367,6 @@ DELIMITER ;
 
 
 
-
-
-
 DROP TRIGGER IF  EXISTS `eliminarDocumentoDetalles`;
 DELIMITER $$
 CREATE TRIGGER eliminarDocumentoDetalles
@@ -395,3 +381,16 @@ AFTER DELETE ON WKF_007_Documento_Detalle
 END$$
 DELIMITER ;
 
+
+
+DROP TRIGGER IF  EXISTS `actualizarSubDocumento`;
+DELIMITER $$
+CREATE TRIGGER actualizarSubDocumento
+AFTER UPDATE ON WKF_015_SubDocumento
+FOR EACH ROW BEGIN
+  INSERT INTO `WKF_015_SubDocumento_Historico`
+    (`idd`, `ide`, `esta`, `resu`, `deta`, `anom`, `priv`, `fcre`, `cuen`, `usua`, `acti`) 
+  VALUES 
+    ( OLD.idd, OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
+END$$
+DELIMITER ;
