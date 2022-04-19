@@ -9,6 +9,9 @@ import { NgbModal, ModalDismissReasons } from '@ng-bootstrap/ng-bootstrap';
 export class ModalRolComponent implements OnInit {
   bodyText: string;
 
+  subdirectiva: string
+
+
   constructor(private modalService: NgbModal) { }
 
   ngOnInit(): void {
@@ -17,6 +20,6 @@ export class ModalRolComponent implements OnInit {
 
   closeModal(id: string) {
     this.modalService.dismissAll(id);
-}
+  }
 
 }
