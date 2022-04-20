@@ -151,7 +151,7 @@ func (C *Core) ParsearApi() (cadena string, err error) {
 	} else {
 		cadena = parsearParametros(C.Parametros, C.Query)
 	}
-	fmt.Println(cadena)
+	//fmt.Println(cadena)
 	return
 }
 

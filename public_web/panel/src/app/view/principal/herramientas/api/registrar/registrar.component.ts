@@ -150,7 +150,7 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   alias  : string   = ''
   tipodato : string   = ''
   tabla : string   = ''
-  dml  : string   = ''
+  xdml  : string   = ''
   defecto : string   = ''
   condicion  : string   = ''
   
@@ -225,14 +225,14 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   async agregarEntrada(){
 
    
-
+    console.log(this.xdml)
     var e = {
       campo : this.campo,
       defecto : this.defecto,
       alias : this.alias,
       tipo : this.tipodato
     }
-    this.IEntradas[this.dml].push (e)
+    this.IEntradas[this.xdml].push (e)
     
     var blAct = await this.selEntradas().then(e => {return e})
     console.log( this.metodo , blAct)
@@ -348,17 +348,19 @@ export class RegistrarComponent implements OnInit, OnDestroy {
  
   
   isValidFunctionReturnsBoolean(args: StepValidationArgs) {
-    var valor = false
+    var valor = true
     
-    if( this.driver != '' && this.descripcion != '' && this.xfuncionalidad != 'S' ){ 
-      valor = true
-      //this.Guardar()
-    }else{
-      this.toastrService.warning(
-        'Debe registrar todos los campos requeridos',
-        `CodeEpic Middleware`
-      );
-    }
+    // false
+    
+    // if( this.driver != '' && this.descripcion != '' && this.xfuncionalidad != 'S' ){ 
+    //   valor = true
+    //   //this.Guardar()
+    // }else{
+    //   this.toastrService.warning(
+    //     'Debe registrar todos los campos requeridos',
+    //     `CodeEpic Middleware`
+    //   );
+    // }
     return valor;
   }
  
@@ -662,8 +664,7 @@ export class RegistrarComponent implements OnInit, OnDestroy {
 
   onDml(ev){
     this.xcondicion = true
-    console.log(this.dml)
-    if (this.dml == "$where"){
+    if (this.xdml == "$where"){
       this.xcondicion = false
     }
     

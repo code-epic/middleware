@@ -46,7 +46,6 @@ func (S *SQLGen) Insertar(consulta string) (cadena string) {
 
 	S.Dml.Nombre = VALOR
 	S.Dml.Definir()
-	fmt.Println(S.Dml.Entrada)
 	for k, v := range S.Dml.Entrada {
 		if k > 0 {
 			coma = ","
@@ -79,7 +78,6 @@ func (S *SQLGen) Actualizar(consulta string) (cadena string) {
 	S.Dml.Nombre = DONDE
 	S.Dml.Definir()
 	count := len(S.Dml.Entrada)
-	fmt.Println("Cantidad de elementos del where ", count)
 	for k, v := range S.Dml.Entrada {
 		if k > 0 {
 			condicion = " AND "

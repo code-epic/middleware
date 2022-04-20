@@ -228,8 +228,7 @@
                                     <label>Tipo de dato</label>
                                     <div class="input-group mb-4">
                                         <select class="form-control selected"  
-                                        (change)="onDml($event)"
-                                        [ngModelOptions]="{standalone: true}" [(ngModel)]="dml"  value ="{{dml}}">
+                                        (change)="onDml($event)" [ngModelOptions]="{standalone: true}" [(ngModel)]="xdml"  value ="{{ xdml }}">
                                             <option  value="" selected>--------</option>
                                             <option *ngFor="let l of lstDml " value ="{{l.id}}" >{{l.nombre}}</option>
                                             
