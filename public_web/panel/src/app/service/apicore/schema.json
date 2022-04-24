@@ -221,3 +221,83 @@ type struct Estatus {
 		]
 	}
 ]
+
+
+
+const SISA = /** 
+* Paste one or more documents here
+*/
+{
+  "cedula": "10502772",
+  "nombre": "SISA",
+  "login": "SISA",
+  "correo": "",
+  "clave": "393a9f8b0b9d1b751bffbe860fe18d19f0639cbae7bc42123f187cf7f5187322",
+  "sucursal": "Todas",
+  "direccion": "",
+  "cargo": "Secretario",
+  "telefono": "",
+  "sistema": "SISA",
+  "rol": {
+    "descipcion": "Secretario de CARAEIPSFANB"
+  },
+  "token": "",
+  "perfil": {
+    "descripcion": "SISA",
+    "privilegios": [
+      {
+        "metodo": "SISA.ingresar",
+        "descripcion": "Crear Usuario",
+        "accion": "Insert()"
+      },
+      {
+        "metodo": "SISA.salvar",
+        "descripcion": "Crear Usuario",
+        "accion": "Insert()"
+      },
+      {
+        "metodo": "SISA.modificar",
+        "descripcion": "Modificar Usuario",
+        "accion": "Update()"
+      },
+      {
+        "metodo": "SISA.aprobar",
+        "descripcion": "Aprobar Nomina",
+        "accion": "aprobarNomina()"
+      },
+      {
+        "metodo": "SISA.reporte",
+        "descripcion": "Reporte General",
+        "accion": "Print()"
+      }
+    ],
+    "menu": [
+      {
+        "url": "starter.html",
+        "js": "usuario",
+        "icono": "fa fa-search",
+        "nombre": "Datos"
+      },
+      {
+        "url": "",
+        "js": "SISA/nominas",
+        "icono": "fa fa-calculator",
+        "nombre": "Reporte Nominas",
+        "accion": "SISAReportesNomina()"
+      },
+      {
+        "url": "",
+        "js": "SISA/subir",
+        "icono": "fa fa-subscript",
+        "nombre": "Cargar Deducciones",
+        "accion": "SISACargarDeducciones()"
+      }
+    ]
+  },
+  "firmadigital": {
+    "direccionmac": "*",
+    "direccionip": "192.168.*.*",
+    "tiempo": "2022-04-22T19:07:05.851Z"
+  },
+  "modulo": {}
+}

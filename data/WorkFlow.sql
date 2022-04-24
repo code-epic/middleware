@@ -337,22 +337,24 @@ AFTER INSERT ON WKF_006_Documento
 END$$
 DELIMITER ;
 
-DROP TRIGGER IF  EXISTS `actualizarUbicacion`;
+
+DROP TRIGGER IF EXISTS `actualizarUbicacion`;
 DELIMITER $$
 CREATE TRIGGER actualizarUbicacion
-BEFORE UPDATE ON WKF_008_Documento_Ubicacion 
-FOR EACH ROW 
-  BEGIN
-    IF NEW.dest = (SELECT id FROM WKF_003_Estado WHERE nomb='Papelera') THEN
-      DELETE FROM WKF_007_Documento_Detalle WHERE wfd = OLD.idd;
-      UPDATE `WKF_006_Documento` SET estado=NEW.dest, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
-    END IF ;
-    IF NEW.llav != '' THEN
-      UPDATE `WKF_006_Documento` SET estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
-    ELSE
-      UPDATE `WKF_006_Documento` SET estado=NEW.orig, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
-    END IF ;
-  END$$
+BEFORE UPDATE ON WKF_008_Documento_Ubicacion
+FOR EACH ROW BEGIN
+  IF NEW.dest = (SELECT id FROM WKF_003_Estado WHERE nomb='Papelera') THEN
+    DELETE FROM WKF_007_Documento_Detalle WHERE wfd = OLD.idd;
+    UPDATE `WKF_006_Documento` SET estado=NEW.dest, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
+  END IF ;
+  IF NEW.llav != '' THEN
+    UPDATE `WKF_006_Documento` SET estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
+  ELSEIF NEW.dest = 1 THEN
+    UPDATE `WKF_006_Documento` SET estado=1, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
+  ELSE
+    UPDATE `WKF_006_Documento` SET estado=NEW.orig, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
+  END IF ;
+END$$
 DELIMITER ;
 
 DROP TRIGGER IF  EXISTS `actualizaDocumento`;

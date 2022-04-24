@@ -9,16 +9,16 @@ import { LoginComponent } from './view/login/login/login.component';
 
 export const routes: Routes = [
   {
-    path: '',
+    path: 'login',
     component: LoginComponent,
-    canActivate:[AuthGuardGuard],
     data: {
       title: 'Login'
     }
   },
   {
-    path: 'login',
+    path: '',
     component: LoginComponent,
+    canActivate:[AuthGuardGuard],
     data: {
       title: 'Login Page'
     }
@@ -41,7 +41,17 @@ export const routes: Routes = [
 ];
 
 @NgModule({
-  imports: [ RouterModule.forRoot(routes, { relativeLinkResolution: 'legacy' }) ],
+  imports: [ RouterModule.forRoot(routes, { useHash: true }) ],
   exports: [ RouterModule ]
 })
 export class AppRoutingModule {}
+
+
+// imports: [
+//   CommonModule,
+//   BrowserModule,
+//   RouterModule.forRoot(routes,{
+//     useHash: true
+// relativeLinkResolution: 'legacy'
+//   })
+// ],

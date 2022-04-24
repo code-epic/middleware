@@ -28,7 +28,31 @@ CREATE TABLE IF NOT EXISTS `MD_001_Documento` (
   `inst` TEXT NOT NULL COMMENT 'Instrucciones',
   `carc` varchar(32) NOT NULL COMMENT 'Codigo de Archivo',
   `nexp` varchar(32) NOT NULL COMMENT 'Numero de Expediente',
-  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  `usua` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+);
+
+
+-- Manejo de Documentos Varios
+DROP TABLE IF EXISTS `MD_001_Proyecto`;
+CREATE TABLE IF NOT EXISTS `MD_001_Proyecto` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomb` varchar(128)  NOT NULL COMMENT 'Nombre',
+  `tipo` varchar(128) NOT NULL COMMENT 'Tipo de Proyecto',
+  `ente` varchar(128) NOT NULL COMMENT 'Ente Contratante',
+  `empr` varchar(128) NOT NULL COMMENT ' Numero de Origen',
+  `fuen` varchar(256) NOT NULL COMMENT 'Fuente de Financiamiento',
+  `ufin` varchar(256) NOT NULL COMMENT 'Usuario Final',
+  `obje` TEXT NOT NULL COMMENT 'Objetivo',
+  `obse` TEXT NOT NULL COMMENT 'Obsercaciones',
+  `mone` varchar(4) COMMENT 'Tipo de moneda',
+  `laps` varchar(128) NOT NULL COMMENT 'Lapso de Ejecucion',
+  `tota` numeric(15,4)  COMMENT 'Monto total',
+  `paga` numeric(15,4)  COMMENT 'Monto pagado',
+  `deud` numeric(15,4)  COMMENT 'Deuda Pendiente',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   `usua` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
@@ -41,7 +65,7 @@ CREATE TABLE IF NOT EXISTS `MD_003_Configuracion` (
   `nomb` varchar(256) NOT NULL COMMENT 'Nombre',
   `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
   `tipo` varchar(32) NOT NULL COMMENT 'Tipo de Documentos',
-  `fech` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
   `usua` varchar(256) NOT NULL,
   INDEX (`tipo`),
   PRIMARY KEY (`id`),
