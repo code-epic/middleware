@@ -51,6 +51,7 @@ VALUES
 (2,'Personal','Departamento de Personal',1),
 (2,'Salida','Salida de Documentos',1),
 (2,'Papelera','Papelera',0),
+(2,'Archivar','Archivar',0),
 (2,'Cerrado','Cerrado',0);
 
 
@@ -338,6 +339,8 @@ END$$
 DELIMITER ;
 
 
+-- ANTES DE EJECUTAR EL UPDATE
+-- llave != Promover al estado siguiente por nota de entrega
 DROP TRIGGER IF EXISTS `actualizarUbicacion`;
 DELIMITER $$
 CREATE TRIGGER actualizarUbicacion
@@ -347,15 +350,20 @@ FOR EACH ROW BEGIN
     DELETE FROM WKF_007_Documento_Detalle WHERE wfd = OLD.idd;
     UPDATE `WKF_006_Documento` SET estado=NEW.dest, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
   END IF ;
-  IF NEW.llav != '' THEN
-    UPDATE `WKF_006_Documento` SET estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
+  
+  IF NEW.llav != OLD.llav THEN 
+    UPDATE `WKF_006_Documento` SET obse='POR NOTA ENTREGA', estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
   ELSEIF NEW.dest = 1 THEN
-    UPDATE `WKF_006_Documento` SET estado=1, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
+    UPDATE `WKF_006_Documento` SET  obse='RECHAZADO',  estado=1, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
   ELSE
-    UPDATE `WKF_006_Documento` SET estado=NEW.orig, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
+    UPDATE `WKF_006_Documento` SET  obse='PROMOVIDO', estado=NEW.orig, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
   END IF ;
 END$$
 DELIMITER ;
+
+
+
+
 
 DROP TRIGGER IF  EXISTS `actualizaDocumento`;
 DELIMITER $$

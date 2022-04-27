@@ -5,7 +5,7 @@
 
 export const environment = {
   production: false,
-  Url: 'https://192.168.1.100',
+  Url: 'https://192.168.1.101',
   API: '/devel/api/',
   Hash: ':c521f27fb1b3311d686d511b668e5bd4'
 };

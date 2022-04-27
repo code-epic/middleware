@@ -5,6 +5,9 @@ import { Router } from '@angular/router';
 import { timer } from 'rxjs';
 import { WsocketsService } from '../../service/websockets/wsockets.service';
 
+// import { CodeEpic, Configuracion } from 'code.epic.module'
+
+
 @Component({
   selector: 'app-principal',
   templateUrl: './principal.component.html',
@@ -12,7 +15,16 @@ import { WsocketsService } from '../../service/websockets/wsockets.service';
 })
 export class PrincipalComponent implements OnInit {
 
-  constructor(private ruta: Router, private ws : WsocketsService) { }
+  // public Epic = new CodeEpic()
+
+  // public cf: Configuracion = {
+  //   token: ''
+  // }
+  constructor(private ruta: Router, private ws: WsocketsService) {
+
+
+
+  }
 
   radioModel: string = 'Month';
 
@@ -88,46 +100,53 @@ export class PrincipalComponent implements OnInit {
   public random(min: number, max: number) {
     return Math.floor(Math.random() * (max - min + 1) + min);
   }
-  listaUsuario : []
-  ngOnInit(): void {
-    if (this.ws.wsk == undefined){
+  listaUsuario: []
+
+
+
+  async ngOnInit() {
+    if (this.ws.wsk == undefined) {
       this.ws.instanciar()
+      // await this.Epic.Instalar(this.cf)
+      //   .then((rs) => {
+      //     console.log(rs)
+      //   })
     }
     this.conectar()
 
   }
 
-  async conectar(){
+  async conectar() {
     this.ws.wsk.subscribe(
       msg => {
         console.log('message : ', msg)
-        
-        if ( msg.lst != undefined ) {
-          this.ws.lst$.emit( msg.lst )
-        }else{
-          this.ws.lst$.emit( msg.contenido )
+
+        if (msg.lst != undefined) {
+          this.ws.lst$.emit(msg.lst)
+        } else {
+          this.ws.lst$.emit(msg.contenido)
         }
-        
-        this.ws.estatusText$.emit( msg.msj )
-      }, 
+
+        this.ws.estatusText$.emit(msg.msj)
+      },
       err => {
 
         console.log("Despues de 10 segundo se intentara conectar nuevamente")
-        this.ws.lst$.emit( [] )
-        this.ws.estatusText$.emit( 'se intentara conectar nuevamente' )
+        this.ws.lst$.emit([])
+        this.ws.estatusText$.emit('se intentara conectar nuevamente')
 
-        timer(10000).subscribe( e => {
+        timer(10000).subscribe(e => {
           this.conectar()
         })
-        
-      }, 
-      () => console.log('complete') 
-   );
-  }
-    
 
- 
-  irA(base: string, ruta: string){
+      },
+      () => console.log('complete')
+    );
+  }
+
+
+
+  irA(base: string, ruta: string) {
     this.ruta.navigate([base, ruta])
   }
 

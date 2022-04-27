@@ -27,6 +27,14 @@
     "e2e": "ng e2e"
   },
   "private": true,
+  "browser": {
+    "http": false,
+    "https": false,
+    "net": false,
+    "path": false,
+    "stream": false,
+    "tls": false
+  },
   "dependencies": {
     "@angular/animations": "^11.2.14",
     "@angular/cdk": "^11.2.4",
@@ -70,6 +78,7 @@
     "popper.js": "^1.16.1",
     "rxjs": "^6.6.6",
     "simple-line-icons": "^2.5.5",
+    "sweetalert2": "^11.4.9",
     "ts-helpers": "^1.1.2",
     "tslib": "^2.0.0",
     "web-animations-js": "^2.3.2",

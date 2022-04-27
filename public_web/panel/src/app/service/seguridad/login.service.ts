@@ -35,6 +35,8 @@ export class LoginService {
    //Dirección Get para servicios en la página WEB
    urlGet = '';
 
+ 
+
   constructor(private router: Router, private http : HttpClient) {
     //environment.Url +
     this.urlGet = environment.API;

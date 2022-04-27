@@ -4,6 +4,7 @@ import { IToken, LoginService } from '../../../service/seguridad/login.service';
 import { ToastrService } from 'ngx-toastr';
 
 
+
 @Component({
   selector: 'app-dashboard',
   templateUrl: 'login.component.html',

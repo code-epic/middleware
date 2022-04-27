@@ -22,3 +22,8 @@ func (F *Funciones) Agregar(v interface{}) (jSon []byte, err error) {
 
 	return c.InsertNOSQL(sys.CFUNCIONES, v)
 }
+
+func (F *Funciones) Ejecutar(v interface{}) (jSon []byte, err error) {
+
+	return
+}

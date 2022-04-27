@@ -321,3 +321,18 @@ func ShPing(script string, flags string, sIP string) (estatus bool) {
 
 	return
 }
+func EjectarBinario(script string, flags string, sIP string) (estatus bool) {
+	var out []byte
+	estatus = false
+	if runtime.GOOS == "darwin" {
+		out, _ = exec.Command("osascript", "-e", `do shell script "./cmd/`+script+` `+sIP+`"`).Output()
+	} else {
+		out, _ = exec.Command("/bin/sh", `./cmd/`+script+` `+flags+`"`).Output()
+	}
+
+	if strings.Contains(string(out), "0.0% packet loss") {
+		estatus = true
+	}
+
+	return
+}
