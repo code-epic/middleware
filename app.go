@@ -59,7 +59,7 @@ func main() {
 		ReadTimeout:  5 * time.Minute,
 	}
 	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO_CHAT)
-	go wser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
+	go wser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.kewy")
 
 	var wsC web.WebSocketCodeEpic
 	go wsC.Analizar()
@@ -71,7 +71,7 @@ func main() {
 		ReadTimeout:  5 * time.Minute,
 	}
 	BoldCyan.Println("Servidor de desarrollo escuchando en el puerto: ", sys.PUERTO_DEV)
-	go devser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
+	go devser.ListenAndServeTLS("sys/seguridad/https/localhost+2.pem", "sys/seguridad/https/localhost+2-key.pem")
 
 	appser := &http.Server{
 		Handler:      context.ClearHandler(web.Enrutador),

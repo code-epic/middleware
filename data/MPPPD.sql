@@ -58,6 +58,32 @@ CREATE TABLE IF NOT EXISTS `MD_001_Proyecto` (
   KEY `id` (`id`)
 );
 
+
+-- Manejo de Documentos Varios
+DROP TABLE IF EXISTS `MD_002_Cotizaciones`;
+CREATE TABLE IF NOT EXISTS `MD_002_Cotizaciones` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `nomb` varchar(128)  NOT NULL COMMENT 'Nombre',
+  `fcre` timestamp NOT NULL COMMENT 'Fecha de Registro',
+  `fvig` timestamp NOT NULL COMMENT 'Fecha de Vigencia',
+  `obje` TEXT NOT NULL COMMENT 'Objetivo',
+  `tota` numeric(15,4)  COMMENT 'Monto total',
+  `paga` numeric(15,4)  COMMENT 'Monto pagado',
+  `deud` numeric(15,4)  COMMENT 'Deuda Pendiente',
+  `gara` numeric(15,4)  COMMENT 'Garantia',
+  `mone` varchar(4) COMMENT 'Tipo de moneda',
+  `laps` varchar(128) NOT NULL COMMENT 'Lapso de Ejecucion',
+  `moda` varchar(128) NOT NULL COMMENT 'Modalidad',
+  `fpag` varchar(128) NOT NULL COMMENT 'Forma de Pago',
+  `resp` varchar(128) NOT NULL COMMENT 'Responsable',
+  `carg` varchar(256) NOT NULL COMMENT 'Cargo Responsable',
+  `obse` TEXT NOT NULL COMMENT 'Obsercaciones',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  `usua` varchar(256) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`)
+);
+
 -- Configuracion de Documentos
 DROP TABLE IF EXISTS `MD_003_Configuracion`;
 CREATE TABLE IF NOT EXISTS `MD_003_Configuracion` (
