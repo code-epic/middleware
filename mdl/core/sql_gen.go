@@ -152,6 +152,10 @@ func (S *SQLGen) ValidarEntrada(tipo string, valor string) (cadena string) {
 	switch tipo {
 	case "string":
 		cadena = "'" + valor + "'"
+
+	case "orcdt":
+		cadena = "TO_DATE('" + valor + "', 'MM/DD/YYYY HH24:MI:SS')"
+
 	case "date":
 		cadena = "'" + valor + "'"
 	case "int":

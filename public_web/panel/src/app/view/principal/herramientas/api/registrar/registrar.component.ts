@@ -59,7 +59,7 @@ export class RegistrarComponent implements OnInit, OnDestroy {
   metodo : string = '0'
   totalizar : string = '0'
   consulta: string = ''
-  version: string = ''
+  version: string = '0.0.1'
 
 
   duracion = `<b>Duración:</b> 00.00.00 seg &nbsp; <b>Peso:</b> 0.00 KB<hr>`
@@ -348,19 +348,17 @@ export class RegistrarComponent implements OnInit, OnDestroy {
  
   
   isValidFunctionReturnsBoolean(args: StepValidationArgs) {
-    var valor = true
+    var valor = false
     
-    // false
-    
-    // if( this.driver != '' && this.descripcion != '' && this.xfuncionalidad != 'S' ){ 
-    //   valor = true
-    //   //this.Guardar()
-    // }else{
-    //   this.toastrService.warning(
-    //     'Debe registrar todos los campos requeridos',
-    //     `CodeEpic Middleware`
-    //   );
-    // }
+    if( this.driver != '' && this.descripcion != '' && this.xfuncionalidad != 'S' ){ 
+      valor = true
+      //this.Guardar()
+    }else{
+      this.toastrService.warning(
+        'Debe registrar todos los campos requeridos',
+        `CodeEpic Middleware`
+      );
+    }
     return valor;
   }
  

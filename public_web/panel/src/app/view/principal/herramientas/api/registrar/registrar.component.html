@@ -109,7 +109,7 @@
                                 <div class="form-group">
                                     <label>Versión</label>
                                     <input type="text" id="txtVersion" class="form-control" placeholder="Enter ..."  
-                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="version"  value ="{{version}}">
+                                    [ngModelOptions]="{standalone: true}" [(ngModel)]="version" readonly value ="{{version}}">
                                 </div>
                             </div>
                             <div class="col-md-6">
@@ -290,6 +290,7 @@
                                             <option value="int">ENTERO</option>
                                             <option value="dbl">DOBLE</option>
                                             <option value="sql">SQL</option>
+                                            <option value="orcdt">F./HORA ORACLE</option>
                                         </select>
                                         <div class="input-group-prepend">
                                             
