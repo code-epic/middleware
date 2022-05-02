@@ -196,7 +196,7 @@ VALUES
 (NULL, '1', '2', 'Clasificación', 'Control de Gestion'),
 (NULL, '2', '1', 'Recibido', 'Control de Gestion'), 
 (NULL, '2', '2', 'Procesado', 'Control de Gestion'),
-(NULL, '2', '3', 'Pendientes', 'Control de Gestion')
+(NULL, '2', '3', 'Pendientes', 'Control de Gestion');
 
 
 
