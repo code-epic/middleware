@@ -183,11 +183,22 @@ CREATE TABLE IF NOT EXISTS `WKF_009_Documento_Variante` (
 DROP TABLE IF EXISTS `WKF_010_Estatus`;
 CREATE TABLE IF NOT EXISTS `WKF_010_Estatus` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `nomb` varchar(64) NOT NULL,
+  `ide` int(11)  NOT NULL COMMENT 'Estado',
+  `idc` int(11)  NOT NULL COMMENT 'Codigo',
+  `nomb` varchar(64) NOT NULL COMMENT 'Nombre',
   `obse` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
+INSERT INTO `WKF_010_Estatus` (`id`, `ide`, `idc`, `nomb`, `obse`) 
+VALUES 
+(NULL, '1', '1', 'Registrado', 'Mesa de Parte'), 
+(NULL, '1', '2', 'Clasificación', 'Control de Gestion'),
+(NULL, '2', '1', 'Recibido', 'Control de Gestion'), 
+(NULL, '2', '2', 'Procesado', 'Control de Gestion'),
+(NULL, '2', '3', 'Pendientes', 'Control de Gestion');
+
+
 
 
 DROP TABLE IF EXISTS `WKF_011_Alerta`;
