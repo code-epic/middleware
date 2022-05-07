@@ -7,7 +7,7 @@ import (
 	"time"
 
 	"github.com/code-epic/middleware/util"
-	jwt "github.com/dgrijalva/jwt-go"
+	jwt "github.com/golang-jwt/jwt/v4"
 )
 
 //Constantes Generales

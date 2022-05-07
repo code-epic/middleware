@@ -9,8 +9,8 @@ import (
 
 	"github.com/code-epic/middleware/mdl/core"
 	"github.com/code-epic/middleware/util"
-	jwt "github.com/dgrijalva/jwt-go"
-	"github.com/dgrijalva/jwt-go/request"
+	jwt "github.com/golang-jwt/jwt/v4"
+	"github.com/golang-jwt/jwt/v4/request"
 	"github.com/gorilla/mux"
 
 	"github.com/code-epic/middleware/sys/seguridad"
