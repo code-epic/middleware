@@ -415,3 +415,25 @@ FOR EACH ROW BEGIN
     ( OLD.idd, OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
 END$$
 DELIMITER ;
+
+
+
+
+
+
+
+
+-- SELECT UBI.idd,
+--   DET.id, DET.numc, DET.fcre, DET.fori, 
+--   DET.nori, DET.saso, DET.tdoc, DET.remi, 
+--   DET.udep, DET.cont, DET.inst, DET.carc, DET.anom, 
+--   DET.nexp, DET.fech, DET.usua, DET.priv,
+--   EST.id AS idestado, EST.nomb AS estado, EST.obse AS desestado,
+--   ACC.acci AS accion, ACC.obse AS observacion_accion
+-- FROM WKF_006_Documento AS DOC
+--   LEFT JOIN WKF_007_Documento_Detalle AS DET ON DOC.id=DET.wfd
+--   LEFT JOIN WKF_003_Estado AS EST ON DOC.estado=EST.id
+--   LEFT JOIN WKF_008_Documento_Ubicacion AS UBI ON UBI.idd=DOC.id
+--   LEFT JOIN (SELECT * FROM `WKF_009_Documento_Variante` 
+-- WHERE idd=$0 ORDER BY fech ASC LIMIT 1) AS ACC ON ACC.idd=DOC.estado 
+-- WHERE DOC.estado=$0 AND DOC.estatus=$1 AND UBI.dest != 10 
