@@ -23,6 +23,7 @@ para la comunicación a través de la red.
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -34,6 +35,16 @@ import (
 )
 
 func init() {
+
+	Magenta := color.New(color.FgMagenta)
+	BoldMagenta := Magenta.Add(color.Bold)
+	fmt.Println("")
+	BoldMagenta.Println("..........................................................")
+	BoldMagenta.Println("...                                                       ")
+	BoldMagenta.Println("...      Versión del Middleware ", sys.Version, "         ")
+	BoldMagenta.Println("...                                                       ")
+	BoldMagenta.Println("..........................................................")
+	BoldMagenta.Println("")
 }
 
 func main() {

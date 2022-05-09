@@ -46,8 +46,8 @@ type DriverNOSQL struct {
 
 //Variables del modelo
 var (
-	Version           string = "V.2.2.4"
-	MySQL             bool   = false
+	Version           string
+	MySQL             bool = false
 	BaseDeDatos       BaseDatos
 	MGConexion        *Mongo
 	Contexto          context.Context
