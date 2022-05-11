@@ -13,8 +13,8 @@ CREATE TABLE MD_000_CGenral (
 
 
 -- Manejo de Documentos Varios
-DROP TABLE IF EXISTS `MD_001_Proyecto`;
-CREATE TABLE IF NOT EXISTS `MD_001_Proyecto` (
+DROP TABLE IF EXISTS mppd.MD_001_Proyecto;
+CREATE TABLE IF NOT EXISTS mppd.MD_001_Proyecto (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nomb` varchar(128)  NOT NULL COMMENT 'Nombre',
   `tipo` varchar(128) NOT NULL COMMENT 'Tipo de Proyecto',
@@ -44,6 +44,28 @@ CREATE TABLE IF NOT EXISTS `MD_001_Proyecto` (
   PRIMARY KEY (`id`),
   KEY `id` (`id`)
 );
+
+
+-- Avances fisicos del Proyecto
+DROP TABLE IF EXISTS mppd.MD_001_Avances;
+CREATE TABLE mppd.MD_001_Avances (
+  id INT  AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  idpr int(11) NOT NULL COMMENT 'Id Proyecto',
+  fech timestamp NOT NULL COMMENT 'Fecha de Registro',
+  mont numeric(15,4)  COMMENT 'Monto pagado',
+  arch varchar(128)  NOT NULL,
+  obse text,
+  KEY (idpr)
+);
+
+-- Avances fisicos del Proyecto Detalles Adjuntos
+DROP TABLE IF EXISTS mppd.MD_001_Avances_Adjunto;
+CREATE TABLE mppd.MD_001_Avances_Adjunto (
+  id INT  AUTO_INCREMENT NOT NULL PRIMARY KEY,
+  arch varchar(128)  NOT NULL
+);
+
+
 
 
 -- Manejo de Documentos Varios

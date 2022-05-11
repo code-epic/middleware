@@ -196,7 +196,34 @@ VALUES
 (NULL, '1', '2', 'Clasificación', 'Control de Gestion'),
 (NULL, '2', '1', 'Recibido', 'Control de Gestion'), 
 (NULL, '2', '2', 'Procesado', 'Control de Gestion'),
-(NULL, '2', '3', 'Pendientes', 'Control de Gestion');
+(NULL, '2', '3', 'Pendientes', 'Control de Gestion'),
+(NULL, '3', '1', 'Recibido', 'Resoluciones'),
+(NULL, '3', '2', 'Procesado', 'Resoluciones'),
+(NULL, '3', '3', 'Pendientes', 'Resoluciones'),
+(NULL, '4', '1', 'Recibido', 'Secretaria'),
+(NULL, '4', '2', 'Ministerial', 'Secretaria'),
+(NULL, '4', '3', 'Presidencial', 'Secretaria'),
+(NULL, '5', '1', 'Recibido', 'Ayudantia'),
+(NULL, '5', '2', 'Procesado', 'Ayudantia'),
+(NULL, '5', '3', 'Pendientes', 'Ayudantia'),
+(NULL, '6', '1', 'Recibido', 'Timonel'),
+(NULL, '6', '2', 'Procesado', 'Timonel'),
+(NULL, '6', '3', 'Pendientes', 'Timonel'),
+(NULL, '7', '1', 'Recibido', 'Acami'),
+(NULL, '7', '2', 'Procesado', 'Acami'),
+(NULL, '7', '3', 'Pendientes', 'Acami'),
+(NULL, '8', '1', 'Recibido', 'Personal'),
+(NULL, '8', '2', 'Procesado', 'Personal'),
+(NULL, '8', '3', 'Pendientes', 'Personal'),
+(NULL, '9', '1', 'Recibido', 'Salida'),
+(NULL, '9', '2', 'Procesado', 'Salida'),
+(NULL, '9', '3', 'Pendientes', 'Salida'),
+(NULL, '10', '1', 'Recibido', 'Papelera'),
+(NULL, '10', '2', 'Procesado', 'Papelera'),
+(NULL, '10', '3', 'Pendientes', 'Papelera'),
+(NULL, '11', '1', 'Por Archivar', 'Archivar'),
+(NULL, '11', '2', 'Archivado', 'Archivar'),
+(NULL, '12', '1', 'Cerrado', 'Cerrado');
 
 
 
@@ -362,10 +389,10 @@ FOR EACH ROW BEGIN
     UPDATE `WKF_006_Documento` SET estado=NEW.dest, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
   END IF ;
   
-  IF NEW.llav != OLD.llav THEN 
-    UPDATE `WKF_006_Documento` SET obse='POR NOTA ENTREGA', estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
-  ELSEIF NEW.dest = 1 THEN
+  IF NEW.dest = 1 THEN
     UPDATE `WKF_006_Documento` SET  obse='RECHAZADO',  estado=1, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
+  ELSEIF NEW.llav != OLD.llav THEN 
+    UPDATE `WKF_006_Documento` SET obse='POR NOTA ENTREGA', estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
   ELSE
     UPDATE `WKF_006_Documento` SET  obse='PROMOVIDO', estado=NEW.orig, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
   END IF ;
