@@ -60,6 +60,7 @@ func CargarModulosPanel() {
 		Enrutador.HandleFunc(vAmb+"lmodulos", wUsuario.ValidarToken(wp.ListarModulos)).Methods("GET")
 		Enrutador.HandleFunc(vAmb+"lmodulox", wp.ListarModulos).Methods("GET")                                   //Listar Modulos del sistema en la carpeta www/inc
 		Enrutador.HandleFunc(vAmb+"larchivos/{id}", wUsuario.ValidarToken(wp.ListarArchivos)).Methods("GET")     //Listar archivos dentro del modulo de los inc
+		Enrutador.HandleFunc(vAmb+"genqr/{id}", wp.GenQr).Methods("GET")                                         //Generar Qr metodo de validacion
 		Enrutador.HandleFunc(vAmb+"phtml", wUsuario.ValidarToken(wp.ProcesarHTML)).Methods("POST")               //Procesar archivos html a scripts
 		Enrutador.HandleFunc(vAmb+"gapihtml", wUsuario.ValidarToken(wp.GenerarAPIHTML)).Methods("POST")          //Procesar archivos html a scripts
 		Enrutador.HandleFunc(vAmb+"ccoleccion", wUsuario.ValidarToken(wp.CrearColeccion)).Methods("POST")        //Crear Conexion

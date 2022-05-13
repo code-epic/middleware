@@ -8,6 +8,7 @@ import (
 	"github.com/code-epic/middleware/mdl/core"
 	"github.com/code-epic/middleware/sys"
 	"github.com/code-epic/middleware/util"
+	"github.com/code-epic/middleware/util/qr"
 	"github.com/code-epic/middleware/util/webscraper"
 	"github.com/gorilla/mux"
 )
@@ -236,4 +237,23 @@ func (wp *WPanel) ObtenerImagenWeb(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", reqImg.Header.Get("Content-Type"))  /* value: image/png */
 	w.WriteHeader(http.StatusOK)
 	w.Write(buffer)
+}
+
+func (wp *WPanel) GenQr(w http.ResponseWriter, r *http.Request) {
+	var xqr qr.Qr
+	var M util.Mensajes
+	estatus := http.StatusOK
+	//id := r.URL.Query().Get("id")
+	M.Tipo = 1
+	M.Msj = "[+] Archivo Qr Generado con exitos"
+	err := xqr.Generar("230075", "base64", "")
+	if err != nil {
+		M.Msj = "[-] Fallo la generacion del qr"
+		sys.CacheLog.Println("Fallo Certificado Qr Generado ")
+		M.Tipo = 1
+		estatus = http.StatusForbidden
+	}
+	j, _ := json.Marshal(M)
+	w.WriteHeader(estatus)
+	w.Write(j)
 }
