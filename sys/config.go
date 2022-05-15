@@ -107,16 +107,21 @@ var Conexiones []CadenaDeConexion
 
 func init() {
 
+	var a util.Archivo
+
 	Magenta := color.New(color.FgMagenta)
 	BoldMagenta := Magenta.Add(color.Bold)
 	fmt.Println("")
 	BoldMagenta.Println("..........................................................")
-	BoldMagenta.Println("...                                                       ")
-	BoldMagenta.Println("...           Versión del Panel ", Version, "             ")
-	BoldMagenta.Println("...      Iniciando Carga de Conexiones a Drivers          ")
+	BoldMagenta.Println(" ... Code Epic Techlogies version  ", Version)
 	BoldMagenta.Println("..........................................................")
 	BoldMagenta.Println("")
-	var a util.Archivo
+	fmt.Println("Iniciando Carga de Archivos Logs                 ")
+
+	_, CacheLog = RegistrarLog("cache.log", "INFO: ")
+	_, QueryLog = RegistrarLog("query.log", "WARNING: ")
+	_, SystemLog = RegistrarLog("system.log", "ALERT: ")
+
 	a.NombreDelArchivo = "sys/config_dev.json"
 	data, _ := a.LeerTodo()
 	e := json.Unmarshal(data, &Conexiones)
@@ -136,8 +141,6 @@ func init() {
 			Estatus:     valor.Estatus,
 		}
 
-		fmt.Println("")
-		fmt.Println("Conectando: ", valor.Descripcion)
 		switch valor.Driver {
 		case "mongodb":
 			MongoDBConexion(cad)
@@ -151,27 +154,13 @@ func init() {
 		}
 	}
 
-	Yellow := color.New(color.FgHiYellow)
-	BoldYellow := Yellow.Add(color.Bold)
-	BoldYellow.Println("..........................................................")
-	BoldYellow.Println("...                                                       ")
-	BoldYellow.Println("...      Iniciando Carga de Archivos Logs                 ")
-	BoldYellow.Println("..........................................................")
-
-	_, CacheLog = RegistrarLog("cache.log", "INFO: ")
-	_, QueryLog = RegistrarLog("query.log", "WARNING: ")
-	_, SystemLog = RegistrarLog("system.log", "ALERT: ")
-
-	SystemLog.Println("Iniciando la carga del servidor post compilación")
 	util.Error(e)
-
 	CargarDrivers()
 }
 
 //ConexionesDinamicas Permite establecer multiples conexiones
 func (C *Config) ConexionesDinamicas(c CadenaDeConexion) (estatus bool) {
 	estatus = true
-	//fmt.Println("Conectando: ", c.Descripcion)
 	switch c.Driver {
 	case "sqlserver17":
 		db, er := CSQLServer(c)
@@ -255,9 +244,6 @@ func (C *Config) ConexionesDinamicas(c CadenaDeConexion) (estatus bool) {
 		break
 	default:
 		estatus = false
-		// errString := "Driver: no funciona para " + c.Driver
-		// _ := errors.New(errString)
-		//fmt.Println("Driver: no funciona para ", c.Driver)
 		break
 	}
 
@@ -291,8 +277,6 @@ func (C *Config) EvaluarConexionesDinamicas(c CadenaDeConexion) (er error) {
 	default:
 		errString := "Driver: no funciona para " + c.Driver
 		er = errors.New(errString)
-		//logs.CacheLog.Println("No existe una definición para el driver en driver.js para: " + c.Driver)
-		//fmt.Println("Driver: no funciona para ", c.Driver)
 		break
 	}
 	return
@@ -310,9 +294,9 @@ func CargarDrivers() {
 func RegistrarLog(file string, mensaje string) (err error, xLog *log.Logger) {
 	f, err := os.OpenFile("./util/logs/"+file, os.O_WRONLY|os.O_CREATE|os.O_APPEND, 0644)
 	if err != nil {
-		color.Red("Error creando archivo log en: ./util/logs/" + file + " verifique los permisos de escritura")
+		color.Red("[-] Fallo la creacion del archivo log en: ./util/logs/" + file + " verifique los permisos de escritura")
 	} else {
-		color.Green("creando archivo log en: ./util/logs/" + file)
+		color.Green("[+] Archivo log Activo en: ./util/logs/" + file)
 	}
 	xLog = log.New(f, mensaje, log.Ldate|log.Ltime|log.Lshortfile)
 	return

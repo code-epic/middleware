@@ -16,8 +16,7 @@ const vDev string = "/devel/api/"
 var (
 	//Enrutador de API
 	Enrutador = mux.NewRouter()
-
-	wUsuario api.WUsuario
+	wUsuario  api.WUsuario
 )
 
 //Cargar los diferentes modulos del sistema
@@ -25,9 +24,7 @@ func Cargar() {
 	CargarModulosPanel()
 	CargarModulosWeb()
 	CargarModulosSeguridad()
-
 	WMAdminLTE()
-	CargarModulosWebDevel()
 }
 
 //CargarModulosPanel Panel de Contencion
@@ -39,26 +36,13 @@ func CargarModulosPanel() {
 	Ambiente[1] = vDev
 	Ambiente[2] = vQua
 
-	fmt.Println("")
-	fmt.Println("")
-	fmt.Println("")
-	FgBlue := color.New(color.FgBlue)
-	BoldFgBlue := FgBlue.Add(color.Bold)
-	BoldFgBlue.Println("..........................................................")
-	BoldFgBlue.Println("...                                                       ")
-	BoldFgBlue.Println("... Iniciando Carga de Elementos Para el Servidor Angular ")
-	BoldFgBlue.Println("...              Módulos de Angular 12                    ")
-	BoldFgBlue.Println("..........................................................")
-	BoldFgBlue.Println("")
+	color.Green("[+] Consola grafica activa -> public_web/panel/dist ")
 	prefixW := http.StripPrefix("/consola", http.FileServer(http.Dir("public_web/panel/dist")))
 	Enrutador.PathPrefix("/consola").Handler(prefixW)
-
-	fmt.Println("Ruta de enlace Activo [ OK ] : public_web/panel/dist --> /consola ")
 
 	for i := 0; i < 3; i++ {
 		vAmb := Ambiente[i]
 		Enrutador.HandleFunc(vAmb+"lmodulos", wUsuario.ValidarToken(wp.ListarModulos)).Methods("GET")
-		Enrutador.HandleFunc(vAmb+"lmodulox", wp.ListarModulos).Methods("GET")                                   //Listar Modulos del sistema en la carpeta www/inc
 		Enrutador.HandleFunc(vAmb+"larchivos/{id}", wUsuario.ValidarToken(wp.ListarArchivos)).Methods("GET")     //Listar archivos dentro del modulo de los inc
 		Enrutador.HandleFunc(vAmb+"genqr/{id}", wp.GenQr).Methods("GET")                                         //Generar Qr metodo de validacion
 		Enrutador.HandleFunc(vAmb+"phtml", wUsuario.ValidarToken(wp.ProcesarHTML)).Methods("POST")               //Procesar archivos html a scripts
@@ -79,28 +63,14 @@ func CargarModulosPanel() {
 
 //WMAdminLTE OpenSource tema de panel de control Tecnología Bootstrap3
 func WMAdminLTE() {
-
-	Cyan := color.New(color.FgHiCyan)
-	BoldCyan := Cyan.Add(color.Bold)
-	BoldCyan.Println("")
-	BoldCyan.Println("")
-	BoldCyan.Println("..........................................................")
-	BoldCyan.Println("...                                                       ")
-	BoldCyan.Println("... Iniciando Carga de Elementos Para el Servidor WEB     ")
-	BoldCyan.Println("...                                                       ")
-	BoldCyan.Println("..........................................................")
-	BoldCyan.Println("")
-
+	color.Green("[+] Cargando elementos del servidor WEB -> public_web/www ")
 	prefix := http.StripPrefix("/", http.FileServer(http.Dir("public_web/www")))
 	Enrutador.PathPrefix("/").Handler(prefix)
-
 }
 
 //CargarModulosWeb Cargador de modulos web
 func CargarModulosWeb() {
-
 	var ap api.API
-	//Enrutador.HandleFunc("/", Principal)
 
 	//Produccion
 	Enrutador.HandleFunc(vAPI+"crud:{id}", wUsuario.ValidarToken(ap.Crud)).Methods("GET")
@@ -169,10 +139,5 @@ func CargarModulosSeguridad() {
 	Enrutador.HandleFunc(vDev+"wusuario/crear", wUsuario.ValidarToken(wUsuario.Crear)).Methods("POST")
 	Enrutador.HandleFunc(vDev+"wusuario/cambiarclave", wUsuario.ValidarToken(wUsuario.CambiarClave)).Methods("PUT")
 	Enrutador.HandleFunc(vDev+"wusuario/cambiarclave", wUsuario.ValidarToken(wUsuario.Opciones)).Methods("OPTIONS")
-
-}
-
-//CargarModulosWebDevel Cargador de modulos web
-func CargarModulosWebDevel() {
 
 }

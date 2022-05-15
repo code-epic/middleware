@@ -5,7 +5,8 @@
 *.so
 *.dylib
 *.log
-
+*.rsa
+*.pub
 # Test binary, built with `go test -c`
 *.test
 
@@ -72,3 +73,8 @@
 # System Files
 /public_web/panel.DS_Store
 /public_web/panelThumbs.db
+
+
+
+#configuracion system
+middleware
