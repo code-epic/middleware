@@ -244,6 +244,24 @@ CREATE TABLE IF NOT EXISTS `WKF_011_Alerta` (
   UNIQUE(`idd`, `ide`, `esta`)
 );
 
+
+
+DROP TABLE IF EXISTS `WKF_011_Alerta_Historico`;
+CREATE TABLE IF NOT EXISTS `WKF_011_Alerta_Historico` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+  `idd` int(11)  NOT NULL COMMENT 'Id Documento',
+  `ide` int(11)  NOT NULL COMMENT 'Identificador del estado',
+  `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
+  `acti` tinyint(1)  NOT NULL COMMENT 'Activo',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
+  `update` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Actualizacion',
+  PRIMARY KEY (`id`)
+);
+
+
+
 DROP TABLE IF EXISTS `WKF_012_Traza`;
 CREATE TABLE IF NOT EXISTS `WKF_012_Traza` (
   `id` int(11) NOT NULL AUTO_INCREMENT  COMMENT 'Identificador',
@@ -446,6 +464,18 @@ DELIMITER ;
 
 
 
+
+DROP TRIGGER IF  EXISTS `actualizarAlerta`;
+DELIMITER $$
+CREATE TRIGGER actualizarAlerta
+AFTER UPDATE ON WKF_011_Alerta
+FOR EACH ROW BEGIN
+  INSERT INTO `WKF_011_Alerta_Historico`
+  (`idd`, `ide`, `esta`, `acti`, `fech`, `usua`, `obse`, `update`) 
+  VALUES 
+  (OLD.idd,OLD.ide,OLD.esta,OLD.acti,OLD.fech,OLD.usua,OLD.obse,OLD.update);
+END$$
+DELIMITER ;
 
 
 

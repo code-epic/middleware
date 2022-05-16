@@ -58,6 +58,8 @@ func CargarModulosPanel() {
 		Enrutador.HandleFunc(vAmb+"establecerconexion", wUsuario.ValidarToken(wp.EstablecerConexion)).Methods("POST") //Establecer conexiones
 		Enrutador.HandleFunc(vAmb+"evaluarpuente", wUsuario.ValidarToken(wp.EvaluarPuenteURL)).Methods("POST")        //Ejecutar Evaluacion puente url
 		Enrutador.HandleFunc(vAmb+"subirarchivos", wUsuario.ValidarToken(wp.SubirArchivos)).Methods("POST")           //Subir Archivos al sistema
+		Enrutador.HandleFunc(vAmb+"imgweb/{id}", wp.ObtenerImagenWeb).Methods("GET")                                  //Subir Archivos al sistema
+		Enrutador.HandleFunc(vAmb+"imglocal/{id}", wp.ObtenerImagenLocal).Methods("GET")                              //Subir Archivos al sistema
 	}
 }
 

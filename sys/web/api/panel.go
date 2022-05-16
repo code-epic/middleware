@@ -3,6 +3,7 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 
 	"github.com/code-epic/middleware/mdl/core"
@@ -226,7 +227,9 @@ func (wp *WPanel) EvaluarPuenteURL(w http.ResponseWriter, r *http.Request) {
 //ObtenerImagenWeb Permite descargar imagenes mediante protocolo de seguridad JWT
 func (wp *WPanel) ObtenerImagenWeb(w http.ResponseWriter, r *http.Request) {
 	id := r.URL.Query().Get("id")
-	reqImg, err := http.Get("http://www.google.com/intl/en_com/images/srpr/logo3w.png?id=" + id)
+
+	fmt.Println("Accediendo a las imagenes" + id)
+	reqImg, err := http.Get("base64.png")
 	if err != nil {
 		fmt.Fprintf(w, "Error %d", err)
 		return
@@ -237,6 +240,21 @@ func (wp *WPanel) ObtenerImagenWeb(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", reqImg.Header.Get("Content-Type"))  /* value: image/png */
 	w.WriteHeader(http.StatusOK)
 	w.Write(buffer)
+}
+
+func (wp *WPanel) ObtenerImagenLocal(w http.ResponseWriter, r *http.Request) {
+	name := "base64.png"
+	w.Header().Set("Content-Type", "image/png")
+	w.Header().Set("Content-Disposition", fmt.Sprintf("inline; filename=\"%s\"", name))
+
+	file, err := ioutil.ReadFile(name)
+	if err != nil {
+		fmt.Fprintf(w, "No verifique esa imagen")
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(file)
+
 }
 
 func (wp *WPanel) GenQr(w http.ResponseWriter, r *http.Request) {
