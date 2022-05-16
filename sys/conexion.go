@@ -37,17 +37,17 @@ func CPostgres(c CadenaDeConexion) (DB *sql.DB, err error) {
 	cadena := "user=" + c.Usuario + " dbname=" + c.Basedatos + " password=" + c.Clave + " host=" + c.Host + " sslmode=disable"
 	DB, err = sql.Open("postgres", cadena)
 	if err != nil {
-		color.Red("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  Error...")
+		color.Red("[-] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
+		SystemLog.Println(err.Error())
 	} else {
 		err = DB.Ping()
 		if err != nil {
-			color.Red("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  Error...")
-			color.Red(err.Error())
+			color.Red("[-] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
+			SystemLog.Println(err.Error())
 			return
 		}
 
-		color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
-		//color.Green("... Host: " + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK... ")
+		color.Green("[+] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
 	}
 	return
 }
@@ -56,15 +56,16 @@ func CPostgres(c CadenaDeConexion) (DB *sql.DB, err error) {
 func CSQLServer(c CadenaDeConexion) (DB *sql.DB, err error) {
 	DB, err = sql.Open("odbc", "server="+c.Host+";database="+c.Basedatos+";DSN=tracking;Uid="+c.Usuario+";Pwd="+c.Clave)
 	if err != nil {
-		color.Red("... Host: "+c.Host+" Base De Datos: ( "+c.Basedatos+" ) Error...", err.Error())
+		color.Red("[-] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
+		SystemLog.Println(err.Error())
 	} else {
 		err = DB.Ping()
 		if err != nil {
-			color.Red("... Host: "+c.Host+" Base De Datos: ( "+c.Basedatos+" ) Error...", err.Error())
-			color.Red(err.Error())
+			color.Red("[-] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
+			SystemLog.Println(err.Error())
 			return
 		}
-		color.Green("... Host: " + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
+		color.Green("[+] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
 	}
 	return
 }
@@ -74,15 +75,16 @@ func CMySQL(c CadenaDeConexion) (DB *sql.DB, err error) {
 	cadena := c.Usuario + ":" + c.Clave + "@tcp(" + c.Host + ":" + c.Puerto + ")/" + c.Basedatos
 	DB, err = sql.Open("mysql", cadena)
 	if err != nil {
-		color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
+		color.Red("[-] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
+		SystemLog.Println(err.Error())
 	} else {
 		err = DB.Ping()
 		if err != nil {
-			color.Red("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  Error...")
-			color.Red(err.Error())
+			color.Red("[-] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
+			SystemLog.Println(err.Error())
 			return
 		}
-		color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
+		color.Green("[+] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
 	}
 	return
 }
@@ -93,15 +95,17 @@ func CSQLOracle(c CadenaDeConexion) (DB *sql.DB, err error) {
 		`" connectString="`+c.Host+`:`+c.Puerto+`/`+c.Basedatos+`" libDir="drivers/oracle"`)
 
 	if err != nil {
-		color.Red("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  Error...")
+		color.Red("[-] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
+		SystemLog.Println(err.Error())
 	} else {
 		err = DB.Ping()
 		if err != nil {
-			color.Red("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  Error...")
-			color.Red(err.Error())
+			color.Red("[-] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
+			SystemLog.Println(err.Error())
+			//SystemLog.Println("Iniciando version ", Version)
 			return
 		}
-		color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
+		color.Green("[+] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
 	}
 	return
 }

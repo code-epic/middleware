@@ -23,6 +23,7 @@ para la comunicación a través de la red.
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"time"
@@ -33,13 +34,7 @@ import (
 	"github.com/gorilla/context"
 )
 
-func init() {
-}
-
 func main() {
-
-	Cyan := color.New(color.FgHiCyan)
-	BoldCyan := Cyan.Add(color.Bold)
 
 	web.Cargar()
 	srv := &http.Server{
@@ -48,8 +43,8 @@ func main() {
 		WriteTimeout: 3 * time.Minute,
 		ReadTimeout:  3 * time.Minute,
 	}
-	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO)
 	go srv.ListenAndServe()
+	color.Green("[+] Puerto:  " + sys.PUERTO + " HTTP  ")
 
 	web.CargarWs()
 	wser := &http.Server{
@@ -58,8 +53,8 @@ func main() {
 		WriteTimeout: 5 * time.Minute,
 		ReadTimeout:  5 * time.Minute,
 	}
-	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO_CHAT)
 	go wser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.kewy")
+	color.Green("[+] Puerto:  " + sys.PUERTO_CHAT + " Chat WSS  ")
 
 	var wsC web.WebSocketCodeEpic
 	go wsC.Analizar()
@@ -70,17 +65,8 @@ func main() {
 		WriteTimeout: 5 * time.Minute,
 		ReadTimeout:  5 * time.Minute,
 	}
-	BoldCyan.Println("Servidor de desarrollo escuchando en el puerto: ", sys.PUERTO_DEV)
 	go devser.ListenAndServeTLS("sys/seguridad/https/localhost+2.pem", "sys/seguridad/https/localhost+2-key.pem")
-
-	appser := &http.Server{
-		Handler:      context.ClearHandler(web.Enrutador),
-		Addr:         ":" + sys.PUERTO_APP,
-		WriteTimeout: 5 * time.Minute,
-		ReadTimeout:  5 * time.Minute,
-	}
-	BoldCyan.Println("Servidor de apliaciones escuchando en el puerto: ", sys.PUERTO_APP)
-	go appser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
+	color.Green("[+] Puerto:  " + sys.PUERTO_DEV + " HTTPS DEV  ")
 
 	rpmser := &http.Server{
 		Handler:      context.ClearHandler(web.Enrutador),
@@ -88,10 +74,9 @@ func main() {
 		WriteTimeout: 5 * time.Minute,
 		ReadTimeout:  5 * time.Minute,
 	}
-	BoldCyan.Println("Servidor de RPM escuchando en el puerto: ", sys.PUERTO_RPM)
 	go rpmser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
+	color.Green("[+] Puerto:  " + sys.PUERTO_RPM + " HTTPS RPM PACKAGE  ")
 
-	//
 	//https://dominio.com/* Protocolo de capa de seguridad
 	server := &http.Server{
 		Handler:      context.ClearHandler(web.Enrutador),
@@ -100,7 +85,9 @@ func main() {
 		ReadTimeout:  280 * time.Second,
 	}
 
-	BoldCyan.Println("Servidor Escuchando en el puerto: ", sys.PUERTO_SSL)
+	color.Green("[+] Puerto:  " + sys.PUERTO_SSL + " HTTPS PRODUCTION  ")
+	fmt.Println("")
+	fmt.Println("")
+	color.Green("[+] code-epicd Finalizo con exito. ")
 	log.Fatal(server.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key"))
-
 }

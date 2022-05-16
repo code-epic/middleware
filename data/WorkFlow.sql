@@ -196,7 +196,34 @@ VALUES
 (NULL, '1', '2', 'Clasificación', 'Control de Gestion'),
 (NULL, '2', '1', 'Recibido', 'Control de Gestion'), 
 (NULL, '2', '2', 'Procesado', 'Control de Gestion'),
-(NULL, '2', '3', 'Pendientes', 'Control de Gestion');
+(NULL, '2', '3', 'Pendientes', 'Control de Gestion'),
+(NULL, '3', '1', 'Recibido', 'Resoluciones'),
+(NULL, '3', '2', 'Procesado', 'Resoluciones'),
+(NULL, '3', '3', 'Pendientes', 'Resoluciones'),
+(NULL, '4', '1', 'Recibido', 'Secretaria'),
+(NULL, '4', '2', 'Ministerial', 'Secretaria'),
+(NULL, '4', '3', 'Presidencial', 'Secretaria'),
+(NULL, '5', '1', 'Recibido', 'Ayudantia'),
+(NULL, '5', '2', 'Procesado', 'Ayudantia'),
+(NULL, '5', '3', 'Pendientes', 'Ayudantia'),
+(NULL, '6', '1', 'Recibido', 'Timonel'),
+(NULL, '6', '2', 'Procesado', 'Timonel'),
+(NULL, '6', '3', 'Pendientes', 'Timonel'),
+(NULL, '7', '1', 'Recibido', 'Acami'),
+(NULL, '7', '2', 'Procesado', 'Acami'),
+(NULL, '7', '3', 'Pendientes', 'Acami'),
+(NULL, '8', '1', 'Recibido', 'Personal'),
+(NULL, '8', '2', 'Procesado', 'Personal'),
+(NULL, '8', '3', 'Pendientes', 'Personal'),
+(NULL, '9', '1', 'Recibido', 'Salida'),
+(NULL, '9', '2', 'Procesado', 'Salida'),
+(NULL, '9', '3', 'Pendientes', 'Salida'),
+(NULL, '10', '1', 'Recibido', 'Papelera'),
+(NULL, '10', '2', 'Procesado', 'Papelera'),
+(NULL, '10', '3', 'Pendientes', 'Papelera'),
+(NULL, '11', '1', 'Por Archivar', 'Archivar'),
+(NULL, '11', '2', 'Archivado', 'Archivar'),
+(NULL, '12', '1', 'Cerrado', 'Cerrado');
 
 
 
@@ -216,6 +243,24 @@ CREATE TABLE IF NOT EXISTS `WKF_011_Alerta` (
   KEY `id` (`id`),
   UNIQUE(`idd`, `ide`, `esta`)
 );
+
+
+
+DROP TABLE IF EXISTS `WKF_011_Alerta_Historico`;
+CREATE TABLE IF NOT EXISTS `WKF_011_Alerta_Historico` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+  `idd` int(11)  NOT NULL COMMENT 'Id Documento',
+  `ide` int(11)  NOT NULL COMMENT 'Identificador del estado',
+  `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
+  `acti` tinyint(1)  NOT NULL COMMENT 'Activo',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
+  `update` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Actualizacion',
+  PRIMARY KEY (`id`)
+);
+
+
 
 DROP TABLE IF EXISTS `WKF_012_Traza`;
 CREATE TABLE IF NOT EXISTS `WKF_012_Traza` (
@@ -362,10 +407,10 @@ FOR EACH ROW BEGIN
     UPDATE `WKF_006_Documento` SET estado=NEW.dest, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
   END IF ;
   
-  IF NEW.llav != OLD.llav THEN 
-    UPDATE `WKF_006_Documento` SET obse='POR NOTA ENTREGA', estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
-  ELSEIF NEW.dest = 1 THEN
+  IF NEW.dest = 1 THEN
     UPDATE `WKF_006_Documento` SET  obse='RECHAZADO',  estado=1, usua=NEW.usua, estatus=1 WHERE id=OLD.idd;
+  ELSEIF NEW.llav != OLD.llav THEN 
+    UPDATE `WKF_006_Documento` SET obse='POR NOTA ENTREGA', estado=OLD.dest, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
   ELSE
     UPDATE `WKF_006_Documento` SET  obse='PROMOVIDO', estado=NEW.orig, usua=NEW.usua, estatus=NEW.esta WHERE id=OLD.idd;
   END IF ;
@@ -415,3 +460,37 @@ FOR EACH ROW BEGIN
     ( OLD.idd, OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
 END$$
 DELIMITER ;
+
+
+
+
+
+DROP TRIGGER IF  EXISTS `actualizarAlerta`;
+DELIMITER $$
+CREATE TRIGGER actualizarAlerta
+AFTER UPDATE ON WKF_011_Alerta
+FOR EACH ROW BEGIN
+  INSERT INTO `WKF_011_Alerta_Historico`
+  (`idd`, `ide`, `esta`, `acti`, `fech`, `usua`, `obse`, `update`) 
+  VALUES 
+  (OLD.idd,OLD.ide,OLD.esta,OLD.acti,OLD.fech,OLD.usua,OLD.obse,OLD.update);
+END$$
+DELIMITER ;
+
+
+
+
+-- SELECT UBI.idd,
+--   DET.id, DET.numc, DET.fcre, DET.fori, 
+--   DET.nori, DET.saso, DET.tdoc, DET.remi, 
+--   DET.udep, DET.cont, DET.inst, DET.carc, DET.anom, 
+--   DET.nexp, DET.fech, DET.usua, DET.priv,
+--   EST.id AS idestado, EST.nomb AS estado, EST.obse AS desestado,
+--   ACC.acci AS accion, ACC.obse AS observacion_accion
+-- FROM WKF_006_Documento AS DOC
+--   LEFT JOIN WKF_007_Documento_Detalle AS DET ON DOC.id=DET.wfd
+--   LEFT JOIN WKF_003_Estado AS EST ON DOC.estado=EST.id
+--   LEFT JOIN WKF_008_Documento_Ubicacion AS UBI ON UBI.idd=DOC.id
+--   LEFT JOIN (SELECT * FROM `WKF_009_Documento_Variante` 
+-- WHERE idd=$0 ORDER BY fech ASC LIMIT 1) AS ACC ON ACC.idd=DOC.estado 
+-- WHERE DOC.estado=$0 AND DOC.estatus=$1 AND UBI.dest != 10 

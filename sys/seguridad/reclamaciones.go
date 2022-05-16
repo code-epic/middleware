@@ -1,6 +1,6 @@
 package seguridad
 
-import jwt "github.com/dgrijalva/jwt-go"
+import jwt "github.com/golang-jwt/jwt/v4"
 
 type Reclamaciones struct {
 	Usuario Usuario `json:"Usuario" bson:"usuario"`

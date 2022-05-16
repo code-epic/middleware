@@ -34,7 +34,7 @@ func (m *Mongo) Conectar(Ctx context.Context, c CadenaDeConexion) (DB *mongo.Dat
 	}
 	DB = Client.Database(c.Basedatos)
 
-	color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
+	color.Green("[+] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
 	rs, e := DB.Collection("sys-drivers").Find(Ctx, bson.D{{}})
 	for rs.Next(Ctx) {
 		var cadena CadenaDeConexion
@@ -63,7 +63,7 @@ func (m *Mongo) ConectarDinamicamente(Ctx context.Context, c CadenaDeConexion) (
 	}
 	DB = Client.Database(c.Basedatos)
 
-	color.Green("... : [ " + c.ID + " ]" + c.Host + " Base De Datos: ( " + c.Basedatos + " )  OK...")
+	color.Green("[+] Driver " + c.ID + " En Host " + c.Host + " Base De Datos: " + c.Basedatos)
 
 	return
 }
