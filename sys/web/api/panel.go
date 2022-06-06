@@ -242,12 +242,28 @@ func (wp *WPanel) ObtenerImagenWeb(w http.ResponseWriter, r *http.Request) {
 	w.Write(buffer)
 }
 
-func (wp *WPanel) ObtenerImagenLocal(w http.ResponseWriter, r *http.Request) {
+func (wp *WPanel) ObtenerArchivoLocal(w http.ResponseWriter, r *http.Request) {
+	var data = mux.Vars(r)
+	id := data["id"]
+	doc := data["doc"]
+	w.Header().Set("Content-Type", typeFile("pdf"))
+	w.Header().Set("Content-Disposition", fmt.Sprintf("inline; filename=\"%s\"", id))
+	file, err := ioutil.ReadFile("./tmp/file/out/" + id + "/" + doc)
+	if err != nil {
+		fmt.Fprintf(w, "No verifique esa imagen")
+		return
+	}
+	w.WriteHeader(http.StatusOK)
+	w.Write(file)
+}
+
+func (wp *WPanel) ListarImagenLocal(w http.ResponseWriter, r *http.Request) {
 	name := "base64.png"
 	w.Header().Set("Content-Type", "image/png")
 	w.Header().Set("Content-Disposition", fmt.Sprintf("inline; filename=\"%s\"", name))
 
-	file, err := ioutil.ReadFile(name)
+	file, err := ioutil.ReadFile("./tmp/qr/" + name)
+	fmt.Println("Pasando informacion del sistema de archivos")
 	if err != nil {
 		fmt.Fprintf(w, "No verifique esa imagen")
 		return
@@ -256,7 +272,6 @@ func (wp *WPanel) ObtenerImagenLocal(w http.ResponseWriter, r *http.Request) {
 	w.Write(file)
 
 }
-
 func (wp *WPanel) GenQr(w http.ResponseWriter, r *http.Request) {
 	var xqr qr.Qr
 	var M util.Mensajes
@@ -274,4 +289,13 @@ func (wp *WPanel) GenQr(w http.ResponseWriter, r *http.Request) {
 	j, _ := json.Marshal(M)
 	w.WriteHeader(estatus)
 	w.Write(j)
+}
+
+func typeFile(extension string) string {
+	switch extension {
+	case "pdf":
+		return "application/x-pdf"
+	default:
+		return "image/png"
+	}
 }

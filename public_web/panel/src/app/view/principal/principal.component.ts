@@ -105,12 +105,10 @@ export class PrincipalComponent implements OnInit {
 
 
   async ngOnInit() {
+    console.log(this.ws.wsk );
     if (this.ws.wsk == undefined) {
       this.ws.instanciar()
-      // await this.Epic.Instalar(this.cf)
-      //   .then((rs) => {
-      //     console.log(rs)
-      //   })
+      
     }
     this.conectar()
 

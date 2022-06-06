@@ -1,4 +1,14 @@
-//cifrado
+/**
+En criptografía, RSA (Rivest, Shamir y Adleman) es un sistema
+criptográfico de clave pública desarrollado en 1979, que utiliza
+factorización de números enteros. Es el primer y más utilizado
+algoritmo de este tipo y es válido tanto para cifrar como para firmar digitalmente.
+La seguridad de este algoritmo radica en el problema de la factorización de números
+enteros. Los mensajes enviados se representan mediante números, y el funcionamiento
+se basa en el producto, conocido, de dos números primos grandes elegidos al
+azar y mantenidos en secreto. Actualmente estos primos son del orden de 10^300, y se
+prevé que su tamaño siempre crezca con el aumento de la capacidad de cálculo de los ordenadores.
+*/
 package cifrado
 
 import (
@@ -9,79 +19,93 @@ import (
 	"errors"
 )
 
-// puede ser generado por openssl
-//openssl genrsa -out rsa_private_key.pem 1024
-var privateKey = []byte(`
-    -----BEGIN RSA PRIVATE KEY-----
-    MIICXQIBAAKBgQCrGh1sc5AKD1EQ8WdA1iWF4m7wXtO6WoS7Dtfd0Jm2ud+LKBQ+
-    e7R6YIXnwfEKB/4Jm+jNtCi7/Zrx5gtEpUuVAyrEo5+qr5al5KibeJq3xyI/626I
-    BsDMFX5o3WOoXceTF7+lgi6r+OuokqFJgpeh7YANXQ8Y8mn8ucw+Ly+LbQIDAQAB
-    AoGAGgoxbC3yP/WwyrlSk4WD1Gpvo9lqs7PO+4D4zWNP4YVMRitlWVUOVImYF3tm
-    qbYprWCy/4tpn6KrECGImXvmkplXPxd4x3W+haZftx3VjTwh5fvT9yHp4swXxN+h
-    LMItDdIOWS4U6wVJa77Dy7VfK303LZrPLqnxkf4oEywp5YECQQDZOz1WD7nOqOiy
-    AlwDhfeLTmArN0f+gV6RLrxMp2XRqC2DN5nMq5O5BVVMK9LBgArNqYfxWYuMa3K2
-    qliRDPPxAkEAyaNWq/fDvjpK9TgztqsHIiG+cUQpWI759zt5qHNA+QF4L43dtAVZ
-    zBR/uam1jnRuM6K0ZCSZo2ITiqapmk8bPQJAEd9d3IbOssIS4xJun5uWElAQeX3C
-    3p2mOiuuMmBTcDx2AiXA8aXsMXzO18WDQYhXWzRniuPjJ1pvxbeeMdDvAQJBAMDh
-    uZAJEzrOAlQurfFICyvQQZ+Rx0dKhbzFLOxBS96mVDSRLYn+MFbzKPcOa3lY0O4d
-    7xd4l2td7zmLkePlVjUCQQCY8VuIfKc0+AWvPnktKXbx9bBdJZSDginZM5cu7pdx
-    W0uB9KZoLqgbGLIvWrLyA6SBqo87Q1j1//wFgLP+A2Gn
-    -----END RSA PRIVATE KEY-----
-    `)
+func Generar() (pubPEM []byte, keyPEM []byte) {
+	bitSize := 4096
+	key, err := rsa.GenerateKey(rand.Reader, bitSize)
+	if err != nil {
+		panic(err)
+	}
 
-//openssl
-//openssl rsa -in rsa_private_key.pem -pubout -out rsa_public_key.pem
-var publicKey = []byte(`
-    -----BEGIN PUBLIC KEY-----
-    MIGfMA0GCSqGSIb3DQEBAQUAA4GNADCBiQKBgQCrGh1sc5AKD1EQ8WdA1iWF4m7w
-    XtO6WoS7Dtfd0Jm2ud+LKBQ+e7R6YIXnwfEKB/4Jm+jNtCi7/Zrx5gtEpUuVAyrE
-    o5+qr5al5KibeJq3xyI/626IBsDMFX5o3WOoXceTF7+lgi6r+OuokqFJgpeh7YAN
-    XQ8Y8mn8ucw+Ly+LbQIDAQAB
-    -----END PUBLIC KEY-----
-    `)
+	// Extract public component.
+	pub := key.Public()
+
+	// Encode private key to PKCS#1 ASN.1 PEM.
+	keyPEM = pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "RSA PRIVATE KEY",
+			Bytes: x509.MarshalPKCS1PrivateKey(key),
+		},
+	)
+
+	// Encode public key to PKCS#1 ASN.1 PEMea.r
+	pubASN1, err := x509.MarshalPKIXPublicKey(pub)
+	if err != nil {
+		panic(err)
+	}
+
+	pubPEM = pem.EncodeToMemory(
+		&pem.Block{
+			Type:  "RSA PUBLIC KEY",
+			Bytes: pubASN1,
+		},
+	)
+
+	/** Write private key to file.
+		if err := ioutil.WriteFile(filename+".rsa", keyPEM, 0700); err != nil {
+			panic(err)
+		}
+
+		// Write public key to file.
+		if err := ioutil.WriteFile(filename+".rsa.pub", pubPEM, 0755); err != nil {
+			panic(err)
+		}
+	**/
+	return
+}
 
 // cifrado
-func RsaEncrypt(origData []byte) ([]byte, error) {
-	// Descifra la clave pública en formato pem
+func RsaEncrypt(origData []byte, publicKey []byte) ([]byte, error) {
+
+	//	fmt.Println(string(publicKey))
 	block, _ := pem.Decode(publicKey)
 	if block == nil {
 		return nil, errors.New("public key error")
 	}
-	// Analiza la clave pública
 	pubInterface, err := x509.ParsePKIXPublicKey(block.Bytes)
 	if err != nil {
 		return nil, err
 	}
-	// tipo de aserción
 	pub := pubInterface.(*rsa.PublicKey)
-	// Cifrar
 	return rsa.EncryptPKCS1v15(rand.Reader, pub, origData)
 }
 
 // descifrar
-func RsaDecrypt(ciphertext []byte) ([]byte, error) {
-	// descifrar
+func RsaDecrypt(ciphertext []byte, privateKey []byte) ([]byte, error) {
+	//fmt.Println(string(privateKey))
 	block, _ := pem.Decode(privateKey)
 	if block == nil {
 		return nil, errors.New("private key error!")
 	}
-	// Analiza la clave privada en formato PKCS1
 	priv, err := x509.ParsePKCS1PrivateKey(block.Bytes)
 	if err != nil {
 		return nil, err
 	}
-	// descifrar
 	return rsa.DecryptPKCS1v15(rand.Reader, priv, ciphertext)
 }
 
 /**
-  func main() {
-  	data, _ := RsaEncrypt([]byte("test data......"))
-  	fmt.Println("-------------------")
+func main() {
+	publickey, privatekey := Generar()
+	data, err := RsaEncrypt([]byte("test data......"), publickey)
+	if err != nil {
+		fmt.Println("Error")
+	}
 
-  	fmt.Println(base64.StdEncoding.EncodeToString(data))
+	fmt.Println("-------------------")
 
-  	fmt.Println("-------------------")
-  	origData, _ := RsaDecrypt(data)
-  	fmt.Println(string(origData))
-  }**/
+	fmt.Println(base64.StdEncoding.EncodeToString(data))
+
+	fmt.Println("-------------------")
+	origData, _ := RsaDecrypt(data, privatekey)
+	fmt.Println(string(origData))
+}**/

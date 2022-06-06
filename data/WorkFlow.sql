@@ -348,11 +348,71 @@ CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento_Historico` (
   INDEX `idd` (`idd`)
 );
 
+DROP TABLE IF EXISTS `WKF_015_SubDocumento_Variante`;
+CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento_Variante` (
+  `id` int(11) AUTO_INCREMENT,
+  `ids` int(11) COMMENT 'SubDocumento Id WorkFlow',
+  `esta` varchar(256)  NOT NULL COMMENT 'Estatus',
+  `acci` TEXT  COMMENT 'Accion',
+  `hist` TEXT  COMMENT 'Historico',
+  `come` TEXT  COMMENT 'Comentario',
+  `arch` TEXT  COMMENT 'Archivo',
+  `anom` varchar(256) COMMENT 'Nombre de Archivo',
+  `deci` varchar(256) COMMENT 'Decision',
+  `fcre` timestamp NOT NULL COMMENT 'Fecha de Registro',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `upda` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Actualizacion',
+  KEY `id` (`id`),
+  UNIQUE(`ids`)
 
+);
 
+DROP TABLE IF EXISTS `WKF_015_SubDocumento_Traza`;
+CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento_Traza` (
+  `id` int(11)  AUTO_INCREMENT,
+  `ids` int(11) COMMENT 'SubDocumento Id WorkFlow',
+  `esta` varchar(256)  NOT NULL COMMENT 'Estatus',
+  `acci` TEXT  COMMENT 'Accion',
+  `hist` TEXT  COMMENT 'Historico',
+  `come` TEXT  COMMENT 'Comentario',
+  `arch` TEXT  COMMENT 'Archivo',
+  `anom` varchar(256) COMMENT 'Nombre de Archivo',
+  `deci` varchar(256) COMMENT 'Decision',
+  `fcre` timestamp NOT NULL COMMENT 'Fecha de Registro',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `upda` TIMESTAMP NOT NULL COMMENT 'Actualizacion',
+  KEY `id` (`id`)
+);
 
+DROP TABLE IF EXISTS `WKF_015_SubDocumento_Alerta`;
+CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento_Alerta` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+  `ids` int(11)  NOT NULL COMMENT 'SubDocumento Id',
+  `ide` int(11)  NOT NULL COMMENT 'Identificador del estado',
+  `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
+  `acti` tinyint(1)  NOT NULL COMMENT 'Activo',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
+  `update` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Actualizacion',
+  PRIMARY KEY (`id`),
+  KEY `id` (`id`),
+  UNIQUE(`ids`, `ide`, `esta`)
+);
 
-
+DROP TABLE IF EXISTS `WKF_015_SubDocumento_Alerta_Historico`;
+CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento_Alerta_Historico` (
+  `id` int(11) NOT NULL AUTO_INCREMENT COMMENT 'Identificador',
+  `ids` int(11)  NOT NULL COMMENT 'SubDocumento Id',
+  `ide` int(11)  NOT NULL COMMENT 'Identificador del estado',
+  `esta` tinyint(1)  NOT NULL COMMENT 'Estatus',
+  `acti` tinyint(1)  NOT NULL COMMENT 'Activo',
+  `fech` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Fecha de creacion',
+  `usua` varchar(256) NOT NULL COMMENT 'Usuario Responsable',
+  `obse` varchar(256) NOT NULL COMMENT 'Observaciones',
+  `update` TIMESTAMP on update CURRENT_TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'Actualizacion',
+  PRIMARY KEY (`id`)
+);
 
 
 
@@ -455,9 +515,9 @@ CREATE TRIGGER actualizarSubDocumento
 AFTER UPDATE ON WKF_015_SubDocumento
 FOR EACH ROW BEGIN
   INSERT INTO `WKF_015_SubDocumento_Historico`
-    (`idd`, `ide`, `esta`, `resu`, `deta`, `anom`, `priv`, `fcre`, `cuen`, `usua`, `acti`) 
+    (`idd`, `come`, `ide`, `esta`, `resu`, `deta`, `anom`, `priv`, `fcre`, `cuen`, `usua`, `acti`) 
   VALUES 
-    ( OLD.idd, OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
+    ( OLD.idd, OLD.come OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
 END$$
 DELIMITER ;
 
@@ -479,6 +539,29 @@ DELIMITER ;
 
 
 
+DROP TRIGGER IF  EXISTS `actualizarSubDocumentoVariante`;
+DELIMITER $$
+CREATE TRIGGER actualizarSubDocumentoVariante
+AFTER UPDATE ON WKF_015_SubDocumento_Variante
+FOR EACH ROW BEGIN
+ INSERT INTO `WKF_015_SubDocumento_Traza`(`ids`, `esta`, `acci`, `hist`, `come`, `arch`, `anom`,`deci`, `fcre`, `usua`, `upda`)
+  VALUES
+ (OLD.ids,OLD.esta,OLD.acci,OLD.hist,come,OLD.arch,OLD.anom,OLD.deci,OLD.fcre,OLD.usua,OLD.upda);
+END$$
+DELIMITER ; 
+
+
+DROP TRIGGER IF  EXISTS `actualizarSubDocumentoAlerta`;
+DELIMITER $$
+CREATE TRIGGER actualizarSubDocumentoAlerta
+AFTER UPDATE ON WKF_015_SubDocumento_Alerta
+FOR EACH ROW BEGIN
+  INSERT INTO `WKF_015_SubDocumento_Alerta_Historico`
+  (`ids`, `ide`, `esta`, `acti`, `fech`, `usua`, `obse`, `update`) 
+  VALUES 
+  (OLD.ids,OLD.ide,OLD.esta,OLD.acti,OLD.fech,OLD.usua,OLD.obse,OLD.update);
+END$$
+DELIMITER ;
 
 -- SELECT UBI.idd,
 --   DET.id, DET.numc, DET.fcre, DET.fori, 

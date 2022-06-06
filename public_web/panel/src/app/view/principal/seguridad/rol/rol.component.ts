@@ -50,7 +50,7 @@ export class RolComponent implements OnInit {
     ngOnInit(): void {
       //document.getElementById('duracion').innerHTML = this.duracion;
      
-      this.ListarApis()
+     
      
       
     }
@@ -67,40 +67,7 @@ export class RolComponent implements OnInit {
       }
     }
   
-    ListarApis(){
-      this.apiService.Listar().subscribe(
-        (data) => {
-          data.forEach(e => {
-            switch (e.entorno) {
-              case "desarrollo":
-                this.developer.push(e)
-                break;
-              case "calidad":
-                this.quality.push(e)
-                break;
-              case "produccion":
-                this.production.push(e)
-                break;
-              default:
-                break;
-            }
-          });
-          this.CargarListadoAPI(0)
-        },
-        (error) => {
-          console.log(error)
-        }
-       );
-    }
-  
-    CargarListadoAPI(e){
-      this.tabPosicion = e
-      this.lengthOfi = 0;
-      this.pageSizeOfi = 10;
-      this.pageSizeOptions = [5, 10, 25, 100];
-      this.recorrerElementos(0)
-    }
-  
+   
     pageChangeEvent(e){
       
       this.recorrerElementos(e.pageIndex+1)
@@ -131,22 +98,6 @@ export class RolComponent implements OnInit {
   
   
   
-    activarFormulario(content, item) {
-      console.log(item)    
-      this.modalService.open(content, {
-        centered: true, 
-        size: 'lg', 
-        ariaLabelledBy: 'modal-basic-title'
-      }).result.then(
-        (result) => {
-          this.closeResult = `Closed with: ${result}`;
-        }, (reason) => {
-          this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
-      });
-      var api = item.entorno=="produccion"?"/v1/":"/devel/"
-      this.xentorno =  api + "api/crud:" + item.id;
-      this.data = item
-    }
    
     private getDismissReason(reason: any): string {
       if (reason === ModalDismissReasons.ESC) {
@@ -158,20 +109,7 @@ export class RolComponent implements OnInit {
       }
     }
   
-    async ejecutarApi(){
-      this.xAPI = this.data;
-      this.xAPI.parametros = this.xparametro;
-      console.log(this.xAPI);
-      await this.apiService.Ejecutar(this.xAPI).subscribe(
-        (data) => {        
-          const formatter = new JSONFormatter(data);
-          document.getElementById("xrs").appendChild(formatter.render());       
-        },
-        (error) => {
-          this.resultado = error;
-        }
-      )
-    }
+
   
   
   

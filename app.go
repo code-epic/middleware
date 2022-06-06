@@ -53,7 +53,7 @@ func main() {
 		WriteTimeout: 5 * time.Minute,
 		ReadTimeout:  5 * time.Minute,
 	}
-	go wser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.kewy")
+	go wser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
 	color.Green("[+] Puerto:  " + sys.PUERTO_CHAT + " Chat WSS  ")
 
 	var wsC web.WebSocketCodeEpic

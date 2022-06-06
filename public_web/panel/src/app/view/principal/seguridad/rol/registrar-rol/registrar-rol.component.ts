@@ -127,17 +127,12 @@ export class RegistrarRolComponent implements OnInit {
     this.lstAplicaciones()
   }
 
-  activar(i: number, valor: boolean) {
-    this.rowDataAcc[i].active = valor
-    console.warn(this.rowDataAcc)
-  }
-
+ 
   async lstAplicaciones() {
     this.xAPI.funcion = "LstAplicaciones";
-    this.xAPI.valores = null;
+    this.xAPI.valores =  ''
     await this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        // console.info(data)
         this.lstApps = data.Cuerpo
       },
       (error) => {
@@ -154,7 +149,7 @@ export class RegistrarRolComponent implements OnInit {
     var menu: any
 
     this.rowDataAcc.forEach(e => {
-      xpri.push(e)
+       
       menu = {
         nombre: e.nomb,
         js: e.js,
@@ -217,13 +212,6 @@ export class RegistrarRolComponent implements OnInit {
   }
 
   EditarRol(i: any) {
-    // this.xModulo.nombre = this.xmodulo
-    // this.xRol.nombre = this.nombre
-    // this.xRol.descripcion= this.descripcion 
-    // this.xRol.Modulo.push(this.xModulo)
-    // this.xAplicacion.nombre = this.aplicacion
-    // this.xAplicacion.Rol = this.xRol
-    // console.info(this.xAplicacion)
     console.warn(i)
   }
 
@@ -237,7 +225,6 @@ export class RegistrarRolComponent implements OnInit {
   }
 
   ViewModal(itemRol) {
-    // console.warn(itemRol)
     this.evenData.emit(itemRol)
   }
 
@@ -257,8 +244,9 @@ export class RegistrarRolComponent implements OnInit {
     this.dataModulo = [];
     this.apiService.Ejecutar(this.xAPI).subscribe(
       (data) => {
-        data.Cuerpo.forEach(e => {
-          this.dataModulo.push({ id: e.id, name: e.nomb })
+        this.dataModulo = data.Cuerpo.map( e => {
+          e.name =  e.nomb
+          return e
         });
       },
       (error) => {
@@ -273,34 +261,12 @@ export class RegistrarRolComponent implements OnInit {
     this.consultarMenu()
   }
 
-  onFocusedModulo(item) {
-    this.moduloid = '';
-    this.modulo = '';
-  }
-
-  onFocusedMenu(item) {
-    if (this.moduloid == '') this.guardarModulo()
-    this.menu = ''
-    this.menuid = ''
-  }
 
   selectEventMenu(item) {
     this.menu = item.name
     this.menuid = item.id
   }
 
-  guardarModulo() {
-    this.xAPI.parametros = this.xmodulo + "," + this.aplicacion
-    this.xAPI.funcion = "AgregarModulo"
-    this.apiService.Ejecutar(this.xAPI).subscribe(
-      (data) => {
-        this.moduloid = data.msj
-      },
-      (error) => {
-        console.log(error)
-      }
-    )
-  }
 
   selectEventUrl(item) {
     this.xurl = item.name;
@@ -360,6 +326,10 @@ export class RegistrarRolComponent implements OnInit {
         console.log('')
       }
     )
+  }
+
+  activar(i: number, event) {
+    this.rowDataAcc[i].active = event.target.checked    
   }
 
 

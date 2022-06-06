@@ -13,9 +13,8 @@ type Traza struct {
 	Accion            string    `json:"accion"`
 	Metodo            string    `json:"metodo"`
 	Pregunta          string    `json:"pregunta"`
-	DireccionMac      string    `json:"mac"`
-	DireccionIP       string    `json:"ip"`
 	CreadoEnFecha     time.Time `json:"creadoenfecha"`
+	Contenido         string    `json:"contenido"`
 	HuellaDigital     string    `json:"huelladigital"`
 }
 

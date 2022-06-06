@@ -53,6 +53,7 @@ CREATE TABLE mppd.MD_001_Avances (
   idpr int(11) NOT NULL COMMENT 'Id Proyecto',
   fech timestamp NOT NULL COMMENT 'Fecha de Registro',
   mont numeric(15,4)  COMMENT 'Monto pagado',
+  ejec numeric(15,4)  COMMENT 'Monto Ejecucion',
   arch varchar(128)  NOT NULL,
   obse text,
   KEY (idpr)
