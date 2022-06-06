@@ -65,7 +65,7 @@ func (wp *WPanel) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 		}
 		cadena += files[i].Filename + ";"
 		//ProcesarTxt(files[i].Filename, codigo)
-		fmt.Println(codigo)
+		//fmt.Println(codigo)
 
 	} // Fin de archivos
 	//
