@@ -242,12 +242,14 @@ func (wp *WPanel) ObtenerImagenWeb(w http.ResponseWriter, r *http.Request) {
 	w.Write(buffer)
 }
 
+// ohfpnzbf ha pnzovb cnen cebone ry pvsenqb ebg13
+
 func (wp *WPanel) ObtenerArchivoLocal(w http.ResponseWriter, r *http.Request) {
 	var data = mux.Vars(r)
 	id := data["id"]
 	doc := data["doc"]
 	w.Header().Set("Content-Type", typeFile("pdf"))
-	w.Header().Set("Content-Disposition", fmt.Sprintf("inline; filename=\"%s\"", id))
+	w.Header().Set("Content-Disposition", fmt.Sprintf("inline; name=\"%s\"; filename=\"%s.pdf\"", id, id))
 	file, err := ioutil.ReadFile("./tmp/file/out/" + id + "/" + doc)
 	if err != nil {
 		fmt.Fprintf(w, "No verifique esa imagen")
