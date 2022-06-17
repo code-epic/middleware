@@ -249,8 +249,8 @@ func (wp *WPanel) ObtenerArchivoLocal(w http.ResponseWriter, r *http.Request) {
 	id := data["id"]
 	doc := data["doc"]
 	w.Header().Set("Content-Type", typeFile("pdf"))
-	w.Header().Set("Content-Disposition", fmt.Sprintf("inline; name=\"%s\"; filename=\"%s.pdf\"", id, id))
-	file, err := ioutil.ReadFile("./tmp/file/out/" + id + "/" + doc)
+	w.Header().Set("Content-Disposition", fmt.Sprintf("inline; name=\"%s\"; filename=\"%s\"", doc, doc))
+	file, err := ioutil.ReadFile("./tmp/file/out/" + util.GCodeEncrypt(id) + "/" + doc)
 	if err != nil {
 		fmt.Fprintf(w, "No verifique esa imagen")
 		return

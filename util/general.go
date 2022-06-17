@@ -15,6 +15,8 @@ import (
 	"strconv"
 	"strings"
 	"time"
+
+	"github.com/code-epic/middleware/util/cifrado"
 )
 
 //Mensajes Formato de salida para Json
@@ -191,6 +193,22 @@ func GenerarHash256(password []byte) (encry string) {
 	encry = hex.EncodeToString(h.Sum(nil))
 	return
 
+}
+
+//GCodeEncrypt encriptar y desencriptar
+func GCodeEncrypt(text string) string {
+	extension := ""
+	s := strings.Split(text, ".")
+	if len(s) > 1 {
+		extension = "." + s[len(s)-1]
+	}
+	return GenerarMD5(GenerarROT13(text)) + extension
+}
+
+//GenerarROT13 encriptar y desencriptar
+func GenerarROT13(text string) (encry string) {
+	var cf cifrado.Rot
+	return cf.Encrypt(text)
 }
 
 //GenerarMD5 Generar patron md5 de encriptamiento

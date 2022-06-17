@@ -10,6 +10,7 @@ import (
 	"os"
 
 	util "github.com/code-epic/middleware/util"
+	"github.com/common-nighthawk/go-figure"
 	"github.com/fatih/color"
 	"go.mongodb.org/mongo-driver/mongo"
 )
@@ -112,12 +113,11 @@ func init() {
 	Magenta := color.New(color.FgMagenta)
 	BoldMagenta := Magenta.Add(color.Bold)
 	fmt.Println("")
-	BoldMagenta.Println("..........................................................")
-	BoldMagenta.Println(" ... Code Epic Techlogies version  ", Version)
-	BoldMagenta.Println("..........................................................")
-	BoldMagenta.Println("")
-	fmt.Println("Iniciando Carga de Archivos Logs                 ")
 
+	myFigure := figure.NewColorFigure("Sandra Server", "", "red", true)
+	myFigure.Print()
+
+	fmt.Println("")
 	_, CacheLog = RegistrarLog("cache.log", "INFO: ")
 	_, QueryLog = RegistrarLog("query.log", "WARNING: ")
 	_, SystemLog = RegistrarLog("system.log", "ALERT: ")
@@ -156,6 +156,8 @@ func init() {
 
 	util.Error(e)
 	CargarDrivers()
+
+	BoldMagenta.Println("- Code Epic Technologies version  ", Version)
 }
 
 //ConexionesDinamicas Permite establecer multiples conexiones
