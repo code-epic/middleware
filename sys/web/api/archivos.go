@@ -25,7 +25,6 @@ func (wp *WPanel) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 
 	er := r.ParseMultipartForm(32 << 20)
 	if er != nil {
-		fmt.Println(er)
 		M.Tipo = 0
 		M.Msj = "Proceso fallo"
 
@@ -36,15 +35,15 @@ func (wp *WPanel) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 	}
 	m := r.MultipartForm
 
-	files := m.File["input-folder-2"]
-	codigo := r.FormValue("txtFileID")
-	directorio := "./tmp/file/out/" + codigo
+	files := m.File["archivos"]
+	codigo := r.FormValue("identificador")
+
+	directorio := "./tmp/file/out/" + util.GCodeEncrypt(codigo)
 	errr := os.Mkdir(directorio, 0777)
 
 	if errr != nil {
 		fmt.Println("El directorio ya existe!")
 	}
-	cadena := ""
 	for i := range files {
 		file, errf := files[i].Open()
 		defer file.Close()
@@ -52,7 +51,7 @@ func (wp *WPanel) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(errf)
 			return
 		}
-		out, er := os.Create(directorio + "/" + files[i].Filename)
+		out, er := os.Create(directorio + "/" + util.GCodeEncrypt(files[i].Filename))
 		defer out.Close()
 		if er != nil {
 			fmt.Println(er.Error())
@@ -63,12 +62,7 @@ func (wp *WPanel) SubirArchivos(w http.ResponseWriter, r *http.Request) {
 			fmt.Println(err)
 			return
 		}
-		cadena += files[i].Filename + ";"
-		//ProcesarTxt(files[i].Filename, codigo)
-		fmt.Println(codigo)
-
 	} // Fin de archivos
-	//
 	M.Msj = "Proceso exitoso"
 
 	j, _ := json.Marshal(M)

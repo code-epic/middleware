@@ -569,24 +569,139 @@ const SISA = /**
             "Privilegio": [],
             "SubMenu": [
               {
-                "url": "",
+                "url": "/rbuzon",
                 "js": "",
-                "icono": "fas fa-shipping-fast",
-                "nombre": "Oficina Postal",
-                "accion": "CargarUrl('cuerpo', 'inc/cnc/registro')",
-                "clase": "opt",
-                "color": "bg-success",
+                "descripcion": "Buzon",
+                "icono": "fa fa-plus-circle",
+                "nombre": "Buzon",
+                "accion": "CargarUrl('resolucion', 'buzon')",
+                "clase": "f-left",
+                "color": "bg-c-green",
                 "Privilegios": [
                   {
-                    "metodo": "actualizar",
-                    "descripcion": "Actualizar",
-                    "accion": "ActualizarOPT()",
+                    "metodo": "registrados",
+                    "descripcion": "Registrados",
+                    "accion": "Registrados()",
                     "directivas": ""
                   },
                   {
-                    "metodo": "reporte",
-                    "descripcion": "Reportes",
-                    "accion": "Reportes()",
+                    "metodo": "enproceso",
+                    "descripcion": "En Proceso",
+                    "accion": "enProceso()",
+                    "directivas": ""
+                  },
+                  {
+                    "metodo": "pendientes",
+                    "descripcion": "Pendientes",
+                    "accion": "Pendientes()",
+                    "directivas": ""
+                  }
+                ]
+              },
+              {
+                "url": "/rstranscripcion",
+                "js": "",
+                "descripcion": "Analisis & Transcripcion",
+                "icono": "fa fa-inbox",
+                "nombre": "Transcripcion",
+                "accion": "CargarUrl('resolucion', 'transcripcion')",
+                "clase": "f-left",
+                "color": "bg-c-blue",
+                "Privilegios": [
+                  {
+                    "metodo": "recibidos",
+                    "descripcion": "Recibidos",
+                    "accion": "Recibidos()",
+                    "directivas": ""
+                  },
+                  {
+                    "metodo": "procesados",
+                    "descripcion": "Procesados",
+                    "accion": "Procesados()",
+                    "directivas": ""
+                  },
+                  {
+                    "metodo": "pendientes",
+                    "descripcion": "Pendientes",
+                    "accion": "Pendientes()",
+                    "directivas": ""
+                  },
+                  {
+                    "metodo": "cerrados",
+                    "descripcion": "Cerrados",
+                    "accion": "Cerrados()",
+                    "directivas": ""
+                  }
+                ]
+              },
+              {
+                "url": "/rsrevision",
+                "js": "",
+                "descripcion": "Salidas Realizadas",
+                "icono": "fa fa-share",
+                "nombre": "Salidas",
+                "accion": "CargarUrl('resolucion', 'salidas')",
+                "clase": "f-left",
+                "color": "bg-c-pink",
+                "Privilegios": [
+                  {
+                    "metodo": "registrados",
+                    "descripcion": "Registrados",
+                    "accion": "Registrados()",
+                    "directivas": ""
+                  },
+                  {
+                    "metodo": "clasificacion",
+                    "descripcion": "Clasificacion",
+                    "accion": "Clasificacion()",
+                    "directivas": ""
+                  }
+                ]
+              },
+              {
+                "url": "/rsprocesos",
+                "js": "",
+                "descripcion": "Procesos",
+                "icono": "fa fa-envelope-open",
+                "nombre": "Procesos",
+                "accion": "CargarUrl('resolucion', 'procesos')",
+                "clase": "f-left",
+                "color": "bg-purple",
+                "Privilegios": [
+                  {
+                    "metodo": "alertas",
+                    "descripcion": "Alerta",
+                    "accion": "Alerta()",
+                    "directivas": ""
+                  },
+                  {
+                    "metodo": "pendientes",
+                    "descripcion": "Pendientes",
+                    "accion": "Pendientes()",
+                    "directivas": ""
+                  }
+                ]
+              },
+              {
+                "url": "/rsconfiguraciones",
+                "js": "",
+                "descripcion": "Configuraciones",
+                "icono": "fa fa-share",
+                "nombre": "Configuracion",
+                "accion": "CargarUrl('resolucion', 'configuracion')",
+                "clase": "f-left",
+                "color": "bg-c-pink",
+                "Privilegios": [
+                  {
+                    "metodo": "registrados",
+                    "descripcion": "Registrados",
+                    "accion": "Registrados()",
+                    "directivas": ""
+                  },
+                  {
+                    "metodo": "clasificacion",
+                    "descripcion": "Clasificacion",
+                    "accion": "Clasificacion()",
                     "directivas": ""
                   }
                 ]

@@ -14,7 +14,7 @@ function ctrl_c() {
 #Define function for help contents
 function HelpFunc(){
 	echo -e "\n\n Uso de la herramiento ./epic-tools.sh "
-	echo -e "\n\t -p : Escanear rango de IP: "
+	echo -e "\n\t -s : Escanear rango de IP: "
 	echo -e "\n\t\t 192.168.12.100-200"
 	echo -e "\n\t -i : Instalar servicio code-epicd "
 	echo -e "\n\t -c : Compilar code-epicd "
@@ -26,7 +26,7 @@ function HelpFunc(){
 }
 
 
-#Scan range ip machine
+#Scan range ip machine desde hasta 192.0.0.1-10
 function ScanRange(){
 	IFS='.' read -r -a xip <<< "$addrs"
 	ip="${xip[0]}.${xip[1]}.${xip[2]}"
@@ -74,7 +74,7 @@ function GenerarRSA(){
 function Compile(){
 	ConfigDirectory
 	GenerarRSA
-	go build -ldflags "-X github.com/code-epic/middleware/sys.Version=$(git describe --tags)" -o code-epicd
+	go build -ldflags "-s -w -X github.com/code-epic/middleware/sys.Version=$(git describe --tags)" -o code-epicd
 	echo -e "\n[+] En hora buena compilacion exitosa\n"
 	exit 0
 }

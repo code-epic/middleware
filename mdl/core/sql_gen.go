@@ -60,7 +60,6 @@ func (S *SQLGen) Insertar(consulta string) (cadena string) {
 }
 
 func (S *SQLGen) Actualizar(consulta string) (cadena string) {
-
 	where, set, coma := "", "", ""
 	S.Dml.Nombre = ASIGNAR
 	S.Dml.Definir()
@@ -152,18 +151,23 @@ func (S *SQLGen) ValidarEntrada(tipo string, valor string) (cadena string) {
 	switch tipo {
 	case "string":
 		cadena = "'" + valor + "'"
-
+		break
+	case "cencrypt":
+		cadena = "'" + util.GCodeEncrypt(valor) + "'"
+		break
 	case "orcdt":
 		cadena = "TO_DATE('" + valor + "', 'MM/DD/YYYY HH24:MI:SS')"
-
+		break
 	case "date":
 		cadena = "'" + valor + "'"
+		break
 	case "int":
 		if valor == "" {
 			cadena = "0"
 		} else {
 			cadena = valor
 		}
+		break
 	default:
 
 		cadena = valor

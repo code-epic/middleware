@@ -13,7 +13,7 @@ type Dml struct {
 
 //Definir el modelo de datos que obtener
 //$values Valores por Insert
-//$set, $where Update Set y Where
+//$set, $where Update Sdelete
 func (D *Dml) Definir() {
 	for _, v := range D.LstEntradas {
 		if v.Dml == D.Nombre {
