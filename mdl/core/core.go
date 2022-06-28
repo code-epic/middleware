@@ -18,6 +18,7 @@ type Core struct {
 	Ruta      string `json:"ruta"`
 	Autor     string `json:"autor"`
 	Resultado RS     `json:"Resultado"`
+	Cantidad  int    `json:"cantidad"`
 	ApiCore
 }
 

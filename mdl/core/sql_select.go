@@ -63,6 +63,7 @@ func (C *Core) Select(v map[string]interface{}, consulta string, conexion *sql.D
 		}()
 	}
 
+	C.Cantidad = len(lista)
 	C.Resultado.Cuerpo = lista
 	jSon, err = json.Marshal(C.Resultado)
 
