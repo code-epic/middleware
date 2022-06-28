@@ -265,17 +265,17 @@ func (u *WUsuario) Access(w http.ResponseWriter, r *http.Request) {
 	c.Asignar(v)
 
 	min := time.Minute * 480
-	token := seguridad.GenerarJWTDinamico(c.Resultado.Cuerpo, min)
-	result := seguridad.RespuestaToken{Token: token}
-
-	j, _ := json.Marshal(result)
-	w.WriteHeader(http.StatusOK)
-	w.Write(j)
-	//	} else {
-	//	w.Header().Set("Content-Type", "application/text")
-	//w.WriteHeader(http.StatusForbidden)
-	//	fmt.Fprintln(w, "Usuario y clave no validas")
-	//	}
+	if c.Cantidad > 0 {
+		token := seguridad.GenerarJWTDinamico(c.Resultado.Cuerpo, min)
+		result := seguridad.RespuestaToken{Token: token}
+		j, _ := json.Marshal(result)
+		w.WriteHeader(http.StatusOK)
+		w.Write(j)
+	} else {
+		w.Header().Set("Content-Type", "application/text")
+		w.WriteHeader(http.StatusForbidden)
+		w.Write([]byte("Acceso denegado"))
+	}
 }
 
 //ValidarTokenDinamico Validacion de usuario

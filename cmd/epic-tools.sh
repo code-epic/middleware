@@ -76,7 +76,11 @@ function Compile(){
 	GenerarRSA
 	go build -ldflags "-s -w -X github.com/code-epic/middleware/sys.Version=$(git describe --tags)" -o code-epicd
 	echo -e "\n[+] En hora buena compilacion exitosa\n"
+	upx code-epicd
+
+	echo -e "\n[+] Felicitaciones el recuso se ha comprimido"
 	exit 0
+
 }
 
 function Install(){
