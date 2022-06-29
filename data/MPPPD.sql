@@ -119,7 +119,7 @@ CREATE TABLE IF NOT EXISTS `MD_004_SistemasArmas` (
 DROP TABLE IF EXISTS `MD_000_CGenral`;
 CREATE TABLE MD_000_CGenral (
   id INT UNSIGNED AUTO_INCREMENT NOT NULL PRIMARY KEY,
-  clas varchar(32)  NOT NULL,
+  clas varchar(64)  NOT NULL,
   skey varchar(64) NOT NULL,
   titu VARCHAR(256) ,
   subt VARCHAR(256) ,
@@ -127,39 +127,46 @@ CREATE TABLE MD_000_CGenral (
   vige DATE,
   simb VARCHAR(256) NOT NULL,
   meta VARCHAR(256) NOT NULL,
-  ranking numeric(15,4)  NOT NULL,
+  ranking FLOAT NOT NULL,
   tipo varchar(1)  NOT NULL,
   resu text,
-  ubic text,
+  ubic VARCHAR(256) NOT NULL,
   cont text,
-  FULLTEXT (skey, ubic, cont, resu)
+  view INT DEFAULT 0 NOT NULL,
+  INDEX (view, fech, meta),
+  FULLTEXT (skey, simb, cont )
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_spanish_ci;
 
 
 
-INSERT INTO MD_000_CGenral ( clas, ranking, titu, skey, subt, simb, tipo, ubic, cont,resu, meta, vige, fech) 
-SELECT '', 0, nombres_apellidos, cedula, cuenta_oficio, 'de', 'E', 'Doc. de Entrada', 
+INSERT INTO MD_000_CGenral ( clas, ranking, titu, skey, subt, simb, tipo, ubic, cont, resu, meta, vige, fech) 
+SELECT xcomponente, 0, nombres_apellidos, cedula, xsubtitulo, CONCAT(IFNULL(xdtmilitar, ''), 'entrada'), 'E', 'Doc. en entrada', 
  CONCAT(xdigital, ' ', xacto, ' ', xentrada, ' ', ' ', xresolucion, ' ', ' ', xurl, ' ', xdatos),  xasunto,
- '{"ref": ["skey", "subt"]}', xfecha, NOW()
+ CONCAT ('{"ref": [ {"idkey" :', xidentificador ,',"idresol" :"', xnumero_resol ,'" }]}'), xfecha, NOW()
   FROM ( 
   SELECT 
+    ed.id AS xidentificador,
+    IFNULL(cm.nombre_componente, '') AS xcomponente, 
     db.nombres_apellidos, 
+    ed.numero_resol AS xnumero_resol,
     IFNULL(db.cedula, '') AS cedula , 
-    ed.cuenta_oficio,
+    ed.cuenta_oficio AS xsubtitulo,
     IF(ed.fecha_entrada='0000-00-00','1986-07-22',ed.fecha_entrada) AS xfecha,
-    CONCAT ( ed.cuenta_oficio, ' ',  ed.digital ) AS xdigital, 
+    CONCAT ( ed.cuenta_oficio, ' - ',  ed.digital ) AS xdigital, 
     IFNULL( ac.des_acto, '' ) as xacto,   
     IFNULL( te.des_tipo_entrada, '' ) as xentrada,
     CONCAT (ed.numero_resol, ' ', ed.fecha_resol, ' ', ed.asunto ) AS xasunto, 
     IFNULL( er.des_estado_resol, '' ) as xresolucion,
     CONCAT ( ed.responsable, ' ',  ed.numero_carpeta, ' ', ed.observacion ) AS xresponsable, 
     IFNULL( ce.url, '' ) as xurl,  
+    CONCAT(cm.nombre_componente, ' ', ct.nombre_categoria,' ', 
+            cl.des_clasificacion, ' ', gr.nombres_grado, ' '
+          ) AS xdtmilitar,
     CONCAT( ed.fecha_registro, ' ',  
-    db.nombres_apellidos,' ', 
-    ct.nombre_categoria,' ',  ct.nombre_corto, ' ', 
-    cm.nombre_componente, ' ', cm.nombre_corto,' ', 
-    gr.nombres_grado, ' ', gr.nombre_corto,' ', 
-    cl.des_clasificacion, ' ', cl.des_corto_clas, ' ', ed.fecha_entrada ) AS xdatos
+            ed.numero_resol, ' ', ed.fecha_resol, ' ', 
+            ed.asunto , ' ',
+            db.nombres_apellidos,' ',  ed.fecha_entrada 
+            ) AS xdatos
   FROM entrada_documentos AS ed
   LEFT JOIN acto AS ac ON ed.cod_acto=ac.cod_acto
   LEFT JOIN tipo_entrada AS te ON ed.cod_tipo_entrada=te.cod_tipo_entrada
@@ -177,20 +184,23 @@ AS Ax;
 
 
 INSERT INTO MD_000_CGenral ( clas, ranking, titu, skey, subt, simb, tipo, ubic, cont,resu, meta, vige, fech) 
-SELECT '', 0, nombres_apellidos, cedula, subtitulo, 'dr', 'R', 'Doc. en Resolución', 
-        xcontenido,  xasunto,'{"ref": ["skey", "subt"]}', xfecha, NOW()
+SELECT xcomponente, 0, nombres_apellidos, cedula, subtitulo, CONCAT(IFNULL(xdtmilitar, ''), 'resolucion'), 'R', 'Doc. en resolución', 
+        xcontenido,  xasunto,
+        CONCAT ('{"ref": [ {"idkey" :', xidentificador ,',"idresol" : "', xnumero_resol ,'" }]}'), xfecha, NOW()
   FROM ( 
   SELECT  
+    dr.id AS xidentificador,
+    IFNULL(cm.nombre_componente, '') AS xcomponente, 
     db.nombres_apellidos, 
+    dr.numero_resol AS xnumero_resol,
     IFNULL(db.cedula, '') AS cedula , 
     CONCAT( dr.numero_resol , ' - ',  tr.des_resol ) AS subtitulo,
     dr.asunto AS xasunto, 
     IF(dr.fecha_resol='0000-00-00','1986-07-22',dr.fecha_resol) AS xfecha,
-    CONCAT( dr.numero_resol,' - ', tr.des_resol, ' ',  db.nombres_apellidos, ' ',  
-    ct.nombre_categoria,' ',  ct.nombre_corto, ' ', 
-    cm.nombre_componente, ' ', cm.nombre_corto,' ', 
-    gr.nombres_grado, ' ', gr.nombre_corto,' ', 
-    cl.des_clasificacion, ' ', cl.des_corto_clas, ' ',  dr.asunto, ' ', dr.fecha_resol) AS xcontenido
+    CONCAT(cm.nombre_componente, ' ', ct.nombre_categoria,' ', 
+            cl.des_clasificacion, ' ', gr.nombres_grado, ' '
+          ) AS xdtmilitar,
+    CONCAT( dr.numero_resol,' - ', tr.des_resol, ' ',  db.nombres_apellidos, ' ',   dr.asunto, ' ', dr.fecha_resol) AS xcontenido
   FROM `resoluciones_mppd` AS dr
   LEFT JOIN tipo_resoluciones AS tr ON dr.cod_tipo_resol=tr.cod_tipo_resol
 	LEFT JOIN datos_basicos AS db ON dr.cedula_resol=db.cedula
@@ -198,9 +208,7 @@ SELECT '', 0, nombres_apellidos, cedula, subtitulo, 'dr', 'R', 'Doc. en Resoluci
 	LEFT JOIN componente AS cm ON db.cod_componente=cm.cod_componente 
   LEFT JOIN grado AS gr ON db.cod_grado=gr.cod_grado
   LEFT JOIN clasificacion AS cl ON db.cod_clasificacion=cl.cod_clasificacion 
-  --WHERE db.cedula = '10352682'
-  ORDER BY xfecha DESC
- -- WHERE db.cedula != '' AND ed.cuenta_oficio != ''
+  ORDER BY dr.fecha_resol DESC
   ) 
 AS Ax;
 
