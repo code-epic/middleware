@@ -14,23 +14,29 @@ import (
 )
 
 //Select Crear Consultas Sql
-func (C *Core) Select(v map[string]interface{}, consulta string, conexion *sql.DB) (jSon []byte, err error) {
+func (C *Core) Select(valor int, consulta string, conexion *sql.DB) (jSon []byte, err error) {
 	var estatus bool
 	var M util.Mensajes
 	lista := make([]map[string]interface{}, 0)
 	M.Tipo = 1
 
-	rs, e := conexion.Query(consulta)
-	if e != nil {
+	C.RowData, err = conexion.Query(consulta)
+	if err != nil {
 		M.Msj = "Select fallo"
 		M.Tipo = 0
 		M.Fecha = time.Now()
-		sys.QueryLog.Println("Core.Select: ", consulta, e.Error())
+		sys.QueryLog.Println("Core.Select: ", consulta, err.Error())
 		jSon, err = json.Marshal(M)
 		return
 	}
 
-	cols, err := rs.Columns()
+	if valor == 1 {
+		M.Msj = "Select por precarga"
+		M.Tipo = 0
+		M.Fecha = time.Now()
+		return
+	}
+	cols, err := C.RowData.Columns()
 	if err != nil {
 		err = actualizarEstatusAPI(C.ApiCore.Funcion, false)
 
@@ -39,13 +45,13 @@ func (C *Core) Select(v map[string]interface{}, consulta string, conexion *sql.D
 
 	colvals := make([]interface{}, len(cols))
 	fila := 0
-	for rs.Next() {
+	for C.RowData.Next() {
 		fila++
 		colassoc := make(map[string]interface{}, len(cols))
 		for i := range colvals {
 			colvals[i] = new(interface{})
 		}
-		if err := rs.Scan(colvals...); err != nil {
+		if err := C.RowData.Scan(colvals...); err != nil {
 			err = actualizarEstatusAPI(C.ApiCore.Funcion, false)
 
 		} else {

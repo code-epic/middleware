@@ -110,6 +110,7 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Documento_Detalle` (
   `tdoc` varchar(256) NOT NULL COMMENT 'Tipo de Documento',
   `remi` varchar(256) NOT NULL COMMENT 'Remitente',
   `udep` varchar(256) NOT NULL COMMENT 'Unidad o Dependencia',
+  `coma` varchar(256) NOT NULL COMMENT 'Gran Comando',
   `cont` TEXT NOT NULL COMMENT 'Contenido',
   `inst` TEXT NOT NULL COMMENT 'Instrucciones',
   `carc` varchar(32) NOT NULL COMMENT 'Codigo de Archivo',
@@ -137,6 +138,7 @@ CREATE TABLE IF NOT EXISTS `WKF_007_Historico_Documento` (
   `tdoc` varchar(256) NOT NULL COMMENT 'Tipo de Documento',
   `remi` varchar(256) NOT NULL COMMENT 'Remitente',
   `udep` varchar(256) NOT NULL COMMENT 'Unidad o Dependencia',
+  `coma` varchar(256) NOT NULL COMMENT 'Gran Comando',
   `cont` TEXT NOT NULL COMMENT 'Contenido',
   `inst` TEXT NOT NULL COMMENT 'Instrucciones',
   `carc` varchar(32) NOT NULL COMMENT 'Codigo de Archivo',
@@ -319,6 +321,9 @@ CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento` (
   `resu` TEXT  COMMENT 'Resumen',
   `deta` TEXT  COMMENT 'Detalle',
   `anom` varchar(256) COMMENT 'Nombre de Archivo',
+  `cedu` varchar(256) COMMENT 'Cedula',
+  `carg` varchar(256) COMMENT 'Cargo',
+  `nomm` varchar(256) COMMENT 'Nombre Militar',
   `priv` int(11) COMMENT 'Privacidad',
   `fcre` timestamp NOT NULL COMMENT 'Fecha de Registro',
   `cuen` varchar(256) COMMENT 'Cuenta Asociada',
@@ -339,6 +344,9 @@ CREATE TABLE IF NOT EXISTS `WKF_015_SubDocumento_Historico` (
   `resu` TEXT  COMMENT 'Resumen',
   `deta` TEXT  COMMENT 'Detalle',
   `anom` varchar(256) COMMENT 'Nombre de Archivo',
+  `cedu` varchar(256) COMMENT 'Cedula',
+  `carg` varchar(256) COMMENT 'Cargo',
+  `nomm` varchar(256) COMMENT 'Nombre Militar',
   `priv` int(11) COMMENT 'Privacidad',
   `fcre` timestamp NOT NULL COMMENT 'Fecha de Registro',
   `cuen` varchar(256) COMMENT 'Cuenta Asociada',
@@ -430,10 +438,10 @@ CREATE TRIGGER actualizarDocumentoDetalles
 AFTER UPDATE ON WKF_007_Documento_Detalle
   FOR EACH ROW BEGIN
     INSERT INTO `WKF_007_Historico_Documento`
-      (wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, cont, 
+      (wfd, numc, fcre, fori, nori, saso, tdoc, remi, udep, coma, cont, 
       inst, carc, nexp, anom, usua, fech, tipo, priv) 
     VALUES 
-      (OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.cont, 
+      (OLD.wfd, OLD.numc, OLD.fcre, OLD.fori, OLD.nori, OLD.saso, OLD.tdoc, OLD.remi, OLD.udep, OLD.coma, OLD.cont, 
       OLD.inst, OLD.carc, OLD.nexp, OLD.anom, OLD.usua, OLD.fech, 1, OLD.priv);
 
     IF OLD.anom != '' THEN
@@ -514,10 +522,10 @@ DELIMITER $$
 CREATE TRIGGER actualizarSubDocumento
 AFTER UPDATE ON WKF_015_SubDocumento
 FOR EACH ROW BEGIN
-  INSERT INTO `WKF_015_SubDocumento_Historico`
-    (`idd`, `come`, `ide`, `esta`, `resu`, `deta`, `anom`, `priv`, `fcre`, `cuen`, `usua`, `acti`) 
+  INSERT INTO 
+    `WKF_015_SubDocumento_Historico`(`idd`, `ide`, `esta`, `resu`, `deta`, `anom`, `cedu`, `carg`, `nomm`, `priv`, `fcre`, `cuen`, `usua`, `acti`) 
   VALUES 
-    ( OLD.idd, OLD.come OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
+    ( OLD.idd, OLD.ide, OLD.esta, OLD.resu, OLD.deta, OLD.anom, OLD.cedu, OLD.carg, OLD.nomm, OLD.priv, OLD.fcre, OLD.cuen, OLD.usua, OLD.acti );
 END$$
 DELIMITER ;
 
@@ -562,18 +570,3 @@ FOR EACH ROW BEGIN
   (OLD.ids,OLD.ide,OLD.esta,OLD.acti,OLD.fech,OLD.usua,OLD.obse,OLD.update);
 END$$
 DELIMITER ;
-
--- SELECT UBI.idd,
---   DET.id, DET.numc, DET.fcre, DET.fori, 
---   DET.nori, DET.saso, DET.tdoc, DET.remi, 
---   DET.udep, DET.cont, DET.inst, DET.carc, DET.anom, 
---   DET.nexp, DET.fech, DET.usua, DET.priv,
---   EST.id AS idestado, EST.nomb AS estado, EST.obse AS desestado,
---   ACC.acci AS accion, ACC.obse AS observacion_accion
--- FROM WKF_006_Documento AS DOC
---   LEFT JOIN WKF_007_Documento_Detalle AS DET ON DOC.id=DET.wfd
---   LEFT JOIN WKF_003_Estado AS EST ON DOC.estado=EST.id
---   LEFT JOIN WKF_008_Documento_Ubicacion AS UBI ON UBI.idd=DOC.id
---   LEFT JOIN (SELECT * FROM `WKF_009_Documento_Variante` 
--- WHERE idd=$0 ORDER BY fech ASC LIMIT 1) AS ACC ON ACC.idd=DOC.estado 
--- WHERE DOC.estado=$0 AND DOC.estatus=$1 AND UBI.dest != 10 

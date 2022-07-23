@@ -26,8 +26,10 @@ import (
 	"fmt"
 	"log"
 	"net/http"
+	_ "net/http/pprof"
 	"time"
 
+	"github.com/code-epic/middleware/mdl/aa"
 	"github.com/code-epic/middleware/sys"
 	"github.com/code-epic/middleware/sys/web"
 	"github.com/fatih/color"
@@ -77,6 +79,10 @@ func main() {
 	go rpmser.ListenAndServeTLS("sys/seguridad/https/app.ve.crt", "sys/seguridad/https/llave.key")
 	color.Green("[+] Puerto:  " + sys.PUERTO_RPM + " HTTPS RPM PACKAGE  ")
 
+	go func() {
+		log.Println(http.ListenAndServe("localhost:6060", nil))
+	}()
+
 	//https://dominio.com/* Protocolo de capa de seguridad
 	server := &http.Server{
 		Handler:      context.ClearHandler(web.Enrutador),
@@ -84,6 +90,9 @@ func main() {
 		WriteTimeout: 280 * time.Second,
 		ReadTimeout:  280 * time.Second,
 	}
+
+	var ml aa.AA
+	go ml.Analizar()
 
 	color.Green("[+] Puerto:  " + sys.PUERTO_SSL + " HTTPS PRODUCTION  ")
 	fmt.Println("")

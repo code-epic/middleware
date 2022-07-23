@@ -151,7 +151,7 @@ SELECT xcomponente, 0, nombres_apellidos, cedula, xsubtitulo, CONCAT(IFNULL(xdtm
     ed.numero_resol AS xnumero_resol,
     IFNULL(db.cedula, '') AS cedula , 
     ed.cuenta_oficio AS xsubtitulo,
-    IF(ed.fecha_entrada='0000-00-00','1986-07-22',ed.fecha_entrada) AS xfecha,
+    IF(ed.fecha_entrada=0000-00-00,'1986-07-22',ed.fecha_entrada) AS xfecha,
     CONCAT ( ed.cuenta_oficio, ' - ',  ed.digital ) AS xdigital, 
     IFNULL( ac.des_acto, '' ) as xacto,   
     IFNULL( te.des_tipo_entrada, '' ) as xentrada,
@@ -196,7 +196,7 @@ SELECT xcomponente, 0, nombres_apellidos, cedula, subtitulo, CONCAT(IFNULL(xdtmi
     IFNULL(db.cedula, '') AS cedula , 
     CONCAT( dr.numero_resol , ' - ',  tr.des_resol ) AS subtitulo,
     dr.asunto AS xasunto, 
-    IF(dr.fecha_resol='0000-00-00','1986-07-22',dr.fecha_resol) AS xfecha,
+    IF(dr.fecha_resol=0000-00-00,'1986-07-22',dr.fecha_resol) AS xfecha,
     CONCAT(cm.nombre_componente, ' ', ct.nombre_categoria,' ', 
             cl.des_clasificacion, ' ', gr.nombres_grado, ' '
           ) AS xdtmilitar,
@@ -313,5 +313,5 @@ WHERE DB.cedula = '$0'
 
 
 
-         
-  
+ -- ALTER TABLE `mppd`.`resoluciones_mppd` ADD INDEX `cedula_resol` (`id`)       
+ -- ALTER TABLE `mppd`.`resoluciones_mppd` ADD INDEX `cedula_resol` (`id`)

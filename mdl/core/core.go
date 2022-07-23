@@ -1,6 +1,7 @@
 package core
 
 import (
+	"database/sql"
 	"fmt"
 	"strconv"
 	"strings"
@@ -20,6 +21,7 @@ type Core struct {
 	Resultado RS     `json:"Resultado"`
 	Cantidad  int    `json:"cantidad"`
 	ApiCore
+	RowData *sql.Rows
 }
 
 //RS Establece la respuesta de la API
@@ -93,7 +95,6 @@ type Object map[string]interface{}
 func (C *Core) Asignar(v map[string]interface{}) (jSon []byte, err error) {
 	var api ApiCore
 	var Valores = false
-
 	for k, vs := range v {
 		if vs != nil {
 			switch k {

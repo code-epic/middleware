@@ -3,7 +3,11 @@ package api
 import (
 	"encoding/json"
 	"fmt"
+	"log"
 	"net/http"
+	_ "net/http/pprof"
+	"os"
+	"runtime/pprof"
 
 	"github.com/code-epic/middleware/mdl/core"
 	"github.com/code-epic/middleware/sys/seguridad"
@@ -22,6 +26,13 @@ func (a *API) Crud(w http.ResponseWriter, r *http.Request) {
 	var c core.Core
 	Cabecera(w, r)
 	var v map[string]interface{}
+
+	f, err := os.Create("Crud.prof")
+	if err != nil {
+		log.Fatal(err)
+	}
+	pprof.StartCPUProfile(f)
+	defer pprof.StopCPUProfile()
 	e := json.NewDecoder(r.Body).Decode(&v)
 	if e != nil {
 		fmt.Println("Error en el objeto JSON")

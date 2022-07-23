@@ -75,11 +75,11 @@ func (C *Core) CrearQuery(v map[string]interface{}) (jSon []byte, err error) {
 		case "select":
 			if !C.ApiCore.Retorna && C.ApiCore.Migrar {
 				go func() {
-					jSon, err = C.Select(v, consulta, conexion)
+					jSon, err = C.Select(0, consulta, conexion)
 				}()
 				jSon, err = json.Marshal(M)
 			} else {
-				jSon, err = C.Select(v, consulta, conexion)
+				jSon, err = C.Select(0, consulta, conexion)
 			}
 		case "insert":
 			jSon, err = C.IUDQuery(consulta, conexion, 0)
